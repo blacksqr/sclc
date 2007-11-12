@@ -1,0 +1,165 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html>
+<head>
+  <title>SCLC Code Size Counter Readme</title>
+</head>
+
+<body text="#330066"><font face="verdana">
+  <h1 align="center">SCLC Code Size Counter<br>
+  (University of Hawaii Edition)</h1>
+  <p align="center">
+    <a href="http://csdl.ics.hawaii.edu/">Collaborative Software Development Laboratory</a><br>
+    <a href="http://www.hawaii.edu/">University of Hawaii&nbsp;</a>
+  </p>
+
+  <h2 align="left">1.0 Overview</h2>
+  <p>
+
+SCLC counts the size of different types of source code files, providing the 
+number of comment, non-comment, blank, and total lines. In addition, a count of "tokens" is 
+provided for organizations where code layout variability makes line-oriented size counts unreliable
+for analysis purposes. The latest stable release of SCLC supports the following 27 file types:
+
+Ada,
+Assembly,
+Awk,
+C,
+C++,
+Chapel,
+CSharp,
+CSS,
+Eiffel,
+FORTRAN,
+HTML,
+Java,
+JavaScript,
+Jess,
+JSP,
+Lisp,
+make,
+Matlab,
+Pascal,
+Perl,
+Python,
+shell,
+SQL,
+Tcl,
+Template,
+XML,
+ZPL
+
+  </p>
+
+  <p>There are at least two flavors of SCLC in circulation.&nbsp; The
+  &quot;original&quot; SCLC was developed by Brad Appleton, and the home page
+  for this flavor is at: <a href="http://www.cmcrossroads.com/bradapp/clearperl/sclc-cdiff.html">http://www.cmcrossroads.com/bradapp/clearperl/sclc-cdiff.html</a>.</p>
+
+  <p>Our &quot;University of Hawaii Edition&quot; of SCLC was developed in
+  response to some additional needs we had for SCLC, including support for XML
+  output and high performance computing languages.&nbsp; The home page for the
+  University of Hawaii Edition is: <a href="http://csdl.ics.hawaii.edu/Tools/SCLC/">http://csdl.ics.hawaii.edu/Tools/SCLC/</a>.</p>
+
+  <h2 align="left">2.0 Installation</h2>
+  <p>
+  	SCLC requires Perl 5.8 and the XML:Simple module.  
+  </p>
+  <p>
+  	Perl source and binaries can be obtained from <a href="http://www.perl.com/download.csp">http://www.perl.com/download.csp</a>.
+  	For a "ready to install" version of Perl try <a href="http://www.activestate.com/Products/ActivePerl/?mp=1" />ActivePerl</a> from
+  	ActiveState.  It supports all platforms, has XML:Simple pre-installed, and is a free download.
+  </p>
+  <p>
+  	If you are planning to use the supplied build.xml to run the demo you will need to install <a href="http://ant.apache.org">Apache Ant</a>.  Ant is not required to run the script by itself.
+  </p>
+  <h3>
+    2.1 Running SCLC on itself
+  </h3>
+  <p>The quickest way to check your installation of SCLC is to invoke it on
+  itself. To do this, cd to the src/ directory, and invoke &quot;perl sclc sclc&quot;.&nbsp;
+  Here is some example output:
+  </p>
+  <pre>C:\svn-csdl\sclc\src&gt;perl sclc sclc
+ Lines  Blank  Cmnts   NCSL TPtoks
+====== ====== ====== ====== ====== ============================================
+  2513    213    959   1418   7740 sclc  (Perl)</pre>
+  <p>
+    Note that the actual numbers you get for the size of SCLC may differ
+    depending upon the version of SCLC you are using.&nbsp; 
+  </p>
+  <h3 align="left">2.2 Running the SCLC validation test suite</h3>
+  <p>SCLC comes with a validation test suite that ensures that the various
+  language processors are counting code correctly. To run the tests, install
+  Ant, then invoke &quot;ant -f test.build.xml&quot;.&nbsp; The Ant build will
+  fail if any of the tests do not pass.&nbsp; Here is an example of a successful
+  run of the test suite:
+  <pre>C:\svnCSDL\sclc&gt;ant -f test.build.xml
+Buildfile: test.build.xml
+
+test.teststack.java:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]     54      7     19     28    198 C:\svnCSDL\sclc\lib\examples/TestStack.java  (Java)
+
+test.pi_calc.c:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]     88     11     41     46    274 C:\svnCSDL\sclc\lib\examples/pi_calc.c  (C)
+
+test.pi_calc.f:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]     99     18     46     35    209 C:\svnCSDL\sclc\lib\examples/pi_calc.f  (FORTRAN)
+
+test.markov.m:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]     36      4     13     19    165 C:\svnCSDL\sclc\lib\examples/markov.m  (Matlab)
+
+&lt;Some tests not shown to reduce output&gt;
+
+test.sclc1.pl:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]   1955    164    722   1101   4374 C:\svnCSDL\sclc\lib\examples/sclc1.pl  (Perl)
+
+test.build.xml:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]     61     10      0     51    422 C:\svnCSDL\sclc\lib\examples/build.xml  (XML)
+
+test.README.html:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]    135     14      0    121   1395 C:\svnCSDL\sclc\lib\examples/README.html  (HTML)
+
+test.ConfirmProjectSettings.jsp:
+     [exec]  Lines  Blank  Cmnts   NCSL TPtoks
+     [exec] ====== ====== ====== ====== ====== ============================================
+     [exec]     75      6      0     69    531 C:\svnCSDL\sclc\lib\examples/ConfirmProjectSettings.jsp  (JSP)
+
+all.test:
+
+BUILD SUCCESSFUL
+Total time: 10 seconds</pre>
+  <p>It is quite easy to extend the test suite to handle tests for new
+  languages.&nbsp; To write the test, create a test file in the language of
+  choice, then manually count the number of lines, comments, tokens, and
+  whatever else is important to check in the output.&nbsp; Then write an Ant
+  target using the supplied &lt;runTest&gt; and &lt;assertContains&gt; macros to
+  invoke SCLC on your file and check the output for the required data.&nbsp;
+  Here's an example test for a sample Fortran file:</p>
+  <pre>  &lt;target name=&quot;test.pi_calc.f&quot;&gt;
+    &lt;runTest property.name=&quot;pi_calc.f.data&quot; test.file=&quot;${testfile.dir}/pi_calc.f&quot; /&gt;
+    &lt;assertContains property.name=&quot;pi_calc.f.data&quot; property.string=&quot;sourceLines=&amp;quot;35&amp;quot;&quot; /&gt;
+    &lt;assertContains property.name=&quot;pi_calc.f.data&quot; property.string=&quot;commentLines=&amp;quot;46&amp;quot;&quot; /&gt;
+  &lt;/target&gt;</pre>
+  <p>Check the test.build.xml file for more examples.&nbsp;</p>
+  <h2>3.0 Usage</h2>
+  <p>
+    To see the complete list of options available for SCLC please run "perldoc
+  sclc&quot;.
+	The output will contain all the options available, their descriptions, and some examples of the more
+	advanced features. 
+  </p>
+</font></body>
+</html>

@@ -1,0 +1,59 @@
+<project name="sclc" default="demo">
+
+  <property name="src.dir" location="${basedir}/src"/>
+  <property name="testfile.dir" location="${basedir}/lib/examples"/> 
+  <property name="build.dir" location="${basedir}/build"/>
+  <property name="dist.dir" location="${build.dir}/dist" />
+  <property name="html.dir" location="${build.dir}/html" />
+  
+  <target name="demo" description="Runs SCLC on itself as a demonstration.">
+    <delete dir="${build.dir}" /> 
+    <mkdir dir="${build.dir}" />
+    <exec executable="perl" dir="${build.dir}">
+      <arg line="${src.dir}/sclc -default_exclude -xml_output ${build.dir}/demo.xml -recurse ${testfile.dir}" />
+    </exec> 
+
+    <echo message="Please check ${build.dir}/demo.xml for XML output."/>
+  </target>
+  
+  <target name="makeHtmlPerlDoc" description="Runs pod2html over sclc.pl to produce HTML documentation.">
+    <mkdir dir="${html.dir}" />
+    <copy file="${src.dir}/sclc" todir="${html.dir}"/>
+    <fixcrlf srcDir="${html.dir}"/>
+    <condition property="pod2html.executable" value="pod2html.bat" else="pod2html">
+      <os family="windows"/>
+    </condition>
+    <exec executable="${pod2html.executable}" dir="${html.dir}">
+       <arg line="-infile=sclc -outfile=sclc.html -title=SCLC" />
+    </exec> 
+    <echo message="${html.dir}/sclc.html contains HTML documentation."/>
+  </target>
+    
+  <!-- Create the version property as major.minor.daystamp -->
+  <property name="majorVersionNumber" value="2" />
+  <property name="minorVersionNumber" value="6" />
+  <tstamp>
+     <format property="TSTAMP" pattern="HH:mm:ss" />
+     <format property="DAYSTAMP" pattern="Mdd" />
+   </tstamp>
+   <property name="version" value="${majorVersionNumber}.${minorVersionNumber}.${DAYSTAMP}" />
+
+  <!-- Create a distribution .zip file for the system. -->
+  <target name="dist" depends="makeHtmlPerlDoc" 
+          description="Create a distribution package with source, jar file, and documentation.">
+    <!-- Define and create the directory holding the distribution and the tmp dir. -->
+    <mkdir dir="${dist.dir}" />
+    <property name="tmp.dir" location="${basedir}/tmp" />
+    <property name="dist.name" value="sclc-${version}" />
+    <mkdir dir="${tmp.dir}/${dist.name}" />
+
+    <!-- Copy useful files to the tmp dir. -->
+    <copy todir="${tmp.dir}/${dist.name}">
+      <fileset dir="${basedir}" excludes="**/.svn/*, **/*~, tmp/**, build/**" />
+    </copy>
+    <!-- Create the zip distribution of this system. -->
+    <zip zipfile="${dist.dir}/${dist.name}.zip" basedir="${tmp.dir}" />
+    <delete dir="${tmp.dir}" />
+  </target> 
+  
+</project>
