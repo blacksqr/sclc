@@ -1,0 +1,512 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SCLC</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:support@ActiveState.com" />
+</head>
+
+<body style="background-color: white">
+
+<p><a name="__index__"></a></p>
+<!-- INDEX BEGIN -->
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#options_and_arguments">OPTIONS AND ARGUMENTS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#examples">EXAMPLES</a></li>
+	<ul>
+
+		<li><a href="#basic_invocation">Basic Invocation</a></li>
+		<li><a href="#controlling_column_output">Controlling column output</a></li>
+		<li><a href="#recursing_through_subdirectories">Recursing through subdirectories</a></li>
+		<li><a href="#obtaining_output_in_xml_format">Obtaining output in XML format</a></li>
+		<li><a href="#comparing_versions_using_cdiff">Comparing versions using CDIFF</a></li>
+	</ul>
+
+	<li><a href="#mpi_and_openmp_token_counting">MPI AND OPENMP TOKEN COUNTING</a></li>
+	<li><a href="#known_issues">KNOWN ISSUES</a></li>
+	<li><a href="#home_page">HOME PAGE</a></li>
+	<li><a href="#see_also">SEE ALSO</a></li>
+	<li><a href="#authors">AUTHORS</a></li>
+</ul>
+<!-- INDEX END -->
+
+<hr />
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>sclc -- Source-code line counter</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<pre>
+ sclc [-delim-ignore] [-counts SPEC] [-sections SPEC] [-language [EXT=]LANG]
+      [-name REGEXP] [-except REGEXP] [-recurse] [-filelist] [-ignore]
+      [-diff] [-fromversion SELECTOR] [-toversion SELECTOR] [-pred]
+      [-prefix REGEXP] [-separate REGEXP] [-vcstring STRING] [-output FILE]
+      [-xml_output FILE][-default_exclude][-excludedir REGEXP][FILE ...]</pre>
+<p>
+</p>
+<hr />
+<h1><a name="options_and_arguments">OPTIONS AND ARGUMENTS</a></h1>
+<dl>
+<dt><strong><a name="item__2dhelp"><strong>-help</strong></a></strong>
+
+<dd>
+<p>Print this help message and exit.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dlanguage__5bext_3d_5dlang"><strong>-language</strong> [<em>EXT</em>=]<em>LANG</em></a></strong>
+
+<dd>
+<p>Assume that any file with a suffix of &quot;<em>EXT</em>&quot; is a <code>LANG</code> source file
+(note that you must supply any leading '.'). If the &quot;<em>EXT</em>&quot; begins
+with a slash ('/'), then the name that follows it is considered to
+be the name of an interpreter that is invoked using &quot;#!<em>path</em>/<em>EXT</em>&quot;
+as the first line of the script (and if the language can't be determined
+from the extension, then the first line of the file will be used). If
+&quot;<em>EXT</em>=&quot; is omitted then <code>LANG</code> will be the default language for any files
+whose language cannot be determined.  <code>LANG</code> must be one of the following:</p>
+</dd>
+<dl>
+<dt>
+<dd>
+<p>Ada,
+Assembly,
+Awk,
+C,
+C++,
+Chapel,
+CSharp,
+CSS,
+Eiffel,
+FORTRAN,
+HTML,
+Java,
+JavaScript,
+Jess,
+JSP,
+Lisp,
+make,
+Matlab,
+Pascal,
+Perl,
+Python,
+shell,
+SQL,
+Tcl,
+Template,
+XML,
+ZPL</p>
+</dd>
+</li>
+</dl>
+<p>Language names may <em>not</em> be abbreviated. This option may be specified
+multiple times.</p>
+<dt><strong><a name="item__2ddelim_2dignore"><strong>-delim-ignore</strong></a></strong>
+
+<dd>
+<p>Ignore all statement delimiters. This means that lines containing
+nothing but statement delimiters/terminators are *not* considered
+lines of code. For C/C++ this would have the effect of ignoring
+lines containing nothing but ';', '{', and '}'.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2ddiff"><strong>-diff</strong></a></strong>
+
+<dd>
+<p>Treat the input as output from <strong>diff(1)</strong> and report counts for both
+inserted and deleted source. Note that the <strong>-diff</strong> option is implied
+by any of <strong>-pred</strong>, <strong>-fromversion</strong> or <strong>-toversion</strong>.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dignore"><strong>-ignore</strong></a></strong>
+
+<dd>
+<p>Don't bother with files whose language can't be determined.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dfilelist"><strong>-filelist</strong></a></strong>
+
+<dd>
+<p>Assume that the source files to read are listed in the contents of
+the files given on the command line (filelist is read from standard
+input if no files are given). This is useful if you wish to use the
+output of commands Like <strong>find(1)</strong> as input to this command.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dname_regexp"><strong>-name</strong> <em>REGEXP</em></a></strong>
+
+<dd>
+<p>Only look at files whose filename (not including the directory path)
+completely match the given perl-style regular expression. Does not
+apply to directories when <strong>-recurse</strong> is used. May be specified
+multiple times (for a description of Perl's regular expression
+syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>).</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dexcept_regexp"><strong>-except</strong> <em>REGEXP</em></a></strong>
+
+<dd>
+<p>Don't look at files whose filename (not including the directory path)
+completely match the given perl-style regular expression (even if
+it would be matched by a <strong>-name</strong> expression). Does not apply to
+directories when <strong>-recurse</strong> is used. May be specified multiple
+times  (for a description of Perl's regular expression
+syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>).</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dprefix_regexp"><strong>-prefix</strong> <em>REGEXP</em></a></strong>
+
+<dd>
+<p>Ignore/strip the leading portion of each line that matches the given
+perl-style regular expression. Do <em>not</em> use a leading '^' unless you
+mean to match the caret character itself (for a description of Perl's
+regular expression syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>)</p>
+</dd>
+</li>
+<dt><strong><a name="item__2drecurse"><strong>-recurse</strong></a></strong>
+
+<dd>
+<p>For every &quot;source&quot; file that is actually a directory, read all
+source files in the directory.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dfromversion_selector"><strong>-fromversion</strong> <em>SELECTOR</em></a></strong>
+
+<dd>
+<p>When used with <strong>-diff</strong>, assumes that <em>SELECTOR</em> is a valid ClearCase
+version selector and uses it in conjunction with <strong>cdiff</strong> as the
+&quot;from&quot; version of each file specified. Only one of <code>-fromversion</code>
+and <a href="#item__2dpred"><code>-pred</code></a> may be specified!</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dtoversion_selector"><strong>-toversion</strong> <em>SELECTOR</em></a></strong>
+
+<dd>
+<p>When used with <strong>-diff</strong>, assumes that <em>SELECTOR</em> is a valid ClearCase
+version selector and uses it in conjunction with <strong>cdiff</strong> as the
+&quot;to&quot; version of each file specified.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dpred"><strong>-pred</strong></a></strong>
+
+<dd>
+<p>When used with <strong>-diff</strong>, assumes that each file is an element in a
+ClearCase VOB and uses it in conjunction with <strong>cdiff</strong> as the &quot;from&quot;
+version of each file specified (note that the predecessor version
+is chosen relative to the &quot;to&quot; version of the file). Only one of
+<strong>-pred</strong> and <strong>-fromversion</strong> may be specified!</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dseparate_regexp"><strong>-separate</strong> <em>REGEXP</em></a></strong>
+
+<dd>
+<p>Assume that whenever a source line is encountered that completely
+matches the given perl-style regular expression, it indicates the
+end of the current source context. Useful if you are trying to
+count lines from the output of a command like <strong>diff(1)</strong> and you
+dont want a comment or quote in one changed section to be treated
+as if it continued into the next block of modifications. May be
+specified multiple times (for a description of Perl's regular expression
+syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>).</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dcounts_spec"><strong>-counts</strong> <em>SPEC</em></a></strong>
+
+<dd>
+<p>Specify which counts/columns to display in the output. <em>SPEC</em>
+may contain any of the following (separated by '+'):</p>
+</dd>
+<dd>
+<pre>
+   &quot;Lines&quot;  : print the total # of lines
+   &quot;Blank&quot;  : print the total # of blank-lines
+   &quot;Cmnts&quot;  : print the total # of comments
+   &quot;NCSL&quot;   : print the total # of non-comment source lines
+   &quot;KPtoks&quot; : print the total # of keyword pseudo-tokens
+   &quot;SPtoks&quot; : print the total # of symbol pseudo-tokens
+   &quot;CPtoks&quot; : print the total # of constant pseudo-tokens
+   &quot;GPtoks&quot; : print the total # of grouping pseudo-tokens
+   &quot;OPtoks&quot; : print the total # of operator pseudo-tokens
+   &quot;TPtoks&quot; : print the total # of total pseudo-tokens
+   &quot;All&quot;    : print all of the above totals
+   &quot;AESL&quot;   : print the total # of assembly-equivalent source lines</pre>
+</dd>
+<dd>
+<p>The above keywords may be abbreviated to a unique prefix if desired.
+If the <strong>-counts</strong> option is <em>not</em> specified, then
+<code>Lines+Blank+Cmnts+NCSL+TPtoks</code> is implied.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dsections_spec"><strong>-sections</strong> <em>SPEC</em></a></strong>
+
+<dd>
+<p>Specify the sections in the output. <em>SPEC</em> may contain any
+of the following (separated by '+'):</p>
+</dd>
+<dd>
+<pre>
+   &quot;Header&quot;     : the column labels and separator bar
+   &quot;Files&quot;      : the counts for each input file
+   &quot;LangTotals&quot; : the totals for each language encountered.
+   &quot;Totals&quot;     : the totals for all files.</pre>
+</dd>
+<dd>
+<p>The above keywords may be abbreviated to a unique prefix
+if desired. If the <strong>-sections</strong> option is <em>NOT</em> specified,
+then <code>Header+Files+LangTotals+Totals</code> is implied.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dvcstring_string"><strong>-vcstring</strong> <em>STRING</em></a></strong>
+
+<dd>
+<p>Specify that <em>STRING</em> is the delimiter used by your version control
+system and that the file suffix should be determined by only
+considering the portion of the file path that precedes the first
+occurrence of <em>STRING</em>.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2doutput_file"><strong>-output</strong> <em>FILE</em></a></strong>
+
+<dd>
+<p>Redirect output to the named file (should have the same effect as
+redirecting STDOUT on the cmdline using &quot;&gt; <em>FILE</em>&quot;).</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dxml_output_file"><strong>-xml_output</strong> <em>FILE</em></a></strong>
+
+<dd>
+<p>Writes the results to the specified FILE.  Output will still be shown on the screen in addition to being in the XML file.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2ddefault_exclude"><strong>-default_exclude</strong></a></strong>
+
+<dd>
+<p>Excludes a default set of files and directories using a set of regular expressions. Tries to filter out files that are commonly ignored by Ant.  Can be used with -excludedir, -name, and -except.</p>
+</dd>
+</li>
+<dt><strong><a name="item__2dexcludedir"><strong>-excludedir</strong></a></strong>
+
+<dd>
+<p>Excludes files from being evaluated if their full path or file name matches the REGEXP. When used with -default_exclude it will exclude all the default plus any REGEXP given by exclude options. Each regex string needs to have its own excludedir option. There is no limit on the number of excludedirs.  Can be used with -name and -except.</p>
+</dd>
+</li>
+<dt><strong><a name="item_file"><em>FILE</em></a></strong>
+
+<dd>
+<p>Name of an input file (or a directory, if the -recurse option is specified).</p>
+</dd>
+</li>
+</dl>
+<p>Option names are case insensitive and only a unique prefix is required.</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p><strong>sclc</strong> will count the number of lines, blank-lines, comments,
+non-comment source lines (NCSL), pseudo-tokens of various types, total
+pseudo-tokens, and optionally, assembly equivalent source lines (AESL)
+in the given input files (which are assumed to be free of syntax
+errors). The output format will look something like the following:</p>
+<pre>
+  &lt;header with column titles and separator line&gt;
+  &lt;count1&gt; &lt;count2&gt; ... &lt;filename&gt;  (&lt;language&gt;)
+    ...      ...           ...         ...
+  &lt;total1&gt; &lt;total2&gt; ... ----- &lt;language&gt; -----  (# files)
+    ...      ...           ...         ...
+  &lt;total1&gt; &lt;total2&gt; ... ***** TOTAL *****  (# files)</pre>
+<p>The <strong>-counts</strong> and <strong>-sections</strong> options may be used to control which counts
+and/or sections to print. The counts are always printed in an order such that:</p>
+<pre>
+     lines --&gt; blank-lines --&gt; comments --&gt; NCSL --&gt; &lt;xPtoks&gt;... --&gt; AESL</pre>
+<p>where &quot;X --&gt; Y&quot; means that the count of Xs always precedes the count of Ys.</p>
+<p>The <strong>-recurse</strong> option can be used to specify that all files in a given directory tree should be
+processed.</p>
+<p>The <strong>-xml_output</strong> option will create a file containing the size data in XML format.</p>
+<p>If the <strong>-diff</strong> option is given than two lines are printed for each set of
+counts: one for deleted lines and one for inserted lines (and the <code>DELETED</code>
+or <code>INSERTED</code> keyword will appear on each output-line). If <strong>-pred</strong> or
+<strong>-fromversion</strong> or <strong>-toversion</strong> is given then <strong>-diff</strong> is implied and <strong>cdiff</strong>
+command is invoked with the <strong>-blank_ignore</strong> option to compare file versions.</p>
+<p>
+</p>
+<hr />
+<h1><a name="examples">EXAMPLES</a></h1>
+<p>
+</p>
+<h2><a name="basic_invocation">Basic Invocation</a></h2>
+<p>The most simple invocation of <strong>sclc</strong> involves specifying the filenames explicitly on
+the command line:</p>
+<pre>
+  $ sclc dir.c dir.h
+   Lines  Blank  Cmnts   NCSL ... TPtoks
+  ====== ====== ====== ====== ... ======  =============================
+     215     26     14    158       1395  dir.c  (C)
+      41      8     16     24        160  dir.h  (C)
+     256     34     30    182       1555  ----- C -----  (2 files)</pre>
+<p>Note that in Windows, you will probably invoke perl and pass SCLC as the program name as follows:</p>
+<pre>
+  C:\&gt; perl sclc dir.c dir.h</pre>
+<p>
+</p>
+<h2><a name="controlling_column_output">Controlling column output</a></h2>
+<p>There are options to control which columns you do/do not want to see.
+The <code>NCSL</code> column is for &quot;non-comment source lines&quot;. The <code>TPtoks</code>
+column gives the total number of psuedo-tokens of all types.</p>
+<p>The optional <code>AESL</code> column is for &quot;assembly equivalent source lines&quot;
+(it calculates this using assembly-equivalence factors published by
+Software Productivity Research).</p>
+<p>If all you care about is NCSL, you could simply invoke it as:</p>
+<pre>
+  $ sclc -counts ncsl dir.[ch]
+   NCSL  
+  =====  ==============================================================
+    158  dir.c  (C)
+     24  dir.h  (C)
+    182  ----- C -----  (2 files)</pre>
+<p>Note the use of a regular expression to specify both dir.c and dir.h.</p>
+<p>If you don't want the header columns, and want to see the overall totals
+instead of the totals per programming language, then you could
+simply say:</p>
+<pre>
+  $ sclc -counts ncsl -sections file+totals *.[ch]</pre>
+<pre>
+    158  dir.c  (C)
+     24  dir.h  (C)
+    182  ***** TOTAL *****  (2 files)</pre>
+<p>
+</p>
+<h2><a name="recursing_through_subdirectories">Recursing through subdirectories</a></h2>
+<p>In many cases, it is more convenient to direct SCLC to recurse over all subdirectories
+of a given directory.  Use the <strong>-recurse</strong> option to enable recursive searching. If using 
+a configuration management system such as Subversion, it is useful to also specify 
+the <strong>-default_exclude</strong> option to avoid processing .svn subdirectories:</p>
+<pre>
+   $ sclc -recurse -default_exclude src
+    Lines  Blank  Cmnts   NCSL TPtoks
+   ====== ====== ====== ====== ====== ============================================
+     2300    200    870   1284   6910 src\sclc.pl  (Perl)</pre>
+<p>
+</p>
+<h2><a name="obtaining_output_in_xml_format">Obtaining output in XML format</a></h2>
+<p>Specifying the <strong>-xml_output</strong> option with a file name instructs SCLC to produce a file in XML output containing
+the size data, in addition to printing it out to the console:</p>
+<pre>
+   $ sclc -recurse -default_exclude -xml_output size.xml src
+    Lines  Blank  Cmnts   NCSL TPtoks
+   ====== ====== ====== ====== ====== ============================================
+     2300    200    870   1284   6910 src\sclc.pl  (Perl)</pre>
+<p>The command line output is the same as before, but now there is a file called size.xml containing the following:</p>
+<pre>
+   &lt;?xml version=&quot;1.0&quot;?&gt;
+   &lt;sclc&gt;
+      &lt;file tool=&quot;SCLC&quot; fileType=&quot;Perl&quot; 
+            fileName=&quot;C:/svn-csdl/sclc/src/sclc.pl&quot; 
+            blankLines=&quot;200&quot; commentLines=&quot;870&quot; sourceLines=&quot;1284&quot; tptoks=&quot;6910&quot; totalLines=&quot;2300&quot;/&gt;
+   &lt;/sclc&gt;</pre>
+<p>
+</p>
+<h2><a name="comparing_versions_using_cdiff">Comparing versions using CDIFF</a></h2>
+<p>SCLC can be used in conjunction with a tool called cdiff to compare versions
+of file stored in the ClearCase configuration management system.</p>
+<p>If you want to know the number of lines of code that have changed
+between versions of files, you can use the <strong>-pred</strong> option, or a
+combination of the <strong>-fromversion</strong> and <strong>-toversion</strong> options. If
+you simply want to know the number of new and changed lines of code
+between a set of files and their immediate predecessors, use the <strong>-pred</strong>
+option:</p>
+<pre>
+  $ sclc -pred *.[ch]</pre>
+<pre>
+  Lines  Blank  Cmnts   NCSL   AESL     
+  =====  =====  =====  =====   ====  ===============================
+      3      1      0      2    5.0  dir.c DELETED  (C)
+      5      1      0      4   10.0  dir.c INSERTED  (C)
+      1      0      0      1    2.5  dir.h DELETED  (C)
+      2      0      0      2    5.0  dir.h INSERTED  (C)
+      4      1      0      3    7.5  ----- C DELETED -----  (2 files)
+      7      1      0      6   15.0  ----- C INSERTED -----  (2 files)</pre>
+<p>Again, if you want to limit the output to include only the NCSL counts for
+the individual files and their totals, add the <strong>-counts</strong> and <strong>-sections</strong>
+options into the fold:</p>
+<pre>
+  $ sclc -pred -counts ncsl -sections file+totals *.[ch]</pre>
+<pre>
+      2  dir.c DELETED  (C)
+      4  dir.c INSERTED  (C)
+      1  dir.h DELETED  (C)
+      2  dir.h INSERTED  (C)
+      3  ***** TOTAL DELETED *****  (2 files)
+      6  ***** TOTAL INSERTED *****  (2 files)</pre>
+<p>If you want to count the difference in source lines between specific
+versions (not just the predecessor) you may use the <strong>-fromversion</strong>
+option to specify the base (&quot;from&quot;) version to use for all comparisons.
+If the base version is not explicitly specified, it defaults to whatever
+version is selected in the users view. Similarly, the <strong>-toversion</strong>
+option may be used to specify the target (&quot;to&quot;) version to use for all
+comparisons. If the target version is not specified, then (like the base
+version) it defaults to whatever version is selected in the users view.</p>
+<p>So if I want to count the changed lines of code between what is in my
+view and what was on the <code>REL1.0.0</code> label, I would do the following:</p>
+<pre>
+  $ sclc -fromver REL1.0.0 *.[ch]</pre>
+<p>And if I wanted to count the changed lines of code between files on
+my <code>/main/rel1/mychanges</code> branch and the REL1.0.0 baseline label they
+where branched off from, I would use:</p>
+<pre>
+  $ sclc -fromver REL1.0.0 -tover .../mychanges/LATEST *.[ch]</pre>
+<p>If I wanted to see the difference in lines of code for files on to
+different labels I would do something like:</p>
+<pre>
+  $ sclc -fromver REL1.0.0 -tover REL2.0.0 *.[ch]</pre>
+<p>If I wanted to do the same as the above, but my view was already selecting
+everything in the REL1.0.0 baseline, then I could simply do:</p>
+<pre>
+  $ sclc -tover REL2.0.0 *.[ch]</pre>
+<p>Hopefully, this &quot;tutorial&quot; should have provided you with a good set of
+cookbook examples for using <strong>sclc</strong>. if you ever want to see this manual
+page, you need only invoke <strong>sclc</strong> using the <strong>-help</strong> option:</p>
+<pre>
+  $ sclc -help</pre>
+<p>
+</p>
+<hr />
+<h1><a name="mpi_and_openmp_token_counting">MPI AND OPENMP TOKEN COUNTING</a></h1>
+<p>MPI and OpenMP token counting is automatically done for C/C++ and FORTRAN files.  It is not displayed on the screen and the results can only be seen if the option <strong>-xml_output</strong> is used.  In the XML, the name of the token will be an attribute and the value of the attribute will be the number occurrences of that token (Example: MPI_Init=&quot;1&quot;).</p>
+<p>
+</p>
+<hr />
+<h1><a name="known_issues">KNOWN ISSUES</a></h1>
+<p>Please note that files with line breaks that are \r (carriage return) used by Mac classic may not work properly.  Converting these to Windows or Unix type line breaks will fix the problem.</p>
+<p>
+</p>
+<hr />
+<h1><a name="home_page">HOME PAGE</a></h1>
+<p>This University of Hawaii Edition of SCLC is maintained at: &lt;<a href="http://sclc.googlecode.com/">http://sclc.googlecode.com/</a>&gt;.</p>
+<p>
+</p>
+<hr />
+<h1><a name="see_also">SEE ALSO</a></h1>
+<p>cdiff -- <strong>sclc</strong> uses <strong>cdiff</strong> to compare versions of files. The home page for cdiff (and
+the original version of SCLC) is at: &lt;<a href="http://www.cmcrossroads.com/bradapp/clearperl/sclc-cdiff.html">http://www.cmcrossroads.com/bradapp/clearperl/sclc-cdiff.html</a>&gt;.</p>
+<p>
+</p>
+<hr />
+<h1><a name="authors">AUTHORS</a></h1>
+<p>Original author: Brad Appleton  &lt;<a href="mailto:bradapp@computer.org">bradapp@computer.org</a>&gt;</p>
+<p>University of Hawaii Edition enhancements by: 
+Cedric Zhang  &lt;<a href="mailto:qzhang@hawaii.edu">qzhang@hawaii.edu</a>&gt;,
+Julie Sakuda  &lt;<a href="mailto:jsakuda@hawaii.edu">jsakuda@hawaii.edu</a>&gt;, 
+Mike Paulding  &lt;<a href="mailto:mpauldin@hawaii.edu">mpauldin@hawaii.edu</a>&gt;, and 
+Philip Johnson  &lt;<a href="mailto:johnson@hawaii.edu">johnson@hawaii.edu</a>&gt;,</p>
+
+</body>
+
+</html>
