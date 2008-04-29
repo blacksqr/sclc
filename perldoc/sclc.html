@@ -1,10 +1,8 @@
-<?xml version="1.0" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>SCLC</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<link rev="made" href="mailto:support@ActiveState.com" />
+<link rev="made" href="mailto:" />
 </head>
 
 <body style="background-color: white">
@@ -65,13 +63,13 @@
 <dt><strong><a name="item__2dlanguage__5bext_3d_5dlang"><strong>-language</strong> [<em>EXT</em>=]<em>LANG</em></a></strong>
 
 <dd>
-<p>Assume that any file with a suffix of &quot;<em>EXT</em>&quot; is a <code>LANG</code> source file
-(note that you must supply any leading '.'). If the &quot;<em>EXT</em>&quot; begins
+<p>Assume that any file with a suffix of ``<em>EXT</em>'' is a <code>LANG</code> source file
+(note that you must supply any leading '.'). If the ``<em>EXT</em>'' begins
 with a slash ('/'), then the name that follows it is considered to
-be the name of an interpreter that is invoked using &quot;#!<em>path</em>/<em>EXT</em>&quot;
+be the name of an interpreter that is invoked using ``#!<em>path</em>/<em>EXT</em>''
 as the first line of the script (and if the language can't be determined
 from the extension, then the first line of the file will be used). If
-&quot;<em>EXT</em>=&quot; is omitted then <code>LANG</code> will be the default language for any files
+``<em>EXT</em>='' is omitted then <code>LANG</code> will be the default language for any files
 whose language cannot be determined.  <code>LANG</code> must be one of the following:</p>
 </dd>
 <dl>
@@ -97,6 +95,7 @@ make,
 Matlab,
 Pascal,
 Perl,
+PHP,
 Python,
 shell,
 SQL,
@@ -174,7 +173,7 @@ regular expression syntax, invoke <code>man perlre</code> or <code>perldoc perlr
 <dt><strong><a name="item__2drecurse"><strong>-recurse</strong></a></strong>
 
 <dd>
-<p>For every &quot;source&quot; file that is actually a directory, read all
+<p>For every ``source'' file that is actually a directory, read all
 source files in the directory.</p>
 </dd>
 </li>
@@ -183,7 +182,7 @@ source files in the directory.</p>
 <dd>
 <p>When used with <strong>-diff</strong>, assumes that <em>SELECTOR</em> is a valid ClearCase
 version selector and uses it in conjunction with <strong>cdiff</strong> as the
-&quot;from&quot; version of each file specified. Only one of <code>-fromversion</code>
+``from'' version of each file specified. Only one of <code>-fromversion</code>
 and <a href="#item__2dpred"><code>-pred</code></a> may be specified!</p>
 </dd>
 </li>
@@ -192,16 +191,16 @@ and <a href="#item__2dpred"><code>-pred</code></a> may be specified!</p>
 <dd>
 <p>When used with <strong>-diff</strong>, assumes that <em>SELECTOR</em> is a valid ClearCase
 version selector and uses it in conjunction with <strong>cdiff</strong> as the
-&quot;to&quot; version of each file specified.</p>
+``to'' version of each file specified.</p>
 </dd>
 </li>
 <dt><strong><a name="item__2dpred"><strong>-pred</strong></a></strong>
 
 <dd>
 <p>When used with <strong>-diff</strong>, assumes that each file is an element in a
-ClearCase VOB and uses it in conjunction with <strong>cdiff</strong> as the &quot;from&quot;
+ClearCase VOB and uses it in conjunction with <strong>cdiff</strong> as the ``from''
 version of each file specified (note that the predecessor version
-is chosen relative to the &quot;to&quot; version of the file). Only one of
+is chosen relative to the ``to'' version of the file). Only one of
 <strong>-pred</strong> and <strong>-fromversion</strong> may be specified!</p>
 </dd>
 </li>
@@ -277,7 +276,7 @@ occurrence of <em>STRING</em>.</p>
 
 <dd>
 <p>Redirect output to the named file (should have the same effect as
-redirecting STDOUT on the cmdline using &quot;&gt; <em>FILE</em>&quot;).</p>
+redirecting STDOUT on the cmdline using ``&gt; <em>FILE</em>'').</p>
 </dd>
 </li>
 <dt><strong><a name="item__2dxml_output_file"><strong>-xml_output</strong> <em>FILE</em></a></strong>
@@ -326,7 +325,7 @@ errors). The output format will look something like the following:</p>
 and/or sections to print. The counts are always printed in an order such that:</p>
 <pre>
      lines --&gt; blank-lines --&gt; comments --&gt; NCSL --&gt; &lt;xPtoks&gt;... --&gt; AESL</pre>
-<p>where &quot;X --&gt; Y&quot; means that the count of Xs always precedes the count of Ys.</p>
+<p>where ``X --&gt; Y'' means that the count of Xs always precedes the count of Ys.</p>
 <p>The <strong>-recurse</strong> option can be used to specify that all files in a given directory tree should be
 processed.</p>
 <p>The <strong>-xml_output</strong> option will create a file containing the size data in XML format.</p>
@@ -358,9 +357,9 @@ the command line:</p>
 </p>
 <h2><a name="controlling_column_output">Controlling column output</a></h2>
 <p>There are options to control which columns you do/do not want to see.
-The <code>NCSL</code> column is for &quot;non-comment source lines&quot;. The <code>TPtoks</code>
+The <code>NCSL</code> column is for ``non-comment source lines''. The <code>TPtoks</code>
 column gives the total number of psuedo-tokens of all types.</p>
-<p>The optional <code>AESL</code> column is for &quot;assembly equivalent source lines&quot;
+<p>The optional <code>AESL</code> column is for ``assembly equivalent source lines''
 (it calculates this using assembly-equivalence factors published by
 Software Productivity Research).</p>
 <p>If all you care about is NCSL, you could simply invoke it as:</p>
@@ -447,10 +446,10 @@ options into the fold:</p>
       6  ***** TOTAL INSERTED *****  (2 files)</pre>
 <p>If you want to count the difference in source lines between specific
 versions (not just the predecessor) you may use the <strong>-fromversion</strong>
-option to specify the base (&quot;from&quot;) version to use for all comparisons.
+option to specify the base (``from'') version to use for all comparisons.
 If the base version is not explicitly specified, it defaults to whatever
 version is selected in the users view. Similarly, the <strong>-toversion</strong>
-option may be used to specify the target (&quot;to&quot;) version to use for all
+option may be used to specify the target (``to'') version to use for all
 comparisons. If the target version is not specified, then (like the base
 version) it defaults to whatever version is selected in the users view.</p>
 <p>So if I want to count the changed lines of code between what is in my
@@ -470,7 +469,7 @@ different labels I would do something like:</p>
 everything in the REL1.0.0 baseline, then I could simply do:</p>
 <pre>
   $ sclc -tover REL2.0.0 *.[ch]</pre>
-<p>Hopefully, this &quot;tutorial&quot; should have provided you with a good set of
+<p>Hopefully, this ``tutorial'' should have provided you with a good set of
 cookbook examples for using <strong>sclc</strong>. if you ever want to see this manual
 page, you need only invoke <strong>sclc</strong> using the <strong>-help</strong> option:</p>
 <pre>
@@ -479,7 +478,7 @@ page, you need only invoke <strong>sclc</strong> using the <strong>-help</strong
 </p>
 <hr />
 <h1><a name="mpi_and_openmp_token_counting">MPI AND OPENMP TOKEN COUNTING</a></h1>
-<p>MPI and OpenMP token counting is automatically done for C/C++ and FORTRAN files.  It is not displayed on the screen and the results can only be seen if the option <strong>-xml_output</strong> is used.  In the XML, the name of the token will be an attribute and the value of the attribute will be the number occurrences of that token (Example: MPI_Init=&quot;1&quot;).</p>
+<p>MPI and OpenMP token counting is automatically done for C/C++ and FORTRAN files.  It is not displayed on the screen and the results can only be seen if the option <strong>-xml_output</strong> is used.  In the XML, the name of the token will be an attribute and the value of the attribute will be the number occurrences of that token (Example: MPI_Init=``1'').</p>
 <p>
 </p>
 <hr />
