@@ -19,11 +19,12 @@
   <macrodef name="assertContains">
     <attribute name="property.name"/>
     <attribute name="property.string"/>
+    <attribute name="assert.num" default="1"/>
     <sequential>
-      <condition property="@{property.name}.pass">
+      <condition property="@{property.name}.pass.@{assert.num}">
         <contains string="${@{property.name}}" substring="@{property.string}"/>
       </condition>
-      <fail unless="@{property.name}.pass" message="@{property.string} not found!" /> 
+      <fail unless="@{property.name}.pass.@{assert.num}" message="@{property.string} not found!" /> 
     </sequential>
   </macrodef>
 
@@ -43,6 +44,14 @@
   
   <!-- Targets for individual SCLC tests. -->
   
+  <!-- 
+  Note: When you define multiple assertContains for a single runTest, you must provide the optional
+  'assert.num' attribute with a unique value.  For example, test.rank_change.php only has one 
+  assertContains, so it does not need to supply that value.  On the other hand, test.teststack.java
+  has two assertContains, so it provides the assert.num attribute with unique values. If you do not
+  do this, then only the first assertContains is tested. 
+  --> 
+  
   <target name="test.rank_change.php">
     <runTest property.name="rank_change.php.data" test.file="${testfile.dir}/rank_change.php" />
     <assertContains property.name="rank_change.php.data" property.string="sourceLines=&quot;14&quot;" />
@@ -50,241 +59,241 @@
       
   <target name="test.teststack.java">
     <runTest property.name="TestStack.java.data" test.file="${testfile.dir}/TestStack.java" />
-    <assertContains property.name="TestStack.java.data" property.string="sourceLines=&quot;28&quot;" />
-    <assertContains property.name="TestStack.java.data" property.string="commentLines=&quot;19&quot;" />
+    <assertContains assert.num="1" property.name="TestStack.java.data" property.string="commentLines=&quot;19&quot;" />
+    <assertContains assert.num="2" property.name="TestStack.java.data" property.string="sourceLines=&quot;28&quot;" />
   </target>
   
   <target name="test.pi_calc.c">
     <runTest property.name="pi_calc.c.data" test.file="${testfile.dir}/pi_calc.c" />
-    <assertContains property.name="pi_calc.c.data" property.string="sourceLines=&quot;46&quot;" />
-    <assertContains property.name="pi_calc.c.data" property.string="commentLines=&quot;31&quot;" />
+    <assertContains assert.num="1" property.name="pi_calc.c.data" property.string="sourceLines=&quot;46&quot;" />
+    <assertContains assert.num="2" property.name="pi_calc.c.data" property.string="commentLines=&quot;41&quot;" />
   </target>
   
   <target name="test.pi_calc.f">
     <runTest property.name="pi_calc.f.data" test.file="${testfile.dir}/pi_calc.f" />
-    <assertContains property.name="pi_calc.f.data" property.string="sourceLines=&quot;35&quot;" />
-    <assertContains property.name="pi_calc.f.data" property.string="commentLines=&quot;46&quot;" />
+    <assertContains assert.num="1" property.name="pi_calc.f.data" property.string="sourceLines=&quot;35&quot;" />
+    <assertContains assert.num="2" property.name="pi_calc.f.data" property.string="commentLines=&quot;46&quot;" />
   </target>
   
   <target name="test.matrix_multiply.c">
     <runTest property.name="matrix_multiply.c.data" test.file="${testfile.dir}/matrix_multiply.c" />
-    <assertContains property.name="matrix_multiply.c.data" property.string="sourceLines=&quot;32&quot;" />
-    <assertContains property.name="matrix_multiply.c.data" property.string="commentLines=&quot;18&quot;" />
+    <assertContains assert.num="1" property.name="matrix_multiply.c.data" property.string="sourceLines=&quot;32&quot;" />
+    <assertContains assert.num="2" property.name="matrix_multiply.c.data" property.string="commentLines=&quot;25&quot;" />
   </target>
   
   <target name="test.matrix_multiply.f">
     <runTest property.name="matrix_multiply.f.data" test.file="${testfile.dir}/matrix_multiply.f" />
-    <assertContains property.name="matrix_multiply.f.data" property.string="sourceLines=&quot;29&quot;" />
-    <assertContains property.name="matrix_multiply.f.data" property.string="commentLines=&quot;18&quot;" />
+    <assertContains assert.num="1" property.name="matrix_multiply.f.data" property.string="sourceLines=&quot;29&quot;" />
+    <assertContains assert.num="2" property.name="matrix_multiply.f.data" property.string="commentLines=&quot;18&quot;" />
   </target>
   
   <target name="test.markov.m">
     <runTest property.name="markov.m.data" test.file="${testfile.dir}/markov.m" />
-    <assertContains property.name="markov.m.data" property.string="sourceLines=&quot;19&quot;" />
-    <assertContains property.name="markov.m.data" property.string="commentLines=&quot;13&quot;" />
+    <assertContains assert.num="1" property.name="markov.m.data" property.string="sourceLines=&quot;19&quot;" />
+    <assertContains assert.num="2" property.name="markov.m.data" property.string="commentLines=&quot;13&quot;" />
   </target>
   
   <target name="test.theta_logistic.m">
     <runTest property.name="theta_logistic.data" test.file="${testfile.dir}/theta_logistic.m" />
-    <assertContains property.name="theta_logistic.data" property.string="sourceLines=&quot;29&quot;" />
-    <assertContains property.name="theta_logistic.data" property.string="commentLines=&quot;18&quot;" />
+    <assertContains assert.num="1" property.name="theta_logistic.data" property.string="sourceLines=&quot;29&quot;" />
+    <assertContains assert.num="2" property.name="theta_logistic.data" property.string="commentLines=&quot;38&quot;" />
   </target>
   
   <target name="test.T02_Inner.java">
     <runTest property.name="T02_Inner.java.data" test.file="${testfile.dir}/T02_Inner.java" />
-    <assertContains property.name="T02_Inner.java.data" property.string="sourceLines=&quot;335&quot;" />
-    <assertContains property.name="T02_Inner.java.data" property.string="commentLines=&quot;28&quot;" />
+    <assertContains assert.num="1" property.name="T02_Inner.java.data" property.string="sourceLines=&quot;335&quot;" />
+    <assertContains assert.num="2" property.name="T02_Inner.java.data" property.string="commentLines=&quot;28&quot;" />
   </target>
   
   <target name="test.mpi_mm.f">
     <runTest property.name="mpi_mm.f.data" test.file="${testfile.dir}/mpi_mm.f" />
-    <assertContains property.name="mpi_mm.f.data" property.string="sourceLines=&quot;91&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="commentLines=&quot;17&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_INTEGER=&quot;8&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_FINALIZE=&quot;1&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_DOUBLE_PRECISION=&quot;6&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_STATUS_SIZE=&quot;1&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_COMM_SIZE=&quot;1&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_RECV=&quot;7&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_COMM_WORLD=&quot;16&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_SEND=&quot;7&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_COMM_RANK=&quot;1&quot;" />
-    <assertContains property.name="mpi_mm.f.data" property.string="MPI_INIT=&quot;1&quot;" />
+    <assertContains assert.num="1" property.name="mpi_mm.f.data" property.string="sourceLines=&quot;91&quot;" />
+    <assertContains assert.num="2" property.name="mpi_mm.f.data" property.string="commentLines=&quot;22&quot;" />
+    <assertContains assert.num="3" property.name="mpi_mm.f.data" property.string="MPI_INTEGER=&quot;8&quot;" />
+    <assertContains assert.num="4" property.name="mpi_mm.f.data" property.string="MPI_FINALIZE=&quot;1&quot;" />
+    <assertContains assert.num="5" property.name="mpi_mm.f.data" property.string="MPI_DOUBLE_PRECISION=&quot;6&quot;" />
+    <assertContains assert.num="6" property.name="mpi_mm.f.data" property.string="MPI_STATUS_SIZE=&quot;1&quot;" />
+    <assertContains assert.num="7" property.name="mpi_mm.f.data" property.string="MPI_COMM_SIZE=&quot;1&quot;" />
+    <assertContains assert.num="8" property.name="mpi_mm.f.data" property.string="MPI_RECV=&quot;7&quot;" />
+    <assertContains assert.num="9" property.name="mpi_mm.f.data" property.string="MPI_COMM_WORLD=&quot;16&quot;" />
+    <assertContains assert.num="A" property.name="mpi_mm.f.data" property.string="MPI_SEND=&quot;7&quot;" />
+    <assertContains assert.num="B" property.name="mpi_mm.f.data" property.string="MPI_COMM_RANK=&quot;1&quot;" />
+    <assertContains assert.num="C" property.name="mpi_mm.f.data" property.string="MPI_INIT=&quot;1&quot;" />
   </target>
   
   <target name="test.omp_mm.f">
     <runTest property.name="omp_mm.f.data" test.file="${testfile.dir}/omp_mm.f" />
-    <assertContains property.name="omp_mm.f.data" property.string="sourceLines=&quot;52&quot;" />
-    <assertContains property.name="omp_mm.f.data" property.string="commentLines=&quot;19&quot;" />
-    <assertContains property.name="omp_mm.f.data" property.string="OMP_DO_SCHEDULE=&quot;4&quot;" />
-    <assertContains property.name="omp_mm.f.data" property.string="OMP_GET_THREAD_NUM=&quot;2&quot;" />
-    <assertContains property.name="omp_mm.f.data" property.string="OMP_PARALLEL_SHARED=&quot;1&quot;" />
-    <assertContains property.name="omp_mm.f.data" property.string="OMP_GET_NUM_THREADS=&quot;2&quot;" />
-    <assertContains property.name="omp_mm.f.data" property.string="OMP_END_PARALLEL=&quot;1&quot;" />
+    <assertContains assert.num="1" property.name="omp_mm.f.data" property.string="sourceLines=&quot;52&quot;" />
+    <assertContains assert.num="2" property.name="omp_mm.f.data" property.string="commentLines=&quot;19&quot;" />
+    <assertContains assert.num="3" property.name="omp_mm.f.data" property.string="OMP_DO_SCHEDULE=&quot;4&quot;" />
+    <assertContains assert.num="4" property.name="omp_mm.f.data" property.string="OMP_GET_THREAD_NUM=&quot;2&quot;" />
+    <assertContains assert.num="5" property.name="omp_mm.f.data" property.string="OMP_PARALLEL_SHARED=&quot;1&quot;" />
+    <assertContains assert.num="6" property.name="omp_mm.f.data" property.string="OMP_GET_NUM_THREADS=&quot;2&quot;" />
+    <assertContains assert.num="7" property.name="omp_mm.f.data" property.string="OMP_END_PARALLEL=&quot;1&quot;" />
   </target>
   
   <target name="test.omp_mm.c">
     <runTest property.name="omp_mm.c.data" test.file="${testfile.dir}/omp_mm.c" />
-    <assertContains property.name="omp_mm.c.data" property.string="sourceLines=&quot;55&quot;" />
-    <assertContains property.name="omp_mm.c.data" property.string="commentLines=&quot;14&quot;" />
-    <assertContains property.name="omp_mm.c.data" property.string="omp_parallel_shared=&quot;1&quot;" />
-    <assertContains property.name="omp_mm.c.data" property.string="omp_get_thread_num=&quot;1&quot;" />
-    <assertContains property.name="omp_mm.c.data" property.string="omp_get_num_threads=&quot;1&quot;" />
-    <assertContains property.name="omp_mm.c.data" property.string="omp_for_schedule=&quot;4&quot;" />
+    <assertContains assert.num="1" property.name="omp_mm.c.data" property.string="sourceLines=&quot;55&quot;" />
+    <assertContains assert.num="2" property.name="omp_mm.c.data" property.string="commentLines=&quot;22&quot;" />
+    <assertContains assert.num="3" property.name="omp_mm.c.data" property.string="omp_parallel_shared=&quot;1&quot;" />
+    <assertContains assert.num="4" property.name="omp_mm.c.data" property.string="omp_get_thread_num=&quot;1&quot;" />
+    <assertContains assert.num="5" property.name="omp_mm.c.data" property.string="omp_get_num_threads=&quot;1&quot;" />
+    <assertContains assert.num="6" property.name="omp_mm.c.data" property.string="omp_for_schedule=&quot;4&quot;" />
   </target>
   
   <target name="test.T01_MpiConstructs.cc">
     <runTest property.name="T01_MpiConstructs.cc.data" test.file="${testfile.dir}/T01_MpiConstructs.cc" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="sourceLines=&quot;136&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="commentLines=&quot;6&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_Init=&quot;1&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_Status=&quot;1&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_Comm_size=&quot;1&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_Comm_rank=&quot;1&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_Abort=&quot;2&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_Wtime=&quot;2&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_Finalize=&quot;1&quot;" />
-    <assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_COMM_WORLD=&quot;4&quot;" />
-	<assertContains property.name="T01_MpiConstructs.cc.data" property.string="MPI_SUCCESS=&quot;1&quot;" />
+    <assertContains assert.num="1" property.name="T01_MpiConstructs.cc.data" property.string="sourceLines=&quot;136&quot;" />
+    <assertContains assert.num="2" property.name="T01_MpiConstructs.cc.data" property.string="commentLines=&quot;6&quot;" />
+    <assertContains assert.num="3" property.name="T01_MpiConstructs.cc.data" property.string="MPI_Init=&quot;1&quot;" />
+    <assertContains assert.num="4" property.name="T01_MpiConstructs.cc.data" property.string="MPI_Status=&quot;1&quot;" />
+    <assertContains assert.num="5" property.name="T01_MpiConstructs.cc.data" property.string="MPI_Comm_size=&quot;1&quot;" />
+    <assertContains assert.num="6" property.name="T01_MpiConstructs.cc.data" property.string="MPI_Comm_rank=&quot;1&quot;" />
+    <assertContains assert.num="7" property.name="T01_MpiConstructs.cc.data" property.string="MPI_Abort=&quot;2&quot;" />
+    <assertContains assert.num="8" property.name="T01_MpiConstructs.cc.data" property.string="MPI_Wtime=&quot;2&quot;" />
+    <assertContains assert.num="9" property.name="T01_MpiConstructs.cc.data" property.string="MPI_Finalize=&quot;1&quot;" />
+    <assertContains assert.num="A" property.name="T01_MpiConstructs.cc.data" property.string="MPI_COMM_WORLD=&quot;4&quot;" />
+	  <assertContains assert.num="B" property.name="T01_MpiConstructs.cc.data" property.string="MPI_SUCCESS=&quot;1&quot;" />
   </target>
   
   <target name="test.sclc1.pl">
     <runTest property.name="sclc1.pl.data" test.file="${testfile.dir}/sclc1.pl" />
-    <assertContains property.name="sclc1.pl.data" property.string="sourceLines=&quot;1101&quot;" />
-    <assertContains property.name="sclc1.pl.data" property.string="commentLines=&quot;722&quot;" />
+    <assertContains assert.num="1" property.name="sclc1.pl.data" property.string="sourceLines=&quot;1101&quot;" />
+    <assertContains assert.num="2" property.name="sclc1.pl.data" property.string="commentLines=&quot;722&quot;" />
   </target>
   
   <target name="test.mpi_mandel_step4.c">
     <runTest property.name="mpi_mandel_step4.c.data" test.file="${testfile.dir}/mpi_mandel_step4.c" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="sourceLines=&quot;231&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="commentLines=&quot;52&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Init=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Comm_size=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_COMM_WORLD=&quot;10&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_SUCCESS=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Comm_rank=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Request=&quot;6&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Status=&quot;4&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Status_IGNORE=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Waitall=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Int=&quot;4&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Finalize=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Abort=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Isend=&quot;3&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Irecv=&quot;2&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Char=&quot;3&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Recv=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Test=&quot;1&quot;" />
-    <assertContains property.name="mpi_mandel_step4.c.data" property.string="MPI_Send=&quot;1&quot;" />
+    <assertContains assert.num="1" property.name="mpi_mandel_step4.c.data" property.string="sourceLines=&quot;231&quot;" />
+    <assertContains assert.num="2" property.name="mpi_mandel_step4.c.data" property.string="commentLines=&quot;52&quot;" />
+    <assertContains assert.num="3" property.name="mpi_mandel_step4.c.data" property.string="MPI_Init=&quot;1&quot;" />
+    <assertContains assert.num="4" property.name="mpi_mandel_step4.c.data" property.string="MPI_Comm_size=&quot;1&quot;" />
+    <assertContains assert.num="5" property.name="mpi_mandel_step4.c.data" property.string="MPI_COMM_WORLD=&quot;10&quot;" />
+    <assertContains assert.num="6" property.name="mpi_mandel_step4.c.data" property.string="MPI_SUCCESS=&quot;1&quot;" />
+    <assertContains assert.num="7" property.name="mpi_mandel_step4.c.data" property.string="MPI_Comm_rank=&quot;1&quot;" />
+    <assertContains assert.num="8" property.name="mpi_mandel_step4.c.data" property.string="MPI_Request=&quot;6&quot;" />
+    <assertContains assert.num="9" property.name="mpi_mandel_step4.c.data" property.string="MPI_Status=&quot;4&quot;" />
+    <assertContains assert.num="A" property.name="mpi_mandel_step4.c.data" property.string="MPI_STATUS_IGNORE=&quot;1&quot;" />
+    <assertContains assert.num="B" property.name="mpi_mandel_step4.c.data" property.string="MPI_Waitall=&quot;1&quot;" />
+    <assertContains assert.num="C" property.name="mpi_mandel_step4.c.data" property.string="MPI_INT=&quot;4&quot;" />
+    <assertContains assert.num="D" property.name="mpi_mandel_step4.c.data" property.string="MPI_Finalize=&quot;1&quot;" />
+    <assertContains assert.num="E" property.name="mpi_mandel_step4.c.data" property.string="MPI_Abort=&quot;1&quot;" />
+    <assertContains assert.num="F" property.name="mpi_mandel_step4.c.data" property.string="MPI_Isend=&quot;3&quot;" />
+    <assertContains assert.num="G" property.name="mpi_mandel_step4.c.data" property.string="MPI_Irecv=&quot;2&quot;" />
+    <assertContains assert.num="H" property.name="mpi_mandel_step4.c.data" property.string="MPI_CHAR=&quot;3&quot;" />
+    <assertContains assert.num="I" property.name="mpi_mandel_step4.c.data" property.string="MPI_Recv=&quot;1&quot;" />
+    <assertContains assert.num="J" property.name="mpi_mandel_step4.c.data" property.string="MPI_Test=&quot;1&quot;" />
+    <assertContains assert.num="K" property.name="mpi_mandel_step4.c.data" property.string="MPI_Send=&quot;1&quot;" />
   </target>
   
   <target name="test.jacobi.zh">
     <runTest property.name="jacobi.zh.data" test.file="${testfile.dir}/jacobi.zh" />
-    <assertContains property.name="jacobi.zh.data" property.string="sourceLines=&quot;29&quot;" />
-    <assertContains property.name="jacobi.zh.data" property.string="commentLines=&quot;14&quot;" />
+    <assertContains assert.num="1" property.name="jacobi.zh.data" property.string="sourceLines=&quot;29&quot;" />
+    <assertContains assert.num="2" property.name="jacobi.zh.data" property.string="commentLines=&quot;14&quot;" />
   </target>
   
   <target name="test.socket.tcl">
     <runTest property.name="socket.tcl.data" test.file="${testfile.dir}/socket.tcl" />
-    <assertContains property.name="socket.tcl.data" property.string="sourceLines=&quot;21&quot;" />
-    <assertContains property.name="socket.tcl.data" property.string="commentLines=&quot;22&quot;" />
+    <assertContains assert.num="1" property.name="socket.tcl.data" property.string="sourceLines=&quot;21&quot;" />
+    <assertContains assert.num="2" property.name="socket.tcl.data" property.string="commentLines=&quot;22&quot;" />
   </target>
   
   <target name="test.sort-array.p">
     <runTest property.name="sort-array.p.data" test.file="${testfile.dir}/sort-array.p" />
-    <assertContains property.name="sort-array.p.data" property.string="sourceLines=&quot;34&quot;" />
-    <assertContains property.name="sort-array.p.data" property.string="commentLines=&quot;3&quot;" />
+    <assertContains assert.num="1" property.name="sort-array.p.data" property.string="sourceLines=&quot;34&quot;" />
+    <assertContains assert.num="2" property.name="sort-array.p.data" property.string="commentLines=&quot;3&quot;" />
   </target>
   
   <target name="test.temp2final.awk">
     <runTest property.name="temp2final.awk.data" test.file="${testfile.dir}/temp2final.awk" />
-    <assertContains property.name="temp2final.awk.data" property.string="sourceLines=&quot;11&quot;" />
-    <assertContains property.name="temp2final.awk.data" property.string="commentLines=&quot;11&quot;" />
+    <assertContains assert.num="1" property.name="temp2final.awk.data" property.string="sourceLines=&quot;11&quot;" />
+    <assertContains assert.num="2" property.name="temp2final.awk.data" property.string="commentLines=&quot;11&quot;" />
   </target>
   
   <target name="test.thdruspi.ada">
     <runTest property.name="thdruspi.ada.data" test.file="${testfile.dir}/thdruspi.ada" />
-    <assertContains property.name="thdruspi.ada.data" property.string="sourceLines=&quot;52&quot;" />
-    <assertContains property.name="thdruspi.ada.data" property.string="commentLines=&quot;19&quot;" />
+    <assertContains assert.num="1" property.name="thdruspi.ada.data" property.string="sourceLines=&quot;52&quot;" />
+    <assertContains assert.num="2" property.name="thdruspi.ada.data" property.string="commentLines=&quot;19&quot;" />
   </target>
   
   <target name="test.sensor-utils.el">
     <runTest property.name="sensor-utils.el.data" test.file="${testfile.dir}/sensor-utils.el" />
-    <assertContains property.name="sensor-utils.el.data" property.string="sourceLines=&quot;18&quot;" />
-    <assertContains property.name="sensor-utils.el.data" property.string="commentLines=&quot;21&quot;" />
+    <assertContains assert.num="1" property.name="sensor-utils.el.data" property.string="sourceLines=&quot;18&quot;" />
+    <assertContains assert.num="2" property.name="sensor-utils.el.data" property.string="commentLines=&quot;21&quot;" />
   </target>
   
   <target name="test.TryMe.e">
     <runTest property.name="TryMe.e.data" test.file="${testfile.dir}/TryMe.e" />
-    <assertContains property.name="TryMe.e.data" property.string="sourceLines=&quot;30&quot;" />
-    <assertContains property.name="TryMe.e.data" property.string="commentLines=&quot;4&quot;" />
+    <assertContains assert.num="1" property.name="TryMe.e.data" property.string="sourceLines=&quot;30&quot;" />
+    <assertContains assert.num="2" property.name="TryMe.e.data" property.string="commentLines=&quot;4&quot;" />
   </target>
 
   <target name="test.build.xml">
     <runTest property.name="build.xml.data" test.file="${testfile.dir}/build.xml" />
-    <assertContains property.name="build.xml.data" property.string="sourceLines=&quot;46&quot;" />
-    <assertContains property.name="build.xml.data" property.string="commentLines=&quot;5&quot;" />
+    <assertContains assert.num="1" property.name="build.xml.data" property.string="sourceLines=&quot;46&quot;" />
+    <assertContains assert.num="2" property.name="build.xml.data" property.string="commentLines=&quot;5&quot;" />
   </target>
 
   <target name="test.README.html">
     <runTest property.name="README.html.data" test.file="${testfile.dir}/README.html" />
-    <assertContains property.name="README.html.data" property.string="sourceLines=&quot;117&quot;" />
-    <assertContains property.name="README.html.data" property.string="commentLines=&quot;7&quot;" />
+    <assertContains assert.num="1" property.name="README.html.data" property.string="sourceLines=&quot;117&quot;" />
+    <assertContains assert.num="2" property.name="README.html.data" property.string="commentLines=&quot;7&quot;" />
   </target>
 
   <target name="test.ConfirmProjectSettings.jsp">
     <runTest property.name="ConfirmProjectSettings.jsp.data" test.file="${testfile.dir}/ConfirmProjectSettings.jsp" />
-    <assertContains property.name="ConfirmProjectSettings.jsp.data" property.string="sourceLines=&quot;61&quot;" />
-    <assertContains property.name="ConfirmProjectSettings.jsp.data" property.string="commentLines=&quot;6&quot;" />
+    <assertContains assert.num="1" property.name="ConfirmProjectSettings.jsp.data" property.string="sourceLines=&quot;61&quot;" />
+    <assertContains assert.num="2" property.name="ConfirmProjectSettings.jsp.data" property.string="commentLines=&quot;11&quot;" />
   </target>
 
   <target name="test.list.sh">
     <runTest property.name="list.sh.data" test.file="${testfile.dir}/list.sh" />
-    <assertContains property.name="list.sh.data" property.string="sourceLines=&quot;3&quot;" />
-    <assertContains property.name="list.sh.data" property.string="commentLines=&quot;1&quot;" />
+    <assertContains assert.num="1" property.name="list.sh.data" property.string="sourceLines=&quot;3&quot;" />
+    <assertContains assert.num="2" property.name="list.sh.data" property.string="commentLines=&quot;1&quot;" />
   </target>
 
   <target name="test.AdventureWorks.sql">
     <runTest property.name="AdventureWorks.sql.data" test.file="${testfile.dir}/AdventureWorks.sql" />
-    <assertContains property.name="AdventureWorks.sql.data" property.string="sourceLines=&quot;22&quot;" />
-    <assertContains property.name="AdventureWorks.sql.data" property.string="commentLines=&quot;6&quot;" />
+    <assertContains assert.num="1" property.name="AdventureWorks.sql.data" property.string="sourceLines=&quot;22&quot;" />
+    <assertContains assert.num="2" property.name="AdventureWorks.sql.data" property.string="commentLines=&quot;6&quot;" />
   </target>
 
   <target name="test.JessActionTemplates.clp">
     <runTest property.name="JessActionTemplates.clp.data" test.file="${testfile.dir}/JessActionTemplates.clp" />
-    <assertContains property.name="JessActionTemplates.clp.data" property.string="sourceLines=&quot;52&quot;" />
-    <assertContains property.name="JessActionTemplates.clp.data" property.string="commentLines=&quot;29&quot;" />
+    <assertContains assert.num="1" property.name="JessActionTemplates.clp.data" property.string="sourceLines=&quot;52&quot;" />
+    <assertContains assert.num="2" property.name="JessActionTemplates.clp.data" property.string="commentLines=&quot;29&quot;" />
   </target>
   
   <target name="test.sample.py">
     <runTest property.name="sample.py.data" test.file="${testfile.dir}/sample.py" />
-    <assertContains property.name="sample.py.data" property.string="sourceLines=&quot;16&quot;" />
-    <assertContains property.name="sample.py.data" property.string="commentLines=&quot;5&quot;" />
+    <assertContains assert.num="1" property.name="sample.py.data" property.string="sourceLines=&quot;16&quot;" />
+    <assertContains assert.num="2" property.name="sample.py.data" property.string="commentLines=&quot;5&quot;" />
   </target>
   
   <target name="test.HelloWorld.cs">
     <runTest property.name="HelloWorld.cs.data" test.file="${testfile.dir}/HelloWorld.cs" />
-    <assertContains property.name="HelloWorld.cs.data" property.string="sourceLines=&quot;11&quot;" />
-    <assertContains property.name="HelloWorld.cs.data" property.string="commentLines=&quot;4&quot;" />
+    <assertContains assert.num="1" property.name="HelloWorld.cs.data" property.string="sourceLines=&quot;11&quot;" />
+    <assertContains assert.num="2" property.name="HelloWorld.cs.data" property.string="commentLines=&quot;4&quot;" />
   </target>
     
   <target name="test.hackyinstaller.xsd">
     <runTest property.name="hackyinstaller.xsd.data" test.file="${testfile.dir}/hackyinstaller.xsd" />
-    <assertContains property.name="hackyinstaller.xsd.data" property.string="sourceLines=&quot;32&quot;" />
-    <assertContains property.name="hackyinstaller.xsd.data" property.string="commentLines=&quot;0&quot;" />
+    <assertContains assert.num="1" property.name="hackyinstaller.xsd.data" property.string="sourceLines=&quot;32&quot;" />
+    <assertContains assert.num="2" property.name="hackyinstaller.xsd.data" property.string="commentLines=&quot;0&quot;" />
   </target>
   
   <target name="test.functions.css">
     <runTest property.name="functions.css.data" test.file="${testfile.dir}/functions.css" />
-    <assertContains property.name="functions.css.data" property.string="sourceLines=&quot;6&quot;" />
-    <assertContains property.name="functions.css.data" property.string="commentLines=&quot;2&quot;" />
-    <assertContains property.name="functions.css.data" property.string="blankLines=&quot;9&quot;" />
+    <assertContains assert.num="1" property.name="functions.css.data" property.string="sourceLines=&quot;6&quot;" />
+    <assertContains assert.num="2" property.name="functions.css.data" property.string="commentLines=&quot;3&quot;" />
+    <assertContains assert.num="3" property.name="functions.css.data" property.string="blankLines=&quot;9&quot;" />
   </target>
   
   <target name="test.sample.js">
     <runTest property.name="sample.js.data" test.file="${testfile.dir}/sample.js" />
-    <assertContains property.name="sample.js.data" property.string="sourceLines=&quot;53&quot;" />
-    <assertContains property.name="sample.js.data" property.string="commentLines=&quot;17&quot;" />
-    <assertContains property.name="sample.js.data" property.string="blankLines=&quot;13&quot;" />
+    <assertContains assert.num="1" property.name="sample.js.data" property.string="sourceLines=&quot;53&quot;" />
+    <assertContains assert.num="2" property.name="sample.js.data" property.string="commentLines=&quot;17&quot;" />
+    <assertContains assert.num="3" property.name="sample.js.data" property.string="blankLines=&quot;13&quot;" />
   </target>
 </project>
