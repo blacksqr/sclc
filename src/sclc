@@ -2454,9 +2454,9 @@ sub CountMPI {
   while( my $line = <INPUT> ){
     chomp($line);
     if ($lang eq 'C' || $lang eq 'C++') {
-      my $cmnt_start = '///*';
-      my $cmnt_end = '/*//';
-      my $cmnt_single = '////';
+      my $cmnt_start = '/\*';
+      my $cmnt_end = '\*/';
+      my $cmnt_single = '//';
       if ($line =~ /$cmnt_start/) { # check if line contains /*
 	# split on /* to get part preceeding /*
 	my @code = split(/$cmnt_start/, $line);
@@ -2524,9 +2524,9 @@ sub CountOMP {
   while( my $line = <INPUT> ){
     chomp($line);
     if ($lang eq 'C' || $lang eq 'C++') {
-      my $cmnt_start = '///*';
-      my $cmnt_end = '/*//';
-      my $cmnt_single = '////';
+      my $cmnt_start = '/\*';
+      my $cmnt_end = '\*/';
+      my $cmnt_single = '//';
       if ($line =~ /$cmnt_start/) { # check if line contains /*
 	# split on /* to get part preceeding /*
 	my @code = split(/$cmnt_start/, $line);
