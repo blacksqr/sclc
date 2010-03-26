@@ -30,7 +30,7 @@
 
   <!-- Target to run all of the individual tests. -->
   <target name="all.test" depends="init, 
-    test.mpi-comment.c, 
+    test.mpi-comment.c, test.mpi-one-line-comment.cpp,
     test.rank_change.php, test.teststack.java, test.pi_calc.c, test.pi_calc.f, test.matrix_multiply.f, 
     test.matrix_multiply.c, test.markov.m, test.theta_logistic.m, test.T02_Inner.java, test.mpi_mm.f, test.omp_mm.f,
     test.omp_mm.c, test.T01_MpiConstructs.cc, test.sclc1.pl, test.hello-mpi.c, test.mpi_mandel_step4.c, test.jacobi.zh, test.socket.tcl,
@@ -59,7 +59,11 @@
      <assertContains property.name="mpi-comment.data" property.string="MPI_Init=&quot;1&quot;" />
   </target>
   
-  
+  <target name="test.mpi-one-line-comment.cpp">
+     <runTest property.name="mpi-one-line-comment.data" test.file="${testfile.dir}/mpi-one-line-comment.cpp" />
+     <assertContains property.name="mpi-one-line-comment.data" property.string="MPI_Init=&quot;1&quot;" />
+  </target>
+
   <target name="test.rank_change.php">
     <runTest property.name="rank_change.php.data" test.file="${testfile.dir}/rank_change.php" />
     <assertContains property.name="rank_change.php.data" property.string="sourceLines=&quot;14&quot;" />
