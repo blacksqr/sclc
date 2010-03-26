@@ -8,7 +8,7 @@
 # Added approximate token counting  1/20/05  Bill Mann
 # Added my impression of Chapel  1/20/05  Bill Mann
 # Handles Fortran OpenMP directives  9/14/05  Lorin Hochstein <lorin@cs.umd.edu>
-# See <http://hackydev.ics.hawaii.edu:8080/browse/SCLC> for remaining changes to this source.
+# See <http://code.google.com/p/sclc/> for remaining changes to this source.
 #
 #-------------------------------------------------------------------------
 # COPYING
