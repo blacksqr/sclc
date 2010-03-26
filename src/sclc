@@ -2473,6 +2473,8 @@ sub CountMPI {
 	while ($code[0] =~ m/MPI_\w*/gi) {
 	  $mpi_counts{$&}++;
 	}
+	# Once we've processed this case, go to the next line
+	next;
       }
       if ($line =~ /$cmnt_end/) { # check end of multi-line cmnt
 	$inComment = 0; # cmnt end found, not in multi-line cmnt
