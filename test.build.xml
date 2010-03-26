@@ -29,9 +29,11 @@
   </macrodef>
 
   <!-- Target to run all of the individual tests. -->
-  <target name="all.test" depends="init, test.rank_change.php, test.teststack.java, test.pi_calc.c, test.pi_calc.f, test.matrix_multiply.f, 
+  <target name="all.test" depends="init, 
+    test.mpi-comment.c, test.mpi-one-line-comment.cpp,
+    test.rank_change.php, test.teststack.java, test.pi_calc.c, test.pi_calc.f, test.matrix_multiply.f, 
     test.matrix_multiply.c, test.markov.m, test.theta_logistic.m, test.T02_Inner.java, test.mpi_mm.f, test.omp_mm.f,
-    test.omp_mm.c, test.T01_MpiConstructs.cc, test.sclc1.pl, test.mpi_mandel_step4.c, test.jacobi.zh, test.socket.tcl,
+    test.omp_mm.c, test.T01_MpiConstructs.cc, test.sclc1.pl, test.hello-mpi.c, test.mpi_mandel_step4.c, test.jacobi.zh, test.socket.tcl,
     test.sort-array.p, test.temp2final.awk, test.thdruspi.ada, test.sensor-utils.el, test.TryMe.e, test.build.xml,
     test.README.html, test.ConfirmProjectSettings.jsp, test.list.sh, test.AdventureWorks.sql, test.JessActionTemplates.clp,
     test.sample.py, test.HelloWorld.cs, test.hackyinstaller.xsd, test.functions.css, test.sample.js">
@@ -51,6 +53,17 @@
   has two assertContains, so it provides the assert.num attribute with unique values. If you do not
   do this, then only the first assertContains is tested. 
   --> 
+
+  <target name="test.mpi-comment.c">
+     <runTest property.name="mpi-comment.data" test.file="${testfile.dir}/mpi-comment.c" />
+     <assertContains property.name="mpi-one-comment.data" property.string="MPI_Init=&quot;1&quot;" />
+  </target>
+  
+
+  <target name="test.mpi-one-line-comment.cpp">
+     <runTest property.name="mpi-one-line-comment.data" test.file="${testfile.dir}/mpi-one-line-comment.cpp" />
+     <assertContains property.name="mpi-one-line-comment.data" property.string="MPI_Init=&quot;1&quot;" />
+  </target>
   
   <target name="test.rank_change.php">
     <runTest property.name="rank_change.php.data" test.file="${testfile.dir}/rank_change.php" />
@@ -162,6 +175,16 @@
     <assertContains assert.num="1" property.name="sclc1.pl.data" property.string="sourceLines=&quot;1101&quot;" />
     <assertContains assert.num="2" property.name="sclc1.pl.data" property.string="commentLines=&quot;722&quot;" />
   </target>
+  
+  <target name="test.hello-mpi.c">
+    <runTest property.name="hello-mpi.c.data" test.file="${testfile.dir}/hello-mpi.c" />   
+    <assertContains assert.num="1" property.name="hello-mpi.c.data" property.string="sourceLines=&quot;24&quot;" />
+    <assertContains assert.num="2" property.name="hello-mpi.c.data" property.string="commentLines=&quot;6&quot;" />
+    <assertContains assert.num="3" property.name="hello-mpi.c.data" property.string="MPI_Init=&quot;1&quot;" />
+    <assertContains assert.num="4" property.name="hello-mpi.c.data" property.string="MPI_Comm_size=&quot;1&quot;" />
+    <assertContains assert.num="5" property.name="hello-mpi.c.data" property.string="MPI_COMM_WORLD=&quot;4&quot;" />
+  </target>
+  
   
   <target name="test.mpi_mandel_step4.c">
     <runTest property.name="mpi_mandel_step4.c.data" test.file="${testfile.dir}/mpi_mandel_step4.c" />
