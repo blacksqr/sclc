@@ -5,7 +5,8 @@
   <property name="build.dir" location="${basedir}/build"/>
   <property name="dist.dir" location="${build.dir}/dist" />
   <property name="html.dir" location="${basedir}/perldoc" />
-  
+	<property name="unittest.dir" location="${basedir}/t" />
+
   <target name="demo" description="Runs SCLC on itself as a demonstration.">
     <delete dir="${build.dir}" /> 
     <mkdir dir="${build.dir}" />
@@ -14,6 +15,18 @@
     </exec> 
     <echo message="Please check ${build.dir}/demo.xml for XML output."/>
   </target>
+
+	<target name="unit" description="Runs unit tests">
+		<exec executable="perl">
+			<arg line="${unittest.dir}/all_tests.t" />
+		</exec>
+	</target>
+	
+	<target name="test" description="Runs full tests">
+		<ant antfile="test.build.xml" />
+	</target>
+		
+
   
   <target name="perldoc" description="Runs pod2html over sclc.pl to produce HTML documentation.">
     <mkdir dir="${html.dir}" />

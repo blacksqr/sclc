@@ -2850,6 +2850,30 @@ sub main {
     }
     &PrintTotals(\%Totals) if (($SECS{'totals'} || $SECS{'langtotals'}) &&
 			       ((! $SECS{'files'}) || ($NumSources > 1)));
+			       
+    if ($OPTS{'xml_output'}) {
+      &WriteXml();
+    }
+
+}
+
+# Check if unit tests are running, 
+# return 1 if true, else 0
+sub UnitTestsAreRunning {
+  # The test runner is t/all_tests.t
+  # We just check if the calling program conatins the word test
+  return ($0 =~ /test/);  
+}
+
+# Write the XML data to  file
+sub WriteXmlToFile {
+    # write to XML file
+    my $xml = XML::Simple->new(RootName=>'sclc');
+    my %fileHash = ();
+    $fileHash{'file'} = \@fileElementArray;
+    my %sclcHash = ();
+    $sclcHash{'sclc'} = \%fileHash;
+    $xml->XMLout(\%sclcHash, OutputFile=>$OPTS{'xml_output'}, KeepRoot=>1, XMLDecl=>"<?xml version='1.0'?>");  
 }
 
 #---------------------------------------------------------------------
@@ -2857,17 +2881,13 @@ package main;
 
 use XML::Simple;
 
-&Sclc::main(@ARGV);		##  unless ($DO_NOT_EXECUTE)
+my $DO_NOT_EXECUTE = 0;
 
-
-#cedric added start
-if ($OPTS{'xml_output'}) {
-    # write to XML file
-    my $xml = XML::Simple->new(RootName=>'sclc');
-    my %fileHash = ();
-    $fileHash{'file'} = \@fileElementArray;
-    my %sclcHash = ();
-    $sclcHash{'sclc'} = \%fileHash;
-    $xml->XMLout(\%sclcHash, OutputFile=>$OPTS{'xml_output'}, KeepRoot=>1, XMLDecl=>"<?xml version='1.0'?>");
+if (&Sclc::UnitTestsAreRunning()) {
+  $DO_NOT_EXECUTE = 1;
 }
-#cedric added end
+
+&Sclc::main(@ARGV) unless ($DO_NOT_EXECUTE);
+
+
+1

@@ -1,14 +1,18 @@
+<?xml version="1.0" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>SCLC</title>
-<link rev="made" href="mailto:" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:lorin@lorin-hochsteins-macbook-pro.local" />
 </head>
 
 <body style="background-color: white">
 
-<p><a name="__index__"></a></p>
+
 <!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
 
 <ul>
 
@@ -32,9 +36,11 @@
 	<li><a href="#see_also">SEE ALSO</a></li>
 	<li><a href="#authors">AUTHORS</a></li>
 </ul>
+
+<hr name="index" />
+</div>
 <!-- INDEX END -->
 
-<hr />
 <p>
 </p>
 <h1><a name="name">NAME</a></h1>
@@ -54,24 +60,22 @@
 <hr />
 <h1><a name="options_and_arguments">OPTIONS AND ARGUMENTS</a></h1>
 <dl>
-<dt><strong><a name="item__2dhelp"><strong>-help</strong></a></strong>
+<dt><strong><a name="help" class="item"><strong>-help</strong></a></strong></dt>
 
 <dd>
 <p>Print this help message and exit.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dlanguage__5bext_3d_5dlang"><strong>-language</strong> [<em>EXT</em>=]<em>LANG</em></a></strong>
+<dt><strong><a name="language_ext_lang" class="item"><strong>-language</strong> [<em>EXT</em>=]<em>LANG</em></a></strong></dt>
 
 <dd>
-<p>Assume that any file with a suffix of ``<em>EXT</em>'' is a <code>LANG</code> source file
-(note that you must supply any leading '.'). If the ``<em>EXT</em>'' begins
+<p>Assume that any file with a suffix of &quot;<em>EXT</em>&quot; is a <code>LANG</code> source file
+(note that you must supply any leading '.'). If the &quot;<em>EXT</em>&quot; begins
 with a slash ('/'), then the name that follows it is considered to
-be the name of an interpreter that is invoked using ``#!<em>path</em>/<em>EXT</em>''
+be the name of an interpreter that is invoked using &quot;#!<em>path</em>/<em>EXT</em>&quot;
 as the first line of the script (and if the language can't be determined
 from the extension, then the first line of the file will be used). If
-``<em>EXT</em>='' is omitted then <code>LANG</code> will be the default language for any files
+&quot;<em>EXT</em>=&quot; is omitted then <code>LANG</code> will be the default language for any files
 whose language cannot be determined.  <code>LANG</code> must be one of the following:</p>
-</dd>
 <dl>
 <dt>
 <dd>
@@ -104,11 +108,11 @@ Template,
 XML,
 ZPL</p>
 </dd>
-</li>
 </dl>
 <p>Language names may <em>not</em> be abbreviated. This option may be specified
 multiple times.</p>
-<dt><strong><a name="item__2ddelim_2dignore"><strong>-delim-ignore</strong></a></strong>
+</dd>
+<dt><strong><a name="delim_ignore" class="item"><strong>-delim-ignore</strong></a></strong></dt>
 
 <dd>
 <p>Ignore all statement delimiters. This means that lines containing
@@ -116,22 +120,19 @@ nothing but statement delimiters/terminators are *not* considered
 lines of code. For C/C++ this would have the effect of ignoring
 lines containing nothing but ';', '{', and '}'.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2ddiff"><strong>-diff</strong></a></strong>
+<dt><strong><a name="diff" class="item"><strong>-diff</strong></a></strong></dt>
 
 <dd>
 <p>Treat the input as output from <strong>diff(1)</strong> and report counts for both
 inserted and deleted source. Note that the <strong>-diff</strong> option is implied
 by any of <strong>-pred</strong>, <strong>-fromversion</strong> or <strong>-toversion</strong>.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dignore"><strong>-ignore</strong></a></strong>
+<dt><strong><a name="ignore" class="item"><strong>-ignore</strong></a></strong></dt>
 
 <dd>
 <p>Don't bother with files whose language can't be determined.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dfilelist"><strong>-filelist</strong></a></strong>
+<dt><strong><a name="filelist" class="item"><strong>-filelist</strong></a></strong></dt>
 
 <dd>
 <p>Assume that the source files to read are listed in the contents of
@@ -139,8 +140,7 @@ the files given on the command line (filelist is read from standard
 input if no files are given). This is useful if you wish to use the
 output of commands Like <strong>find(1)</strong> as input to this command.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dname_regexp"><strong>-name</strong> <em>REGEXP</em></a></strong>
+<dt><strong><a name="name_regexp" class="item"><strong>-name</strong> <em>REGEXP</em></a></strong></dt>
 
 <dd>
 <p>Only look at files whose filename (not including the directory path)
@@ -149,8 +149,7 @@ apply to directories when <strong>-recurse</strong> is used. May be specified
 multiple times (for a description of Perl's regular expression
 syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>).</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dexcept_regexp"><strong>-except</strong> <em>REGEXP</em></a></strong>
+<dt><strong><a name="except_regexp" class="item"><strong>-except</strong> <em>REGEXP</em></a></strong></dt>
 
 <dd>
 <p>Don't look at files whose filename (not including the directory path)
@@ -160,8 +159,7 @@ directories when <strong>-recurse</strong> is used. May be specified multiple
 times  (for a description of Perl's regular expression
 syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>).</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dprefix_regexp"><strong>-prefix</strong> <em>REGEXP</em></a></strong>
+<dt><strong><a name="prefix_regexp" class="item"><strong>-prefix</strong> <em>REGEXP</em></a></strong></dt>
 
 <dd>
 <p>Ignore/strip the leading portion of each line that matches the given
@@ -169,42 +167,37 @@ perl-style regular expression. Do <em>not</em> use a leading '^' unless you
 mean to match the caret character itself (for a description of Perl's
 regular expression syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>)</p>
 </dd>
-</li>
-<dt><strong><a name="item__2drecurse"><strong>-recurse</strong></a></strong>
+<dt><strong><a name="recurse" class="item"><strong>-recurse</strong></a></strong></dt>
 
 <dd>
-<p>For every ``source'' file that is actually a directory, read all
+<p>For every &quot;source&quot; file that is actually a directory, read all
 source files in the directory.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dfromversion_selector"><strong>-fromversion</strong> <em>SELECTOR</em></a></strong>
+<dt><strong><a name="fromversion_selector" class="item"><strong>-fromversion</strong> <em>SELECTOR</em></a></strong></dt>
 
 <dd>
 <p>When used with <strong>-diff</strong>, assumes that <em>SELECTOR</em> is a valid ClearCase
 version selector and uses it in conjunction with <strong>cdiff</strong> as the
-``from'' version of each file specified. Only one of <code>-fromversion</code>
-and <a href="#item__2dpred"><code>-pred</code></a> may be specified!</p>
+&quot;from&quot; version of each file specified. Only one of <code>-fromversion</code>
+and <a href="#pred"><code>-pred</code></a> may be specified!</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dtoversion_selector"><strong>-toversion</strong> <em>SELECTOR</em></a></strong>
+<dt><strong><a name="toversion_selector" class="item"><strong>-toversion</strong> <em>SELECTOR</em></a></strong></dt>
 
 <dd>
 <p>When used with <strong>-diff</strong>, assumes that <em>SELECTOR</em> is a valid ClearCase
 version selector and uses it in conjunction with <strong>cdiff</strong> as the
-``to'' version of each file specified.</p>
+&quot;to&quot; version of each file specified.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dpred"><strong>-pred</strong></a></strong>
+<dt><strong><a name="pred" class="item"><strong>-pred</strong></a></strong></dt>
 
 <dd>
 <p>When used with <strong>-diff</strong>, assumes that each file is an element in a
-ClearCase VOB and uses it in conjunction with <strong>cdiff</strong> as the ``from''
+ClearCase VOB and uses it in conjunction with <strong>cdiff</strong> as the &quot;from&quot;
 version of each file specified (note that the predecessor version
-is chosen relative to the ``to'' version of the file). Only one of
+is chosen relative to the &quot;to&quot; version of the file). Only one of
 <strong>-pred</strong> and <strong>-fromversion</strong> may be specified!</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dseparate_regexp"><strong>-separate</strong> <em>REGEXP</em></a></strong>
+<dt><strong><a name="separate_regexp" class="item"><strong>-separate</strong> <em>REGEXP</em></a></strong></dt>
 
 <dd>
 <p>Assume that whenever a source line is encountered that completely
@@ -216,14 +209,11 @@ as if it continued into the next block of modifications. May be
 specified multiple times (for a description of Perl's regular expression
 syntax, invoke <code>man perlre</code> or <code>perldoc perlre</code>).</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dcounts_spec"><strong>-counts</strong> <em>SPEC</em></a></strong>
+<dt><strong><a name="counts_spec" class="item"><strong>-counts</strong> <em>SPEC</em></a></strong></dt>
 
 <dd>
 <p>Specify which counts/columns to display in the output. <em>SPEC</em>
 may contain any of the following (separated by '+'):</p>
-</dd>
-<dd>
 <pre>
    &quot;Lines&quot;  : print the total # of lines
    &quot;Blank&quot;  : print the total # of blank-lines
@@ -237,33 +227,25 @@ may contain any of the following (separated by '+'):</p>
    &quot;TPtoks&quot; : print the total # of total pseudo-tokens
    &quot;All&quot;    : print all of the above totals
    &quot;AESL&quot;   : print the total # of assembly-equivalent source lines</pre>
-</dd>
-<dd>
 <p>The above keywords may be abbreviated to a unique prefix if desired.
 If the <strong>-counts</strong> option is <em>not</em> specified, then
 <code>Lines+Blank+Cmnts+NCSL+TPtoks</code> is implied.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dsections_spec"><strong>-sections</strong> <em>SPEC</em></a></strong>
+<dt><strong><a name="sections_spec" class="item"><strong>-sections</strong> <em>SPEC</em></a></strong></dt>
 
 <dd>
 <p>Specify the sections in the output. <em>SPEC</em> may contain any
 of the following (separated by '+'):</p>
-</dd>
-<dd>
 <pre>
    &quot;Header&quot;     : the column labels and separator bar
    &quot;Files&quot;      : the counts for each input file
    &quot;LangTotals&quot; : the totals for each language encountered.
    &quot;Totals&quot;     : the totals for all files.</pre>
-</dd>
-<dd>
 <p>The above keywords may be abbreviated to a unique prefix
 if desired. If the <strong>-sections</strong> option is <em>NOT</em> specified,
 then <code>Header+Files+LangTotals+Totals</code> is implied.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dvcstring_string"><strong>-vcstring</strong> <em>STRING</em></a></strong>
+<dt><strong><a name="vcstring_string" class="item"><strong>-vcstring</strong> <em>STRING</em></a></strong></dt>
 
 <dd>
 <p>Specify that <em>STRING</em> is the delimiter used by your version control
@@ -271,38 +253,32 @@ system and that the file suffix should be determined by only
 considering the portion of the file path that precedes the first
 occurrence of <em>STRING</em>.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2doutput_file"><strong>-output</strong> <em>FILE</em></a></strong>
+<dt><strong><a name="output_file" class="item"><strong>-output</strong> <em>FILE</em></a></strong></dt>
 
 <dd>
 <p>Redirect output to the named file (should have the same effect as
-redirecting STDOUT on the cmdline using ``&gt; <em>FILE</em>'').</p>
+redirecting STDOUT on the cmdline using &quot;&gt; <em>FILE</em>&quot;).</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dxml_output_file"><strong>-xml_output</strong> <em>FILE</em></a></strong>
+<dt><strong><a name="xml_output_file" class="item"><strong>-xml_output</strong> <em>FILE</em></a></strong></dt>
 
 <dd>
 <p>Writes the results to the specified FILE.  Output will still be shown on the screen in addition to being in the XML file.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2ddefault_exclude"><strong>-default_exclude</strong></a></strong>
+<dt><strong><a name="default_exclude" class="item"><strong>-default_exclude</strong></a></strong></dt>
 
 <dd>
 <p>Excludes a default set of files and directories using a set of regular expressions. Tries to filter out files that are commonly ignored by Ant.  Can be used with -excludedir, -name, and -except.</p>
 </dd>
-</li>
-<dt><strong><a name="item__2dexcludedir"><strong>-excludedir</strong></a></strong>
+<dt><strong><a name="excludedir" class="item"><strong>-excludedir</strong></a></strong></dt>
 
 <dd>
 <p>Excludes files from being evaluated if their full path or file name matches the REGEXP. When used with -default_exclude it will exclude all the default plus any REGEXP given by exclude options. Each regex string needs to have its own excludedir option. There is no limit on the number of excludedirs.  Can be used with -name and -except.</p>
 </dd>
-</li>
-<dt><strong><a name="item_file"><em>FILE</em></a></strong>
+<dt><strong><a name="file" class="item"><em>FILE</em></a></strong></dt>
 
 <dd>
 <p>Name of an input file (or a directory, if the -recurse option is specified).</p>
 </dd>
-</li>
 </dl>
 <p>Option names are case insensitive and only a unique prefix is required.</p>
 <p>
@@ -325,7 +301,7 @@ errors). The output format will look something like the following:</p>
 and/or sections to print. The counts are always printed in an order such that:</p>
 <pre>
      lines --&gt; blank-lines --&gt; comments --&gt; NCSL --&gt; &lt;xPtoks&gt;... --&gt; AESL</pre>
-<p>where ``X --&gt; Y'' means that the count of Xs always precedes the count of Ys.</p>
+<p>where &quot;X --&gt; Y&quot; means that the count of Xs always precedes the count of Ys.</p>
 <p>The <strong>-recurse</strong> option can be used to specify that all files in a given directory tree should be
 processed.</p>
 <p>The <strong>-xml_output</strong> option will create a file containing the size data in XML format.</p>
@@ -357,9 +333,9 @@ the command line:</p>
 </p>
 <h2><a name="controlling_column_output">Controlling column output</a></h2>
 <p>There are options to control which columns you do/do not want to see.
-The <code>NCSL</code> column is for ``non-comment source lines''. The <code>TPtoks</code>
+The <code>NCSL</code> column is for &quot;non-comment source lines&quot;. The <code>TPtoks</code>
 column gives the total number of psuedo-tokens of all types.</p>
-<p>The optional <code>AESL</code> column is for ``assembly equivalent source lines''
+<p>The optional <code>AESL</code> column is for &quot;assembly equivalent source lines&quot;
 (it calculates this using assembly-equivalence factors published by
 Software Productivity Research).</p>
 <p>If all you care about is NCSL, you could simply invoke it as:</p>
@@ -446,10 +422,10 @@ options into the fold:</p>
       6  ***** TOTAL INSERTED *****  (2 files)</pre>
 <p>If you want to count the difference in source lines between specific
 versions (not just the predecessor) you may use the <strong>-fromversion</strong>
-option to specify the base (``from'') version to use for all comparisons.
+option to specify the base (&quot;from&quot;) version to use for all comparisons.
 If the base version is not explicitly specified, it defaults to whatever
 version is selected in the users view. Similarly, the <strong>-toversion</strong>
-option may be used to specify the target (``to'') version to use for all
+option may be used to specify the target (&quot;to&quot;) version to use for all
 comparisons. If the target version is not specified, then (like the base
 version) it defaults to whatever version is selected in the users view.</p>
 <p>So if I want to count the changed lines of code between what is in my
@@ -469,7 +445,7 @@ different labels I would do something like:</p>
 everything in the REL1.0.0 baseline, then I could simply do:</p>
 <pre>
   $ sclc -tover REL2.0.0 *.[ch]</pre>
-<p>Hopefully, this ``tutorial'' should have provided you with a good set of
+<p>Hopefully, this &quot;tutorial&quot; should have provided you with a good set of
 cookbook examples for using <strong>sclc</strong>. if you ever want to see this manual
 page, you need only invoke <strong>sclc</strong> using the <strong>-help</strong> option:</p>
 <pre>
@@ -478,7 +454,7 @@ page, you need only invoke <strong>sclc</strong> using the <strong>-help</strong
 </p>
 <hr />
 <h1><a name="mpi_and_openmp_token_counting">MPI AND OPENMP TOKEN COUNTING</a></h1>
-<p>MPI and OpenMP token counting is automatically done for C/C++ and FORTRAN files.  It is not displayed on the screen and the results can only be seen if the option <strong>-xml_output</strong> is used.  In the XML, the name of the token will be an attribute and the value of the attribute will be the number occurrences of that token (Example: MPI_Init=``1'').</p>
+<p>MPI and OpenMP token counting is automatically done for C/C++ and FORTRAN files.  It is not displayed on the screen and the results can only be seen if the option <strong>-xml_output</strong> is used.  In the XML, the name of the token will be an attribute and the value of the attribute will be the number occurrences of that token (Example: MPI_Init=&quot;1&quot;).</p>
 <p>
 </p>
 <hr />
