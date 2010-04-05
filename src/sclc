@@ -615,11 +615,11 @@ my %AssemblyEquivalence = ('C++', 6.0);
 ## Be wary of changing these defaults, but feel free to override them.
 ## For reference, all ASCII operators: [~`!\@#\$%^&*_\-+=|\\\\:\'"<>.?/]
 my %DEFAULT_DEFNS = ('KEYWORD', '0', # no keywords specified
-		     'SYMBOL', '[a-zA-Z]\w*',
-		     'NUMBER', '(?=\.?\d)[\d_]*(?:\.[\d_]*)?(?:[a-zA-Z][-+]?\d)?\w*',
-		     'GROUPER', '[(){}[\],;]',
-		     'OPERATOR', '(.)\1*=?',
-		     );
+             'SYMBOL', '[a-zA-Z]\w*',
+             'NUMBER', '(?=\.?\d)[\d_]*(?:\.[\d_]*)?(?:[a-zA-Z][-+]?\d)?\w*',
+             'GROUPER', '[(){}[\],;]',
+             'OPERATOR', '(.)\1*=?',
+             );
 ##
 ##----------------------------------------------------------------------
 
@@ -640,14 +640,14 @@ $LANG_RULES{'ASSEMBLY'} = [ \@ASSEMBLY_EVALS, \%ASSEMBLY_DEFNS ];
 ##----------------------------------------------------------------------
 ## C/C++ language definitions
 my %C_KEYWORDS;
-@C_KEYWORDS{			# standard C
+@C_KEYWORDS{            # standard C
     qw(define defined error ifdef if elif else endif include undef
        auto break case char const continue
        default do double else enum extern
        float for goto if int long register return
        short signed sizeof static struct switch
        typedef union unsigned void volatile while)} = undef;
-@C_KEYWORDS{			# C++ extensions
+@C_KEYWORDS{            # C++ extensions
     qw(asm bool catch class const_cast
        delete dynamic_cast explicit
        false friend inline mutable
@@ -672,9 +672,9 @@ my %C_DEFNS = ('AESL', 2.5,
                '//', $EolCmnt,
                '/*', $BeginCmnt,
                '*/', $EndCmnt,
-	       'KEYWORD', 'exists $C_KEYWORDS{$1}',
-	       'SYMBOL', '[\$_a-zA-Z][\$\w]*',
-	       'OPERATOR', '->|(.)\1*=?', # add ->
+           'KEYWORD', 'exists $C_KEYWORDS{$1}',
+           'SYMBOL', '[\$_a-zA-Z][\$\w]*',
+           'OPERATOR', '->|(.)\1*=?', # add ->
               );
 $LANG_RULES{'C'} = [ \@C_EVALS, \%C_DEFNS ];
 
@@ -708,9 +708,9 @@ my %JAVA_DEFNS = ('AESL', 6,
                   '//', $EolCmnt,
                   '/*', $BeginCmnt,
                   '*/', $EndCmnt,
-		  'KEYWORD', 'exists $JAVA_KEYWORDS{$1}',
-		  'SYMBOL', '[\$_a-zA-Z][\$\w]*',
-		  );
+          'KEYWORD', 'exists $JAVA_KEYWORDS{$1}',
+          'SYMBOL', '[\$_a-zA-Z][\$\w]*',
+          );
 $LANG_RULES{'JAVA'} = [ \@JAVA_EVALS, \%JAVA_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -745,9 +745,9 @@ my %PHP_DEFNS = ('AESL', 6,
                   '//', $EolCmnt,
                   '/*', $BeginCmnt,
                   '*/', $EndCmnt,
-		  'KEYWORD', 'exists $PHP_KEYWORDS{$1}',
-		  'SYMBOL', '[\$_a-zA-Z][\$\w]*',
-		  );
+          'KEYWORD', 'exists $PHP_KEYWORDS{$1}',
+          'SYMBOL', '[\$_a-zA-Z][\$\w]*',
+          );
 $LANG_RULES{'PHP'} = [ \@PHP_EVALS, \%PHP_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -778,8 +778,8 @@ my %SHELL_DEFNS = ('AESL', 15.0,
                    "'", $BeginQuote,
                    '"', $BeginQuote,
                    '`', $BeginQuote,
-		   'KEYWORD', 'exists $SHELL_KEYWORDS{$1}',
-		   );
+           'KEYWORD', 'exists $SHELL_KEYWORDS{$1}',
+           );
 $LANG_RULES{'SHELL'} = [ \@SHELL_EVALS, \%SHELL_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -856,8 +856,8 @@ $LANG_RULES{'TCL'} = [ \@TCL_EVALS, \%TCL_DEFNS ];
 ##       Backslash-quote #,',",` when used in regexp,q,qq,qx,qw,<<
 ##
 my @PERL_EVALS = ('s/\\\\./__/g;',       ## remove escaped characters
-		  's/\$[\'"`#]/\$_/g;',  ## avoid special symbol problems
-		  's/(^|\s+)#/\001/g',   ## denote '#' comments with \001
+          's/\$[\'"`#]/\$_/g;',  ## avoid special symbol problems
+          's/(^|\s+)#/\001/g',   ## denote '#' comments with \001
                   's/^=cut/\003/g',      ## end pod comments with \003
                   's/^=[a-z]+/\002/g',   ##   and start them with \002
                   's/[{};]/ /g  if ($OPTS{delim_ignore})'
@@ -866,21 +866,21 @@ my %PERL_DEFNS = ('AESL', 15.0,
                   'START_STATE', "['\"`]|[\001\002]",
                   'CMMNT_STATE', "^\003",
                   'CMMNT_NESTING', "",
-		  '"QUOTE_STATE', '"',
-		  'END_"', '"',
-		  "'QUOTE_STATE", "'",
-		  "END_'", "'",
-		  "`QUOTE_STATE", "`",
-		  "END_`", "`",
-		  "'", $BeginQuote,
-		  '"', $BeginQuote,
-		  '`', $BeginQuote,
+          '"QUOTE_STATE', '"',
+          'END_"', '"',
+          "'QUOTE_STATE", "'",
+          "END_'", "'",
+          "`QUOTE_STATE", "`",
+          "END_`", "`",
+          "'", $BeginQuote,
+          '"', $BeginQuote,
+          '`', $BeginQuote,
                   "\001", $EolCmnt,
                   "\002", $BeginCmnt,
                   "\003", $EndCmnt,
-		  'KEYWORD', '$1 =~ /^[a-z]/', # any symbol in lowercase
-		  'SYMBOL', '(?i)[$@%][^\sa-z]|[$@%&]?[a-z_]\w*',
-		  'OPERATOR', '<=>|->|=>|=~|!~|\?:|(.)\1*=?',
+          'KEYWORD', '$1 =~ /^[a-z]/', # any symbol in lowercase
+          'SYMBOL', '(?i)[$@%][^\sa-z]|[$@%&]?[a-z_]\w*',
+          'OPERATOR', '<=>|->|=>|=~|!~|\?:|(.)\1*=?',
                  );
 $LANG_RULES{'PERL'} = [ \@PERL_EVALS, \%PERL_DEFNS ];
 
@@ -898,7 +898,7 @@ my %ADA_DEFNS = ('AESL', 6.5,
                  'END_"', '"',
                  "--", $EolCmnt,
                  '"', $BeginQuote,
-		 );
+         );
 $LANG_RULES{'ADA'} = [ \@ADA_EVALS, \%ADA_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -917,7 +917,7 @@ my %EIFFEL_DEFNS = ('AESL', 15.0,
                     "'", $BeginQuote,
                     '"', $BeginQuote,
                     "--", $EolCmnt,
-		    );
+            );
 $LANG_RULES{'EIFFEL'} = [ \@EIFFEL_EVALS, \%EIFFEL_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -962,7 +962,7 @@ my %LISP_DEFNS = ('AESL', 5.0,
                   'END_"', '"',
                   ";", $EolCmnt,
                   '"', $BeginQuote,
-		  'KEYWORD', 'exists $LISP_KEYWORDS{$1}',
+          'KEYWORD', 'exists $LISP_KEYWORDS{$1}',
                  );
 $LANG_RULES{'LISP'} = [ \@LISP_EVALS, \%LISP_DEFNS ];
 
@@ -975,24 +975,24 @@ my %MATLAB_KEYWORDS;
        false find for function global if otherwise
        persistent return switch true try while)} = undef;
 my @MATLAB_EVALS = (
-		    's/^\s*%([{}])\s*$/\001$1/',
-		    's/(\.\.\.\s*)\S/$1%/',
-		    's/(\G|[^.\w\)\}\]\'])\'(.*?)\'/$1\002$2\002/g',
-		    's/\bend\b|;/ /g  if ($OPTS{delim_ignore})'
-		    );
-my %MATLAB_DEFNS = ('AESL', 15,	# who knows ...
-		    'START_STATE', "%|\001[{}]|\002",
-		    'CMMNT_STATE', "\001[{}]",
-		    'CMMNT_NESTING', 1,
-		    "\002QUOTE_STATE", "\002\002|\002",
-		    "END_\002", "\002",
-		    '%', $EolCmnt,
-		    "\001{", $BeginCmnt,
-		    "\001}", $EndCmnt,
-		    "\002", $BeginQuote,
-		    'KEYWORD', 'exists $MATLAB_KEYWORDS{$1}',
-		    'OPERATOR', '\.[\'*\\\\^/]|(.)\1*=?', # add dot operators
-		    );
+            's/^\s*%([{}])\s*$/\001$1/',
+            's/(\.\.\.\s*)\S/$1%/',
+            's/(\G|[^.\w\)\}\]\'])\'(.*?)\'/$1\002$2\002/g',
+            's/\bend\b|;/ /g  if ($OPTS{delim_ignore})'
+            );
+my %MATLAB_DEFNS = ('AESL', 15, # who knows ...
+            'START_STATE', "%|\001[{}]|\002",
+            'CMMNT_STATE', "\001[{}]",
+            'CMMNT_NESTING', 1,
+            "\002QUOTE_STATE", "\002\002|\002",
+            "END_\002", "\002",
+            '%', $EolCmnt,
+            "\001{", $BeginCmnt,
+            "\001}", $EndCmnt,
+            "\002", $BeginQuote,
+            'KEYWORD', 'exists $MATLAB_KEYWORDS{$1}',
+            'OPERATOR', '\.[\'*\\\\^/]|(.)\1*=?', # add dot operators
+            );
 $LANG_RULES{'MATLAB'} = [ \@MATLAB_EVALS, \%MATLAB_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -1016,25 +1016,25 @@ my %ZPL_KEYWORDS;
        ushortint var while with without wrap
        write writeln)} = undef;
 my @ZPL_EVALS = (
-		 's/\b(?:begin|end)\b|;/ /g  if ($OPTS{delim_ignore})'
-		 );
-my %ZPL_DEFNS = ('AESL', 15,	# who knows ...
-		 'START_STATE', '/\*|--|["\']',
-		 'CMMNT_STATE', '\*/',
-		 'CMMNT_NESTING', "",
-		 '"QUOTE_STATE', '\\\\.|"',
-		 'END_"', '"',
-		 "'QUOTE_STATE", "\\\\.|'",
-		 "END_'", "'",
-		 '"', $BeginQuote,
-		 "'", $BeginQuote,
-		 '--', $EolCmnt,
-		 '/*', $BeginCmnt,
-		 '*/', $EndCmnt,
-		 'KEYWORD', 'exists $ZPL_KEYWORDS{$1}',
-		 'SYMBOL', '[_a-zA-Z]\w*',
-		 'OPERATOR', '@\^|(.)\1?=?', # add @^, break up |||
-		 );
+         's/\b(?:begin|end)\b|;/ /g  if ($OPTS{delim_ignore})'
+         );
+my %ZPL_DEFNS = ('AESL', 15,    # who knows ...
+         'START_STATE', '/\*|--|["\']',
+         'CMMNT_STATE', '\*/',
+         'CMMNT_NESTING', "",
+         '"QUOTE_STATE', '\\\\.|"',
+         'END_"', '"',
+         "'QUOTE_STATE", "\\\\.|'",
+         "END_'", "'",
+         '"', $BeginQuote,
+         "'", $BeginQuote,
+         '--', $EolCmnt,
+         '/*', $BeginCmnt,
+         '*/', $EndCmnt,
+         'KEYWORD', 'exists $ZPL_KEYWORDS{$1}',
+         'SYMBOL', '[_a-zA-Z]\w*',
+         'OPERATOR', '@\^|(.)\1?=?', # add @^, break up |||
+         );
 $LANG_RULES{'ZPL'} = [ \@ZPL_EVALS, \%ZPL_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -1058,24 +1058,24 @@ my %FORTRAN_KEYWORDS;
        wait where while write)} = undef;
 my @FORTRAN_EVALS =
               ('s/^[c\\*]/!/gi', ## denote 'c ...' comments with !
-	       's/!\$OMP/\$OMP/gi', ## Remove ! from OpenMP directive so it looks like code 
+           's/!\$OMP/\$OMP/gi', ## Remove ! from OpenMP directive so it looks like code 
                's/^\s*end[^!\n]*/ /gi  if ($OPTS{delim_ignore})'
               );
-my %FORTRAN_DEFNS = ('AESL', 5,	# who knows ...
-		     'START_STATE', "!|[\"']",
-		     'CMMNT_STATE', "",
-		     'CMMNT_NESTING', "",
-		     '"QUOTE_STATE', '\\\\.|"',
-		     'END_"', '"',
-		     "'QUOTE_STATE", "\\\\.|'",
-		     "END_'", "'",
-		     '"', $BeginQuote,
-		     "'", $BeginQuote,
-		     '!', $EolCmnt,
-		     '/*', $BeginCmnt,
-		     '*/', $EndCmnt,
-		     'KEYWORD', 'exists $FORTRAN_KEYWORDS{$1}',
-		     );
+my %FORTRAN_DEFNS = ('AESL', 5, # who knows ...
+             'START_STATE', "!|[\"']",
+             'CMMNT_STATE', "",
+             'CMMNT_NESTING', "",
+             '"QUOTE_STATE', '\\\\.|"',
+             'END_"', '"',
+             "'QUOTE_STATE", "\\\\.|'",
+             "END_'", "'",
+             '"', $BeginQuote,
+             "'", $BeginQuote,
+             '!', $EolCmnt,
+             '/*', $BeginCmnt,
+             '*/', $EndCmnt,
+             'KEYWORD', 'exists $FORTRAN_KEYWORDS{$1}',
+             );
 $LANG_RULES{'FORTRAN'} = [ \@FORTRAN_EVALS, \%FORTRAN_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -1095,34 +1095,34 @@ my %CHAPEL_KEYWORDS;
        unordered var view when where
        while with yield)} = undef;
 my @CHAPEL_EVALS = (
-		    's/[{};]/ /g  if ($OPTS{delim_ignore})'
-		    );
-my %CHAPEL_DEFNS = ('AESL', 15,	# who knows ...
-		    'START_STATE', '/\*|--|//|["\']',
-		    'CMMNT_STATE', '/\*|\*/',
-		    'CMMNT_NESTING', 1,
-		    '"QUOTE_STATE', '\\\\.|"',
-		    'END_"', '"',
-		    "'QUOTE_STATE", "\\\\.|'",
-		    "END_'", "'",
-		    '"', $BeginQuote,
-		    "'", $BeginQuote,
-		    '--', $EolCmnt,
-		    '//', $EolCmnt,
-		    '/*', $BeginCmnt,
-		    '*/', $EndCmnt,
-		    'KEYWORD', 'exists $CHAPEL_KEYWORDS{$1}',
-		    'SYMBOL', '[\$_a-zA-Z][?\$\w]*',
-		    'NUMBER', '\.?\d[.\w]*',
-		    'GROUPER', '[(){}[\],;]',
-		    );
+            's/[{};]/ /g  if ($OPTS{delim_ignore})'
+            );
+my %CHAPEL_DEFNS = ('AESL', 15, # who knows ...
+            'START_STATE', '/\*|--|//|["\']',
+            'CMMNT_STATE', '/\*|\*/',
+            'CMMNT_NESTING', 1,
+            '"QUOTE_STATE', '\\\\.|"',
+            'END_"', '"',
+            "'QUOTE_STATE", "\\\\.|'",
+            "END_'", "'",
+            '"', $BeginQuote,
+            "'", $BeginQuote,
+            '--', $EolCmnt,
+            '//', $EolCmnt,
+            '/*', $BeginCmnt,
+            '*/', $EndCmnt,
+            'KEYWORD', 'exists $CHAPEL_KEYWORDS{$1}',
+            'SYMBOL', '[\$_a-zA-Z][?\$\w]*',
+            'NUMBER', '\.?\d[.\w]*',
+            'GROUPER', '[(){}[\],;]',
+            );
 $LANG_RULES{'CHAPEL'} = [ \@CHAPEL_EVALS, \%CHAPEL_DEFNS ];
 
 ##----------------------------------------------------------------------
 ## XML language definitions
 my @XML_EVALS = (
-								  's/[{};]/ /g  if ($OPTS{delim_ignore})'
-								);
+                                  's/[{};]/ /g  if ($OPTS{delim_ignore})'
+                                );
 my %XML_DEFNS = ('AESL', 22,
                  'START_STATE', '<!--|["\']',
                  'CMMNT_STATE', "-->",
@@ -1142,8 +1142,8 @@ $LANG_RULES{'XML'} = [ \@XML_EVALS, \%XML_DEFNS ];
 ##----------------------------------------------------------------------
 ## HTML language definitions
 my @HTML_EVALS = (
-								  's/[{};]/ /g  if ($OPTS{delim_ignore})'
-								);
+                                  's/[{};]/ /g  if ($OPTS{delim_ignore})'
+                                );
 my %HTML_DEFNS = ('AESL', 22,
                  'START_STATE', '<!--|["\']',
                  'CMMNT_STATE', "-->",
@@ -1162,8 +1162,8 @@ $LANG_RULES{'HTML'} = [ \@HTML_EVALS, \%HTML_DEFNS ];
 ##----------------------------------------------------------------------
 ## JSP language definitions
 my @JSP_EVALS = (
-								  's/[{};]/ /g  if ($OPTS{delim_ignore})'
-								);
+                                  's/[{};]/ /g  if ($OPTS{delim_ignore})'
+                                );
 my %JSP_DEFNS = ('AESL', 22,
                  'START_STATE', '<%--|["\']',
                  'CMMNT_STATE', "--%>",
@@ -1182,8 +1182,8 @@ $LANG_RULES{'JSP'} = [ \@JSP_EVALS, \%JSP_DEFNS ];
 ##----------------------------------------------------------------------
 ## SQL language definitions
 my @SQL_EVALS = (
-								  's/[{};]/ /g  if ($OPTS{delim_ignore})'
-								);
+                                  's/[{};]/ /g  if ($OPTS{delim_ignore})'
+                                );
 my %SQL_DEFNS = ('AESL', 22,
                  'START_STATE', '--|["\']',
                  'CMMNT_STATE', "--",
@@ -1218,7 +1218,7 @@ my %PYTHON_KEYWORDS;
 my @PYTHON_EVALS = (
                    's/(^|\s+)#/\001/g',   ## denote '#' comments with \001
                    's/\\\\./__/g',        ## remove escaped characters
-		   );
+           );
 
 # copied verbatim from SHELL_DEFNS
 my %PYTHON_DEFNS = ('AESL', 15.0, 
@@ -1229,18 +1229,18 @@ my %PYTHON_DEFNS = ('AESL', 15.0,
                    "END_'", "'",
                    "`QUOTE_STATE", "\\\\.|`",
                    "END_`", "`",
-		   "'''QUOTE_STATE", "\\\\.|'''",
-		   "END_'''", "'''",
-		   '"""QUOTE_STATE', '\\.|"""',
-		   'END_"""', '"""',
+           "'''QUOTE_STATE", "\\\\.|'''",
+           "END_'''", "'''",
+           '"""QUOTE_STATE', '\\.|"""',
+           'END_"""', '"""',
                    "\001", $EolCmnt,
                    "'''", $BeginQuote,
                    '"""', $BeginQuote,
                    "'", $BeginQuote,
                    '"', $BeginQuote,
                    '`', $BeginQuote,
-		   'KEYWORD', 'exists $PYTHON_KEYWORDS{$1}',
-		   );
+           'KEYWORD', 'exists $PYTHON_KEYWORDS{$1}',
+           );
 
 $LANG_RULES{'PYTHON'} = [ \@PYTHON_EVALS, \%PYTHON_DEFNS];
 
@@ -1278,70 +1278,70 @@ my %CSHARP_DEFNS = ('AESL', 6,
                   '//', $EolCmnt,
                   '/*', $BeginCmnt,
                   '*/', $EndCmnt,
-		  'KEYWORD', 'exists $CSHARP_KEYWORDS{$1}',
-		  'SYMBOL', '[\$_a-zA-Z][\$\w]*',
-		  );
+          'KEYWORD', 'exists $CSHARP_KEYWORDS{$1}',
+          'SYMBOL', '[\$_a-zA-Z][\$\w]*',
+          );
 $LANG_RULES{'CSHARP'} = [ \@CSHARP_EVALS, \%CSHARP_DEFNS ];
 
 ##----------------------------------------------------------------------
 ## Template language definitions
 my @TEMPLATE_EVALS = (
-		      's/[{;}]/ /g',
-		      's/%\]/\002/g',
-		      's/\[%/\001/g if ($OPTS{delim_ignore})'
-		      );
+              's/[{;}]/ /g',
+              's/%\]/\002/g',
+              's/\[%/\001/g if ($OPTS{delim_ignore})'
+              );
 my %TEMPLATE_DEFNS = ('AESL', 15.0, # who knows
-		      'START_STATE', '\001',
-		      'CMMNT_STATE', "/\001%#|.*%\002/",
-		      'CMMNT_NESTING', "",
-		      '"QUOTE_STATE', "",
-		      'END_"', '"',
-		      ";", $EolCmnt,
-		      '"', $BeginQuote,
-		      );
+              'START_STATE', '\001',
+              'CMMNT_STATE', "/\001%#|.*%\002/",
+              'CMMNT_NESTING', "",
+              '"QUOTE_STATE', "",
+              'END_"', '"',
+              ";", $EolCmnt,
+              '"', $BeginQuote,
+              );
 $LANG_RULES{'TEMPLATE'} = [ \@TEMPLATE_EVALS, \%TEMPLATE_DEFNS ];
 
 ##----------------------------------------------------------------------
 ##JavaScript language definitions
 my @JAVASCRIPT_EVALS = ('s/\\\\./__/g;', ## remove escaped characters
-			 's/[{};]/ /g if ($OPTS{delim_ignore})'
-			 );
+             's/[{};]/ /g if ($OPTS{delim_ignore})'
+             );
 my %JAVASCRIPT_DEFNS = ('AESL', 15.0, # who knows
-			'START_STATE', '/[*/]|["\']',
-			'CMMNT_STATE', '\\*/',
-			'CMMNT_NESTING', "",
-			'"QUOTE_STATE', '"',
-			'END_"', '"',
-			"'QUOTE_STATE", "'",
-			"END_'", "'",
-			'"', $BeginQuote,
-			"'", $BeginQuote,
-			'//', $EolCmnt,
-			'/*', $BeginCmnt,
-			'*/', $EndCmnt,
-			);
+            'START_STATE', '/[*/]|["\']',
+            'CMMNT_STATE', '\\*/',
+            'CMMNT_NESTING', "",
+            '"QUOTE_STATE', '"',
+            'END_"', '"',
+            "'QUOTE_STATE", "'",
+            "END_'", "'",
+            '"', $BeginQuote,
+            "'", $BeginQuote,
+            '//', $EolCmnt,
+            '/*', $BeginCmnt,
+            '*/', $EndCmnt,
+            );
 $LANG_RULES{'JAVASCRIPT'} = [ \@JAVASCRIPT_EVALS, \%JAVASCRIPT_DEFNS ];
 
 ##----------------------------------------------------------------------
 ## CSS language definitions
 my @CSS_EVALS = (
-		 's/[{};]/ /g if ($OPTS{delim_ignore})'
-		 );
+         's/[{};]/ /g if ($OPTS{delim_ignore})'
+         );
 my %CSS_DEFNS = ('AESL', 22,
-		 'START_STATE', '<!--|/\\*|["\']',
-		 'CMMNT_STATE', '\\*/|-->',
-		 'CMMNT_NESTING', 1,
-		 '"QUOTE_STATE', '\\\\.|"',
-		 'END_"', '"',
-		 "'QUOTE_STATE", "\\\\.|'",
-		 "END_'", "'",
-		 "'", $BeginQuote,
-		 '"', $BeginQuote,
-		 "<!--", $BeginCmnt,
-		 "-->", $EndCmnt,
-		 '/*', $BeginCmnt,
-		 '*/', $EndCmnt
-		 );
+         'START_STATE', '<!--|/\\*|["\']',
+         'CMMNT_STATE', '\\*/|-->',
+         'CMMNT_NESTING', 1,
+         '"QUOTE_STATE', '\\\\.|"',
+         'END_"', '"',
+         "'QUOTE_STATE", "\\\\.|'",
+         "END_'", "'",
+         "'", $BeginQuote,
+         '"', $BeginQuote,
+         "<!--", $BeginCmnt,
+         "-->", $EndCmnt,
+         '/*', $BeginCmnt,
+         '*/', $EndCmnt
+         );
 $LANG_RULES{'CSS'} = [ \@CSS_EVALS, \%CSS_DEFNS ];
 
 ##----------------------------------------------------------------------
@@ -1367,7 +1367,7 @@ my %JESS_DEFNS = ('AESL', 5.0,
                   'END_"', '"',
                   ";", $EolCmnt,
                   '"', $BeginQuote,
-		  'KEYWORD', 'exists $LISP_KEYWORDS{$1}',
+          'KEYWORD', 'exists $LISP_KEYWORDS{$1}',
                  );
 $LANG_RULES{'JESS'} = [ \@JESS_EVALS, \%JESS_DEFNS ];
 
@@ -1477,10 +1477,10 @@ my %Suffixes = (
       ".xml",   "XML",
       ".xsd",   "XML",
    ## HTML
-      ".html",	"HTML",
-      ".htm",	"HTML",
+      ".html",  "HTML",
+      ".htm",   "HTML",
    ## JSP
-      ".jsp",	"JSP",
+      ".jsp",   "JSP",
    ## SQL
       ".sql",   "SQL",
    ## PYTHON
@@ -1606,10 +1606,10 @@ sub Usage {
     my ($exitval, $message) = (1, '');
     ## Collect arguments
     if ( /^[-+]?\d+$/ ) {
-	($exitval, $message) = ($_, '');
+    ($exitval, $message) = ($_, '');
     }
     elsif (defined $_  and  length $_) {
-	($exitval, $message) = (2, $_);
+    ($exitval, $message) = (2, $_);
     }
     printf STDERR ("%s: %s\n", basename($0), $message)  if ($message);
     $ENV{PATH} .= $PathList_Sep . $Config{bin};
@@ -1683,30 +1683,30 @@ sub CheckLanguage {
     my(@extspecs) = @_;
     local($_);
     foreach (@extspecs) {
-	my ($ext, $lang) = ('', $_);
-	($ext, $lang) = ($1, $2) if (/^([^=]*)=(.+)$/);
-	if (! $lang) {
-	    &ErrorMsg("invalid -language argument \"$_\"");
-	    ++$ERRORS;
-	    next;
-	}
-	my $expr = $lang;
-	$expr =~ s/\W/\\$&/g;
-	my @matches = grep(/^${expr}$/i, @Languages);
-	if (@matches == 0) {
-	    &ErrorMsg("Unknown programming language: \"$lang\"");
-	    ++$ERRORS;
-	}
-	$lang = $matches[$[];
-	if (! $ext) {
-	    $DEFAULT_LANG = $lang;
-	}
-	elsif ($ext =~ m|^/(.*)$|) {
-	    $Interpreters{$1} = $lang;
-	}
-	else {
-	    $Suffixes{$ext} = $lang;
-	}
+    my ($ext, $lang) = ('', $_);
+    ($ext, $lang) = ($1, $2) if (/^([^=]*)=(.+)$/);
+    if (! $lang) {
+        &ErrorMsg("invalid -language argument \"$_\"");
+        ++$ERRORS;
+        next;
+    }
+    my $expr = $lang;
+    $expr =~ s/\W/\\$&/g;
+    my @matches = grep(/^${expr}$/i, @Languages);
+    if (@matches == 0) {
+        &ErrorMsg("Unknown programming language: \"$lang\"");
+        ++$ERRORS;
+    }
+    $lang = $matches[$[];
+    if (! $ext) {
+        $DEFAULT_LANG = $lang;
+    }
+    elsif ($ext =~ m|^/(.*)$|) {
+        $Interpreters{$1} = $lang;
+    }
+    else {
+        $Suffixes{$ext} = $lang;
+    }
     }
 }
 
@@ -1728,25 +1728,25 @@ sub CheckSections {
     local($_);
     my @secspecs = split(/\W/, $OPTS{'sections'});
     if (0 == @secspecs) {
-	&ErrorMsg("invalid sections specifier \"$OPTS{'sections'}\"");
-	++$ERRORS;
+    &ErrorMsg("invalid sections specifier \"$OPTS{'sections'}\"");
+    ++$ERRORS;
     }
     else {
-	my @matches = ();
-	foreach (@secspecs) {
-	    @matches = &MatchKwd($_, "header", "files", "langtotals", "totals");
-	    if (@matches == 1) {
-		++$SECS{$matches[0]};
-	    }
-	    elsif (@matches == 0) {
-		&ErrorMsg("invalid sections specifier \"$_\"");
-		++$ERRORS;
-	    }
-	    else {
-		&ErrorMsg("ambiguous sections specifier \"$_\"");
-		++$ERRORS;
-	    }
-	}
+    my @matches = ();
+    foreach (@secspecs) {
+        @matches = &MatchKwd($_, "header", "files", "langtotals", "totals");
+        if (@matches == 1) {
+        ++$SECS{$matches[0]};
+        }
+        elsif (@matches == 0) {
+        &ErrorMsg("invalid sections specifier \"$_\"");
+        ++$ERRORS;
+        }
+        else {
+        &ErrorMsg("ambiguous sections specifier \"$_\"");
+        ++$ERRORS;
+        }
+    }
     }
 }
 
@@ -1769,32 +1769,32 @@ sub CheckCounts {
     local($_);
     my @cntspecs = split(/\W/, $OPTS{'counts'});
     if (0 == @cntspecs) {
-	&ErrorMsg("invalid counts specifier \"$OPTS{'counts'}\"");
-	++$ERRORS;
+    &ErrorMsg("invalid counts specifier \"$OPTS{'counts'}\"");
+    ++$ERRORS;
     }
     else {
-	my @matches = ();
-	foreach (@cntspecs) {
-	    @matches = &MatchKwd($_, @Count_Names, 'all');
-	    if (@matches == 1) {
-		if ($matches[0] eq 'all') {
-		    for (@Count_Names) {
-			next if $_ eq 'AESL'; # skip this one
-			++$CNTS{lc $_};
-		    }
-		} else {
-		    ++$CNTS{lc $matches[0]};
-		}
-	    }
-	    elsif (@matches == 0) {
-		&ErrorMsg("invalid counts specifier \"$_\"");
-		++$ERRORS;
-	    }
-	    else {
-		&ErrorMsg("ambiguous counts specifier \"$_\"");
-		++$ERRORS;
-	    }
-	}
+    my @matches = ();
+    foreach (@cntspecs) {
+        @matches = &MatchKwd($_, @Count_Names, 'all');
+        if (@matches == 1) {
+        if ($matches[0] eq 'all') {
+            for (@Count_Names) {
+            next if $_ eq 'AESL'; # skip this one
+            ++$CNTS{lc $_};
+            }
+        } else {
+            ++$CNTS{lc $matches[0]};
+        }
+        }
+        elsif (@matches == 0) {
+        &ErrorMsg("invalid counts specifier \"$_\"");
+        ++$ERRORS;
+        }
+        else {
+        &ErrorMsg("ambiguous counts specifier \"$_\"");
+        ++$ERRORS;
+        }
+    }
     }
 }
 
@@ -1823,17 +1823,17 @@ sub SplitPath {
     local($_) = @_;
     my($dirname, $basename, $vcsuffix, $i);
     if ($OPTS{'vcstring'}) {
-	$i = index($_, $OPTS{'vcstring'});
-	unless ($i < 0) {
-	    $vcsuffix = substr($_, $i+1);
-	    $_ = substr($_, 0, $i);
-	}
+    $i = index($_, $OPTS{'vcstring'});
+    unless ($i < 0) {
+        $vcsuffix = substr($_, $i+1);
+        $_ = substr($_, 0, $i);
+    }
     }
     ($dirname, $basename) = ('.', $_);
     $i = rindex($_, $Path_Sep);
     unless ($i < 0) {
-	$dirname = substr($_, 0, $i);
-	$basename = substr($_, $i+1);
+    $dirname = substr($_, 0, $i);
+    $basename = substr($_, $i+1);
     }
     ($dirname, $basename, $vcsuffix);
 }
@@ -1879,8 +1879,8 @@ sub ExcludeFile {
   if($OPTS{'default_exclude'}) {
     foreach my $ex_pattern (@EXCLUDES) {
       if($pathname =~ m/$ex_pattern/) {
-	# matches exclude pattern
-	return 1; # don't use this file
+    # matches exclude pattern
+    return 1; # don't use this file
       }
     }
   }
@@ -1889,8 +1889,8 @@ sub ExcludeFile {
     my @user_excludes = @{ $OPTS{'excludedir'} };
     foreach my $user_pattern (@user_excludes) {
       if($pathname =~ m/$user_pattern/) {
-	#matches pattern, don't use
-	return 1;
+    #matches pattern, don't use
+    return 1;
       }
     }
   }
@@ -1918,11 +1918,11 @@ sub RefLanguage {
     local($_) = $lang;
     ## Figure out the language-specific pair of arrays to use
     if ($lang) {
-	$_ = "C" if ($lang eq "C++"); ## C & C++ use the same arrays
-	## Arrays are named <LANG>_DEFNS and <LANG>_EVALS where <LANG> is
-	## all uppercase with non-alphanumerics removed
-	s/\W//g;
-	s/[a-z]/\U$&/g;
+    $_ = "C" if ($lang eq "C++"); ## C & C++ use the same arrays
+    ## Arrays are named <LANG>_DEFNS and <LANG>_EVALS where <LANG> is
+    ## all uppercase with non-alphanumerics removed
+    s/\W//g;
+    s/[a-z]/\U$&/g;
     }
     $_;
 }
@@ -1945,47 +1945,47 @@ sub GuessLanguage {
     local($_) = @_;
     my($lang) = "";
     if ($DEFAULT_LANG) {
-	$lang = $DEFAULT_LANG;
+    $lang = $DEFAULT_LANG;
     }
     elsif (m/^\s*\#\s*(include|if|ifdef|define)\b/) {
-	$lang = "C";
+    $lang = "C";
     }
     elsif (m|^\s*/\*\*\s*$|) {
-	$lang = "Java";
+    $lang = "Java";
     }
     elsif (m|^\s*/\*|) {
-	$lang = "C";
+    $lang = "C";
     }
     elsif (m|^\s*//|) {
-	$lang = "C++";
+    $lang = "C++";
     }
     elsif (/^\s*\(\*/) {
-	$lang = "Pascal";
+    $lang = "Pascal";
     }
     elsif (/^\s*\{/) {
-	$lang = "Pascal";
+    $lang = "Pascal";
     }
     elsif (/^\s*--/) {
-	$lang = "Ada";	       ## or it could be Eiffel, ZPL or Chapel
+    $lang = "Ada";         ## or it could be Eiffel, ZPL or Chapel
     }
     elsif (/^\s*[\(;]/) {
-	$lang = "Lisp";
+    $lang = "Lisp";
     }
     elsif (/^\s*\*/) {
-	$lang = "Assembly";
+    $lang = "Assembly";
     }
     # DO NOT USE: m:^\s*\#\s*\!\s*\S+$Path_Sep(\S+):
     # IT IS INCOMPATIBLE ON WINDOWS
     elsif (m|^\s*#\s*\!\s*\S+[\\/]([^\\/\s]+)\s*|) {
-	my $execname = $1;	## get the name of the program to exec
-	## Remove the extension if we can't find its name
-	$execname =~ s/\.[^.]*$//   unless (defined $Interpreters{$execname});
-	## Remove trailing numbers if we still can't find its name
-	$execname =~ s/\d[.\d]*$//  unless (defined $Interpreters{$execname});
-	$lang = $Interpreters{$execname} if (defined $Interpreters{$execname});
+    my $execname = $1;  ## get the name of the program to exec
+    ## Remove the extension if we can't find its name
+    $execname =~ s/\.[^.]*$//   unless (defined $Interpreters{$execname});
+    ## Remove trailing numbers if we still can't find its name
+    $execname =~ s/\d[.\d]*$//  unless (defined $Interpreters{$execname});
+    $lang = $Interpreters{$execname} if (defined $Interpreters{$execname});
     }
     elsif (/^\s*#/) {
-	   $lang = "shell";
+       $lang = "shell";
        }
 
     $lang = $DEFAULT_LANG if ($DEFAULT_LANG && (! $lang));
@@ -2015,37 +2015,37 @@ sub SetLanguage {
     my ($dirname, $basename) = &SplitPath($_);
     ## First see if we have a '.' suffix
     if ($basename =~ /.+(\.[^.]+)$/) {
-	$lang = $Suffixes{$1} if (defined $Suffixes{$1});
+    $lang = $Suffixes{$1} if (defined $Suffixes{$1});
     }
     elsif ($basename =~ /^makefile/i) {
-	$lang = "make";
+    $lang = "make";
     }
     elsif ($filepath ne '-') {
-	## Not a normal '.' suffix, have to look at all of them
-	my %seen = ();
-	foreach (keys %Suffixes) {
-	    next unless ($_);
-	    next if (defined $seen{$_});
-	    ++$seen{$_};
-	    s/\W/\\$&/g;	## escape regexp meta-characters
-	    $lang = $Suffixes{$_} if ($basename =~ m|^.+$_$|);
-	    last if ($lang);
-	}
+    ## Not a normal '.' suffix, have to look at all of them
+    my %seen = ();
+    foreach (keys %Suffixes) {
+        next unless ($_);
+        next if (defined $seen{$_});
+        ++$seen{$_};
+        s/\W/\\$&/g;    ## escape regexp meta-characters
+        $lang = $Suffixes{$_} if ($basename =~ m|^.+$_$|);
+        last if ($lang);
+    }
     }
     if ($lang) {
-	$lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
-	my $ref = &RefLanguage($lang) || "";
-	($LANG_NAME, $LANG_REF) = ($lang, $ref);
+    $lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
+    my $ref = &RefLanguage($lang) || "";
+    ($LANG_NAME, $LANG_REF) = ($lang, $ref);
     }
     else {
-	## If we still dont know the language -- see if we can tell by
-	## looking at the contents of the first non-blank line
-	my $found_line=0;
-	if ($filepath eq '-') {
-	    $_ = '';
-	}
-	elsif (open(FILEPATH, $filepath)) {
-	    while (<FILEPATH>) {
+    ## If we still dont know the language -- see if we can tell by
+    ## looking at the contents of the first non-blank line
+    my $found_line=0;
+    if ($filepath eq '-') {
+        $_ = '';
+    }
+    elsif (open(FILEPATH, $filepath)) {
+        while (<FILEPATH>) {
                if ( /^\s$/ ) {
                        chop;
                }
@@ -2053,16 +2053,16 @@ sub SetLanguage {
                        $found_line = 1;
                        last;
                }
-	    }
-	    close(FILEPATH);
-	}
-	if( ! $found_line) {
-	    my $ref = &RefLanguage($DEFAULT_LANG)||"";
-	    ($LANG_NAME, $LANG_REF) = ($DEFAULT_LANG, $ref);
-	}
-	else {
-	    &GuessLanguage($_);
-	}
+        }
+        close(FILEPATH);
+    }
+    if( ! $found_line) {
+        my $ref = &RefLanguage($DEFAULT_LANG)||"";
+        ($LANG_NAME, $LANG_REF) = ($DEFAULT_LANG, $ref);
+    }
+    else {
+        &GuessLanguage($_);
+    }
     }
 }
 
@@ -2085,7 +2085,7 @@ sub IsSeparator {
     return 0 if (@{ $OPTS{'separate'} } == 0);
     my $regexp;
     foreach $regexp (@{ $OPTS{'separate'} }) {
-	return 1 if (/^(?:$regexp)$/);
+    return 1 if (/^(?:$regexp)$/);
     }
     0;
 }
@@ -2127,184 +2127,175 @@ sub SourceCount {
     my %error = ('Error', "Error");
     my $filehandle;
     local($_);
-    my $diffType;		## one of '' or '<' or '>'
+    my $diffType;       ## one of '' or '<' or '>'
     my ($inComment, $inQuote) = (0, '');
     my %counts = ();
 
     ## Fill in any missing langDefns
     for (keys %DEFAULT_DEFNS) {
-	$langDefns{$_} = $DEFAULT_DEFNS{$_} unless exists $langDefns{$_};
+        $langDefns{$_} = $DEFAULT_DEFNS{$_} unless exists $langDefns{$_};
     }
 
     ## Open input
     if (($filename eq "-") && !($OPTS{'filelist'} && (@ARGV == 0))) {
-	$filehandle = \*STDIN;
+        $filehandle = \*STDIN;
     }
     else {
-	if ($OPTS{'pred'} || $OPTS{'fromversion'} || $OPTS{'toversion'}) {
-	    ## invoke cdiff using ClearCase version selectors
-	    my $from_pname = $filename;
-	    my $to_pname   = $filename;
-	    $from_pname      .= "\@\@$OPTS{'fromversion'}"  if ($OPTS{'fromversion'});
-	    $to_pname        .= "\@\@$OPTS{'toversion'}"    if ($OPTS{'toversion'});
-	    my $cdiff_cmd  = ${EXECDIR} . $Path_Sep . 'cdiff';
-	    $cdiff_cmd       .= " -unlimited -noprolog -blank_ignore";
-	    $cdiff_cmd       .= ($OPTS{'pred'}) ? " -pred" : " $from_pname";
-	    $cdiff_cmd       .= " $to_pname";
-	    $filename = "$cdiff_cmd |";
-	}
-	$filehandle = \*INPUT;
-	unless (open(INPUT, $filename)) {
-	    &ErrorMsg("Can't open $filename for reading: $!");
-	    return %error;
-	}
+        if ($OPTS{'pred'} || $OPTS{'fromversion'} || $OPTS{'toversion'}) {
+            ## invoke cdiff using ClearCase version selectors
+            my $from_pname = $filename;
+            my $to_pname   = $filename;
+            $from_pname      .= "\@\@$OPTS{'fromversion'}"  if ($OPTS{'fromversion'});
+            $to_pname        .= "\@\@$OPTS{'toversion'}"    if ($OPTS{'toversion'});
+            my $cdiff_cmd  = ${EXECDIR} . $Path_Sep . 'cdiff';
+            $cdiff_cmd       .= " -unlimited -noprolog -blank_ignore";
+            $cdiff_cmd       .= ($OPTS{'pred'}) ? " -pred" : " $from_pname";
+            $cdiff_cmd       .= " $to_pname";
+            $filename = "$cdiff_cmd |";
+        }
+        $filehandle = \*INPUT;
+        unless (open(INPUT, $filename)) {
+            &ErrorMsg("Can't open $filename for reading: $!");
+            return %error;
+        }
     }
 
     while (<$filehandle>) {
-	chomp;
-	$diffType = '';
-	## See if this is a context separator.
-	if (&IsSeparator($_)) {
-	    ## Yes, reset context and get the next line.
-	    ($inComment, $inQuote) = (0, '');
-	    next;
-	}
-	## Strip any leading prefix
-	s/^(?:$OPTS{'prefix'})// if ($OPTS{'prefix'});
+        chomp;
+        $diffType = '';
+        ## See if this is a context separator.
+        if (&IsSeparator($_)) {
+            ## Yes, reset context and get the next line.
+            ($inComment, $inQuote) = (0, '');
+            next;
+        }
+        ## Strip any leading prefix
+        s/^(?:$OPTS{'prefix'})// if ($OPTS{'prefix'});
+        
+        ## If this is diff(1) output, do some special stuff
+        if ($OPTS{'diff'}) {
+            if (/^([<>])\s+/) {
+            ## line was inserted or deleted (strip the prefix)
+            $diffType = $1;
+            $_ = $'; #'
+            } else {
+                ## Reset context and get the next line.
+                ($inComment, $inQuote) = (0, '');
+                next;
+            }
+        }
 
-	## If this is diff(1) output, do some special stuff
-	if ($OPTS{'diff'}) {
-	    if (/^([<>])\s+/) {
-		## line was inserted or deleted (strip the prefix)
-		$diffType = $1;
-		$_ = $'; #'
-	    }
-	    else {
-		## Reset context and get the next line.
-		($inComment, $inQuote) = (0, '');
-		next;
-	    }
-	}
+        ## Check for a blank line
+        ++$counts{"${diffType}Lines"};
+        ++$counts{"Lines"} if ($diffType); ## count total lines in a diff
+        if (/^\s*$/) {
+            ++$counts{"${diffType}Blank"};
+            next;
+        } 
 
-	## Check for a blank line
-	++$counts{"${diffType}Lines"};
-	++$counts{"Lines"} if ($diffType); ## count total lines in a diff
-	if (/^\s*$/) {
-	    ++$counts{"${diffType}Blank"};
-	    next;
-	} 
+        ## The following is a KLUGE to distinguish C++ from C
+        if ($LANG_NAME eq "C" && !($inComment || $inQuote)) {
+            $LANG_NAME = "C++"
+            if m/(?: ^\s*
+                  (?: \:\:\s*\w |
+                   (?: class |
+                public \s* : |
+                private \s* : |
+                protected \s* : |
+                template \s* < | 
+                virtual | 
+                throw \s* [\(;] |
+                try \s* [{}] |
+                catch \s* \( |
+                dynamic_cast
+                )
+                   )
+                  \b) |
+                  (?: ^[^\/\"\']*
+                   (?: \b
+                (?: throw \s* [\(;] |
+                 try \s* [{}] |
+                 catch \s* \( |
+                 dynamic_cast
+                 )\b |
+                \:\:
+                )
+                   )/x;
+        }
 
-	## The following is a KLUGE to distinguish C++ from C
-	if ($LANG_NAME eq "C" && !($inComment || $inQuote)) {
-	    $LANG_NAME = "C++"
-		if m/(?: ^\s*
-		      (?: \:\:\s*\w |
-		       (?: class |
-			public \s* : |
-			private \s* : |
-			protected \s* : |
-			template \s* < | 
-			virtual | 
-			throw \s* [\(;] |
-			try \s* [{}] |
-			catch \s* \( |
-			dynamic_cast
-			)
-		       )
-		      \b) |
-		      (?: ^[^\/\"\']*
-		       (?: \b
-			(?: throw \s* [\(;] |
-			 try \s* [{}] |
-			 catch \s* \( |
-			 dynamic_cast
-			 )\b |
-			\:\:
-			)
-		       )/x;
-	}
-
-	## Perform any language-specific preprocessing
-	my $expr;
-	foreach $expr (@langEvals) {
-	    eval $expr;
-	}
-	## See how many comments, statements & tokens are on this line
-	my ($hasSource, $hasComment) = (0, 0);
-	s/^\s*//;
-	while ($_) {
-	    if ($inComment > 0) {
-		++$hasComment;
-		if (m/$langDefns{'CMMNT_STATE'}/) {
-		    $_ = $'; #'
-		    if ($langDefns{'CMMNT_NESTING'}) {
-			--$inComment if ($langDefns{$&} eq $EndCmnt);
-			++$inComment if ($langDefns{$&} eq $BeginCmnt);
-		    }
-		    else {
-			$inComment = 0  if ($langDefns{$&} eq $EndCmnt);
-		    }
-		}
-		else {
-		    $_ = '';
-		}
-	    }
-	    elsif ($inQuote) {
-		++$hasSource;
-		if (m/$langDefns{"${inQuote}QUOTE_STATE"}/) {
-		    $_ = $'; #'
-		    $inQuote = '' if ($& eq $langDefns{"END_${inQuote}"});
-		}
-		else {
-		    $_ = '';
-		}
-	    }
-	    elsif (m/^(?:$langDefns{'START_STATE'})/) {
-		$_ = $'; #'
-		if ($langDefns{$&} eq $EolCmnt) {
-		    ++$hasComment;
-		    ++$hasSource if ($` =~ /\S/);
-		    $_ = '';
-		}
-		elsif ($langDefns{$&} eq $BeginCmnt) {
-		    ++$hasComment;
-		    ++$hasSource if ($` =~ /\S/);
-		    $inComment = 1;
-		}
-		else {
-		    ++$hasSource;
-		    if ($langDefns{$&} eq $BeginQuote) {
-			$inQuote = $&;
-			my $quote = $_;
-			$quote =~ s/$inQuote.*// or $quote .= '...';
-			&Token(\%counts, $diffType, 'CPtoks',
-			       "$inQuote$quote$inQuote");
-		    }
-		}
-	    }
-	    else {
-		++$hasSource;
-		if (s/^($langDefns{'SYMBOL'})\s*//) {
-		    if (eval $langDefns{'KEYWORD'}) {
-			&Token(\%counts, $diffType, 'KPtoks', $&);
-		    } else {
-			&Token(\%counts, $diffType, 'SPtoks', $&);
-		    }
-		} elsif (s/^(?:$langDefns{'NUMBER'})\s*//) {
-		    &Token(\%counts, $diffType, 'CPtoks', $&);
-		} elsif (s/^(?:$langDefns{'GROUPER'})\s*//) {
-		    &Token(\%counts, $diffType, 'GPtoks', $&);
-		} elsif (s/^(?:$langDefns{'OPERATOR'})\s*//) {
-		    &Token(\%counts, $diffType, 'OPtoks', $&);
-		} else {	# ignore anything else
-		    &ErrorMsg("undefined token '$_'\n");
-		    s/^.//;
-		}
-	    }
-	    s/^\s*//;
-	}
-	++$counts{"${diffType}NCSL"}  if ($hasSource);
-	++$counts{"${diffType}Cmnts"} if ($hasComment);
+        ## Perform any language-specific preprocessing
+        my $expr;
+        foreach $expr (@langEvals) {
+            eval $expr;
+        }
+        ## See how many comments, statements & tokens are on this line
+        my ($hasSource, $hasComment) = (0, 0);
+        s/^\s*//;
+        while ($_) {
+            if ($inComment > 0) {
+                ++$hasComment;
+                if (m/$langDefns{'CMMNT_STATE'}/) {
+                    $_ = $'; #'
+                    if ($langDefns{'CMMNT_NESTING'}) {
+                        --$inComment if ($langDefns{$&} eq $EndCmnt);
+                        ++$inComment if ($langDefns{$&} eq $BeginCmnt);
+                    } else {
+                        $inComment = 0  if ($langDefns{$&} eq $EndCmnt);
+                    }
+                } else {
+                    $_ = '';
+                }
+            } elsif ($inQuote) {
+                ++$hasSource;
+                if (m/$langDefns{"${inQuote}QUOTE_STATE"}/) {
+                    $_ = $'; #'
+                    $inQuote = '' if ($& eq $langDefns{"END_${inQuote}"});
+                } else {
+                    $_ = '';
+                }
+            } elsif (m/^(?:$langDefns{'START_STATE'})/) {
+                $_ = $'; #'
+                if ($langDefns{$&} eq $EolCmnt) {
+                    ++$hasComment;
+                    ++$hasSource if ($` =~ /\S/);
+                    $_ = '';
+                } elsif ($langDefns{$&} eq $BeginCmnt) {
+                    ++$hasComment;
+                    ++$hasSource if ($` =~ /\S/);
+                    $inComment = 1;
+                } else {
+                    ++$hasSource;
+                    if ($langDefns{$&} eq $BeginQuote) {
+                        $inQuote = $&;
+                        my $quote = $_;
+                        $quote =~ s/$inQuote.*// or $quote .= '...';
+                        &Token(\%counts, $diffType, 'CPtoks',
+                               "$inQuote$quote$inQuote");
+                    }
+                }
+            } else {
+                ++$hasSource;
+                if (s/^($langDefns{'SYMBOL'})\s*//) {
+                    if (eval $langDefns{'KEYWORD'}) {
+                        &Token(\%counts, $diffType, 'KPtoks', $&);
+                    } else {
+                        &Token(\%counts, $diffType, 'SPtoks', $&);
+                    }
+                } elsif (s/^(?:$langDefns{'NUMBER'})\s*//) {
+                    &Token(\%counts, $diffType, 'CPtoks', $&);
+                } elsif (s/^(?:$langDefns{'GROUPER'})\s*//) {
+                    &Token(\%counts, $diffType, 'GPtoks', $&);
+                } elsif (s/^(?:$langDefns{'OPERATOR'})\s*//) {
+                    &Token(\%counts, $diffType, 'OPtoks', $&);
+                } else {    # ignore anything else
+                    &ErrorMsg("undefined token '$_'\n");
+                    s/^.//;
+                }
+            }
+            s/^\s*//;
+        }
+        ++$counts{"${diffType}NCSL"}  if ($hasSource);
+        ++$counts{"${diffType}Cmnts"} if ($hasComment);
     }
 
     close($filehandle) unless ($filename eq '-');
@@ -2429,10 +2420,10 @@ sub WriteXml {
       my %mpi_totals = &CountMPI($fname, $language);
       my %omp_totals = &CountOMP($fname, $language);
       foreach my $key (keys %mpi_totals) {
-	    $fileInfoHash{$key} = $mpi_totals{$key};
+        $fileInfoHash{$key} = $mpi_totals{$key};
       }
       foreach my $key (keys %omp_totals) {
-	    $fileInfoHash{$key} = $omp_totals{$key};
+        $fileInfoHash{$key} = $omp_totals{$key};
       }
     }
     push(@fileElementArray, \%fileInfoHash);
@@ -2458,52 +2449,52 @@ sub CountMPI {
       my $cmnt_end = '\*/';
       my $cmnt_single = '//';
       if ($line =~ /$cmnt_start/) { # check if line contains /*
-	# split on /* to get part preceeding /*
-	my @code = split(/$cmnt_start/, $line);
-	# process part before /*, it is either blank or code
-	while ($code[0] =~ m/MPI_\w*/gi) {
-	  $mpi_counts{$&}++;
-	}
-	$inComment++; # mark that in multi-line comment
+    # split on /* to get part preceeding /*
+    my @code = split(/$cmnt_start/, $line);
+    # process part before /*, it is either blank or code
+    while ($code[0] =~ m/MPI_\w*/gi) {
+      $mpi_counts{$&}++;
+    }
+    $inComment++; # mark that in multi-line comment
       }
       elsif ($line =~ /$cmnt_single/) { # check single line cmnt
-	# split on // to get part preceeding the //
-	my @code = split(/$cmnt_single/, $line);
-	# process part before //, either blank or code
-	while ($code[0] =~ m/MPI_\w*/gi) {
-	  $mpi_counts{$&}++;
-	}
-	# Once we've processed this case, go to the next line
-	next;
+    # split on // to get part preceeding the //
+    my @code = split(/$cmnt_single/, $line);
+    # process part before //, either blank or code
+    while ($code[0] =~ m/MPI_\w*/gi) {
+      $mpi_counts{$&}++;
+    }
+    # Once we've processed this case, go to the next line
+    next;
       }
       if ($line =~ /$cmnt_end/) { # check end of multi-line cmnt
-	$inComment = 0; # cmnt end found, not in multi-line cmnt
+    $inComment = 0; # cmnt end found, not in multi-line cmnt
       }
       if ($inComment > 0) {
-	# if inComment > 0 then in multi-line comment
-	# so don't process $line, either processed earlier or
-	# doesn't need to be processed because line is only comment text
-	next;
+    # if inComment > 0 then in multi-line comment
+    # so don't process $line, either processed earlier or
+    # doesn't need to be processed because line is only comment text
+    next;
       }
       else { # not in multi-line comment, process $line
-	while ($line =~ m/MPI_\w*/gi) {
-	  $mpi_counts{$&}++;
-	}
+    while ($line =~ m/MPI_\w*/gi) {
+      $mpi_counts{$&}++;
+    }
       }
     }
     elsif ($lang eq 'FORTRAN') {
       my $cmnt_char = 'C';
       my $cmnt_char2 = '!';
       if ($line =~ /^$cmnt_char/ || $line =~ /^$cmnt_char2/) {
-	next; # comment starts a beginning of line, don't process
+    next; # comment starts a beginning of line, don't process
       }
       elsif ($line =~ /$cmnt_char2/) {
-	# split on !, only check part before !
-	my @code = split(/$cmnt_char2/, $line);
-	$line = $code[0];
+    # split on !, only check part before !
+    my @code = split(/$cmnt_char2/, $line);
+    $line = $code[0];
       }
       while ($line =~ m/MPI_\w*/gi) { # find MPI_* tokens
-	$mpi_counts{$&}++;
+    $mpi_counts{$&}++;
       }
     }
   }
@@ -2530,68 +2521,68 @@ sub CountOMP {
       my $cmnt_end = '\*/';
       my $cmnt_single = '//';
       if ($line =~ /$cmnt_start/) { # check if line contains /*
-	# split on /* to get part preceeding /*
-	my @code = split(/$cmnt_start/, $line);
-	# process part before /*, it is either blank or code
-	while ($code[0] =~ m/omp[_\ ][\w\ ]+/gi) {
-	  my $omp_token = $&;
-	  $omp_token =~ s/\ /_/g;
-	  if ($omp_token =~ /_$/) { # check for _ at end
-	    chop $omp_token; # remove extra _ at end
-	  }
-	  $omp_counts{$omp_token}++;
-	}
-	$inComment++; # mark that in multi-line comment
+    # split on /* to get part preceeding /*
+    my @code = split(/$cmnt_start/, $line);
+    # process part before /*, it is either blank or code
+    while ($code[0] =~ m/omp[_\ ][\w\ ]+/gi) {
+      my $omp_token = $&;
+      $omp_token =~ s/\ /_/g;
+      if ($omp_token =~ /_$/) { # check for _ at end
+        chop $omp_token; # remove extra _ at end
+      }
+      $omp_counts{$omp_token}++;
+    }
+    $inComment++; # mark that in multi-line comment
       }
       elsif ($line =~ /$cmnt_single/) { # check single line cmnt
-	# split on // to get part preceeding the //
-	my @code = split(/$cmnt_single/, $line);
-	# process part before //, either blank or code
-	while ($code[0] =~ m/omp[_\ ][\w\ ]+/gi) {
-	  my $omp_token = $&;
-	  $omp_token =~ s/\ /_/g;
-	  if ($omp_token =~ /_$/) { # check for _ at end
-	    chop $omp_token; # remove extra _ at end
-	  }
-	  $omp_counts{$omp_token}++;
-	}
+    # split on // to get part preceeding the //
+    my @code = split(/$cmnt_single/, $line);
+    # process part before //, either blank or code
+    while ($code[0] =~ m/omp[_\ ][\w\ ]+/gi) {
+      my $omp_token = $&;
+      $omp_token =~ s/\ /_/g;
+      if ($omp_token =~ /_$/) { # check for _ at end
+        chop $omp_token; # remove extra _ at end
+      }
+      $omp_counts{$omp_token}++;
+    }
       }
       if ($line =~ /$cmnt_end/) { # check end of multi-line cmnt
-	$inComment = 0; # cmnt end found, not in multi-line cmnt
+    $inComment = 0; # cmnt end found, not in multi-line cmnt
       }
       if ($inComment > 0) {
-	# if inComment > 0 then in multi-line comment
-	# so don't process $line, either processed earlier or
-	# doesn't need to be processed because line is only comment text
-	next;
+    # if inComment > 0 then in multi-line comment
+    # so don't process $line, either processed earlier or
+    # doesn't need to be processed because line is only comment text
+    next;
       }
       else { # not in multi-line comment, process $line
-	while ($line =~ m/omp[_\ ][\w\ ]+/gi) {
-	  my $omp_token = $&;
-	  $omp_token =~ s/\ /_/g;
-	  if ($omp_token =~ /_$/) { # check for _ at end
-	    chop $omp_token; # remove extra _ at end
-	  }
-	  $omp_counts{$omp_token}++;
-	}
+    while ($line =~ m/omp[_\ ][\w\ ]+/gi) {
+      my $omp_token = $&;
+      $omp_token =~ s/\ /_/g;
+      if ($omp_token =~ /_$/) { # check for _ at end
+        chop $omp_token; # remove extra _ at end
+      }
+      $omp_counts{$omp_token}++;
+    }
       }
     }
     elsif ($lang eq 'FORTRAN') {
       if ($line =~ /^C/ || ($line =~ /^!/ && $line !~ /^!\$OMP/i)) {
-	next; # comment starts a beginning of line, don't process
+    next; # comment starts a beginning of line, don't process
       }
       elsif ($line =~ /!/ && $line !~ /!\$/) {
-	# split on !, only check part before !
-	my @code = split(/!/, $line);
-	$line = $code[0];
+    # split on !, only check part before !
+    my @code = split(/!/, $line);
+    $line = $code[0];
       }
       while ($line =~ m/OMP[_\ ][\w\ ]+/gi) {
-	my $omp_token = $&;
-	$omp_token =~ s/\ /_/g;
-	if ($omp_token =~ /_$/) { # check for _ at end
-	  chop $omp_token; # remove extra _ at end
-	}
-	$omp_counts{$omp_token}++;
+    my $omp_token = $&;
+    $omp_token =~ s/\ /_/g;
+    if ($omp_token =~ /_$/) { # check for _ at end
+      chop $omp_token; # remove extra _ at end
+    }
+    $omp_counts{$omp_token}++;
       }
     }
   }
@@ -2627,23 +2618,23 @@ sub ExpandDirectory {
     my($absdir, @elements);
     local($_);
     unless ($Is_WinDos) {
-	## On Unix, make sure we dont traverse this directory twice
-	## due to symlinks
-	my($absdir);
-	chomp($absdir = `cd $dir && /bin/pwd`);
-	return @elements if (defined $TRAVERSED{$absdir});
-	++$TRAVERSED{$absdir};
+    ## On Unix, make sure we dont traverse this directory twice
+    ## due to symlinks
+    my($absdir);
+    chomp($absdir = `cd $dir && /bin/pwd`);
+    return @elements if (defined $TRAVERSED{$absdir});
+    ++$TRAVERSED{$absdir};
     }
     ## Open the directory for reading
     unless (opendir(DIRECTORY, $dir)) {
-	&error_msg("Can't traverse directory $dir: $!");
-	return @elements;
+    &error_msg("Can't traverse directory $dir: $!");
+    return @elements;
     }
     $dir = '' if ($dir eq $Path_Sep); ## might be root
     ## Read all the directory entries
     while ($_ = readdir(DIRECTORY)) {
-	next if (/^\.*$/);	## ignore . and ..
-	push(@elements, "${dir}${Path_Sep}$_");
+    next if (/^\.*$/);  ## ignore . and ..
+    push(@elements, "${dir}${Path_Sep}$_");
     }
     closedir(DIRECTORY);
     (@elements);
@@ -2666,43 +2657,43 @@ sub CountFiles {
     my @files = @_;
     local ($_);
     foreach (@files) {
-	if (-d $_  && $OPTS{'recurse'}) {
-	    my @entries = &ExpandDirectory($_);
-	    &CountFiles(@entries);
-	    next;
-	}
-	## See if we should exclude this file from the list
-	next if (&ExcludeFile($_));
-	if (-d $_  && $OPTS{'recurse'}) {
-	    &ErrorMsg("$_ is a directory.") unless ($OPTS{'ignore'});
-	    next;
-	}
-	if (-B _) {
-	    &ErrorMsg("$_ is a binary file.") unless ($OPTS{'ignore'});
-	    next;
-	}
-	## See if we can determine the programming language
-	($LANG_NAME, $LANG_REF) = ('', '');
-	&SetLanguage($_);
-	&ErrorMsg("Can't determine programming language for $_")
-	    unless ($LANG_REF || $OPTS{'ignore'});
-	next unless (exists $LANG_RULES{$LANG_REF});
-	my %counts = &SourceCount($_, @{ $LANG_RULES{$LANG_REF} });
-	next if ($counts{'Error'} || !$counts{'Lines'});
-	&PrintCounts('s', '', '', \@Count_Names, "", \%counts)
-	    if ((++$NumSources == 1) && $SECS{'header'});
-	++$NumSources{$LANG_NAME};
-	my (@kindList, $kind) = ("");
-	@kindList = ('<', '>') if ($OPTS{'diff'});
-	for $kind (@kindList) {
-	    &PrintCounts('d', "$_$KIND{$kind}", $LANG_NAME, \@Count_Names,
-			 $kind, \%counts);
-	}
+    if (-d $_  && $OPTS{'recurse'}) {
+        my @entries = &ExpandDirectory($_);
+        &CountFiles(@entries);
+        next;
+    }
+    ## See if we should exclude this file from the list
+    next if (&ExcludeFile($_));
+    if (-d $_  && $OPTS{'recurse'}) {
+        &ErrorMsg("$_ is a directory.") unless ($OPTS{'ignore'});
+        next;
+    }
+    if (-B _) {
+        &ErrorMsg("$_ is a binary file.") unless ($OPTS{'ignore'});
+        next;
+    }
+    ## See if we can determine the programming language
+    ($LANG_NAME, $LANG_REF) = ('', '');
+    &SetLanguage($_);
+    &ErrorMsg("Can't determine programming language for $_")
+        unless ($LANG_REF || $OPTS{'ignore'});
+    next unless (exists $LANG_RULES{$LANG_REF});
+    my %counts = &SourceCount($_, @{ $LANG_RULES{$LANG_REF} });
+    next if ($counts{'Error'} || !$counts{'Lines'});
+    &PrintCounts('s', '', '', \@Count_Names, "", \%counts)
+        if ((++$NumSources == 1) && $SECS{'header'});
+    ++$NumSources{$LANG_NAME};
+    my (@kindList, $kind) = ("");
+    @kindList = ('<', '>') if ($OPTS{'diff'});
+    for $kind (@kindList) {
+        &PrintCounts('d', "$_$KIND{$kind}", $LANG_NAME, \@Count_Names,
+             $kind, \%counts);
+    }
 
-	for (keys %counts) {
-	    $Totals{$_} += $counts{$_};
-	    $Totals{$LANG_NAME}{$_} += $counts{$_};
-	}
+    for (keys %counts) {
+        $Totals{$_} += $counts{$_};
+        $Totals{$LANG_NAME}{$_} += $counts{$_};
+    }
     }
 }
 
@@ -2729,23 +2720,23 @@ sub PrintTotals {
     @kindList = ('<', '>') if ($OPTS{'diff'});
 
     foreach (@languages) {
-	for $kind (@kindList) {
-	    if ($SECS{'langtotals'}) {
-		$str = sprintf("%s  (%d %s)",
-			       "----- $_$KIND{$kind} -----",
-			       $NumSources{$_},
-			       ($NumSources{$_} == 1) ? 'file' : 'files');
-		&PrintCounts('d', $str, '', \@Count_Names, $kind, $totals->{$_});
-	    }
-	}
+    for $kind (@kindList) {
+        if ($SECS{'langtotals'}) {
+        $str = sprintf("%s  (%d %s)",
+                   "----- $_$KIND{$kind} -----",
+                   $NumSources{$_},
+                   ($NumSources{$_} == 1) ? 'file' : 'files');
+        &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals->{$_});
+        }
+    }
     }
     for $kind (@kindList) {
-	$str = sprintf("%s  (%d %s)",
-		       "***** TOTAL$KIND{$kind} *****",
-		       $NumSources,
-		       ($NumSources == 1) ? 'file' : 'files');
-	&PrintCounts('d', $str, '', \@Count_Names, $kind, $totals)
-	    if ($SECS{'totals'} && ((!$SECS{'langtotals'}) || (@languages > 1)));
+    $str = sprintf("%s  (%d %s)",
+               "***** TOTAL$KIND{$kind} *****",
+               $NumSources,
+               ($NumSources == 1) ? 'file' : 'files');
+    &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals)
+        if ($SECS{'totals'} && ((!$SECS{'langtotals'}) || (@languages > 1)));
     }
 }
 
@@ -2781,37 +2772,37 @@ sub main {
 
     ## Parse options
     my $rc = &GetOptions( \%OPTS,
-			  "debug",
-			  "help",
-			  "output=s",
-			  "counts=s",
-			  "delim_ignore|delim-ignore",
-			  "diff",
-			  "except=s@",
-			  "filelist",
-			  "fromversion=s",
-			  "ignore",
-			  "language=s@",
-			  "name=s@",
-			  "pred",
-			  "prefix=s",
-			  "recurse",
-			  "sections=s",
-			  "separate=s@",
-			  "toversion=s",
-			  "vcstring=s",
-			  "xml_output=s",
-			  "default_exclude",
-			  "excludedir=s@"
-			  );
+              "debug",
+              "help",
+              "output=s",
+              "counts=s",
+              "delim_ignore|delim-ignore",
+              "diff",
+              "except=s@",
+              "filelist",
+              "fromversion=s",
+              "ignore",
+              "language=s@",
+              "name=s@",
+              "pred",
+              "prefix=s",
+              "recurse",
+              "sections=s",
+              "separate=s@",
+              "toversion=s",
+              "vcstring=s",
+              "xml_output=s",
+              "default_exclude",
+              "excludedir=s@"
+              );
     &Usage(1) if ($OPTS{'help'});
     &Usage(2) unless ($rc);
     &Usage(2) if ((@ARGV == 0) && (-t STDIN));
 
     ## Check for syntax errors
     if ($OPTS{'pred'} && $OPTS{'fromversion'}) {
-	&ErrorMsg("The '-pred' and '-fromversion' options are incompatible!");
-	++$ERRORS;
+    &ErrorMsg("The '-pred' and '-fromversion' options are incompatible!");
+    ++$ERRORS;
     }
     &CheckLanguage(@{ $OPTS{'language'} }) if (@{ $OPTS{'language'} } > 0);
     &CheckSections($OPTS{'sections'}) if ($OPTS{'sections'});
@@ -2821,38 +2812,38 @@ sub main {
 
     ## Redirect STDOUT if requested
     if ($OPTS{'output'}) {
-	close STDOUT;
-	open(STDOUT, ">$OPTS{'output'}")
-	    or &FatalMsg("Unable to redirect STDOUT to $OPTS{'output'}: $!");
+    close STDOUT;
+    open(STDOUT, ">$OPTS{'output'}")
+        or &FatalMsg("Unable to redirect STDOUT to $OPTS{'output'}: $!");
     }
 
     if ($OPTS{'pred'} || $OPTS{'fromversion'} || $OPTS{'toversion'}) {
-	## Set mandatory options for using cdiff
-	$OPTS{'diff'}     = 1;
-	$OPTS{'separate'} = ['-----'];
+    ## Set mandatory options for using cdiff
+    $OPTS{'diff'}     = 1;
+    $OPTS{'separate'} = ['-----'];
     }
     %KIND = (
-	     '' , '',
-	     '<', ' DELETED',
-	     '>', ' INSERTED'
-	     );
+         '' , '',
+         '<', ' DELETED',
+         '>', ' INSERTED'
+         );
 
     if (! $OPTS{'filelist'}) {
-	@ARGV = ('-') if (0 == @ARGV);
-	&CountFiles(@ARGV);
+    @ARGV = ('-') if (0 == @ARGV);
+    &CountFiles(@ARGV);
     }
     else {
-	## have to read list of filenames from input
-	while (<>) {
-	    chomp;
-	    &CountFiles($_);
-	}
+    ## have to read list of filenames from input
+    while (<>) {
+        chomp;
+        &CountFiles($_);
+    }
     }
     &PrintTotals(\%Totals) if (($SECS{'totals'} || $SECS{'langtotals'}) &&
-			       ((! $SECS{'files'}) || ($NumSources > 1)));
-			       
+                   ((! $SECS{'files'}) || ($NumSources > 1)));
+                   
     if ($OPTS{'xml_output'}) {
-      &WriteXml();
+      &WriteXmlToFile();
     }
 
 }
