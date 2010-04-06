@@ -90,7 +90,8 @@ sclc -- Source-code line counter
       [-name REGEXP] [-except REGEXP] [-recurse] [-filelist] [-ignore]
       [-diff] [-fromversion SELECTOR] [-toversion SELECTOR] [-pred]
       [-prefix REGEXP] [-separate REGEXP] [-vcstring STRING] [-output FILE]
-      [-xml_output FILE][-default_exclude][-excludedir REGEXP][FILE ...]
+      [-xml_output FILE][tm3_output FILE][-default_exclude][-excludedir REGEXP]
+      [FILE ...]
 
 =head1 OPTIONS AND ARGUMENTS
 
@@ -284,7 +285,12 @@ redirecting STDOUT on the cmdline using "> I<FILE>").
 
 =item B<-xml_output> I<FILE>
 
-Writes the results to the specified FILE.  Output will still be shown on the screen in addition to being in the XML file.
+Writes the results in XML format to the specified FILE.  Output will still be shown on the screen in addition to being in the XML file.
+
+=item B<-tm3_output> I<FILE>
+
+Writes the results in TM3 format to the specified FILE.  Output will still be shown on the screen in addition to being in the TM3 file.
+
 
 =item B<-default_exclude>
 
@@ -328,6 +334,9 @@ The B<-recurse> option can be used to specify that all files in a given director
 processed.
 
 The B<-xml_output> option will create a file containing the size data in XML format. 
+
+The B<-tm3_output> option will create a file containing the size data in TM3 format. For format details, see:
+E<lt>http://www.cs.umd.edu/hcil/treemap/doc4.1/create_TM3_file.htmlE<gt>
 
 If the B<-diff> option is given than two lines are printed for each set of
 counts: one for deleted lines and one for inserted lines (and the C<DELETED>
@@ -415,6 +424,23 @@ The command line output is the same as before, but now there is a file called si
             fileName="C:/svn-csdl/sclc/src/sclc.pl" 
             blankLines="200" commentLines="870" sourceLines="1284" tptoks="6910" totalLines="2300"/>
    </sclc>
+   
+
+Specifying the B<-tm3_output> option with a file name instructs SCLC to produce a file in TM3 output containing
+the size data, in addition to printing it out to the console:
+
+   $ sclc -recurse -default_exclude -tm3_output size.tm3 src
+    Lines  Blank  Cmnts   NCSL TPtoks
+   ====== ====== ====== ====== ====== ============================================
+     2300    200    870   1284   6910 src\sclc.pl  (Perl)
+
+The command line output is the same as before, but now there is a file called size.tm3 containing the following:
+
+    Language    Lines   Blank   Comments    SLOC    Tokens
+    STRING      INTEGER INTEGER INTEGER     INTEGER INTEGER
+    Perl        2300    200     870         1284    6910        src     sclc.pl
+
+
 
 =head2 Comparing versions using CDIFF
 
@@ -2302,7 +2328,7 @@ sub SourceCount {
 ##----------------------------------------------------------------------
 sub PrintCounts {
   my @tmp = @_;
-  my ($ntype, $fname, $language, $Name, $type, $Count) = @tmp;
+  my ($ntype, $fname, $language, $Name, $type, $Count, $is_total) = @tmp;
   local $_;
   my ($fwidth, @nums);
   my $ll = 79;
@@ -2337,7 +2363,46 @@ sub PrintCounts {
   if ($ntype eq 'd' && $OPTS{'xml_output'}) {
     &WriteXml(@tmp);
   }
+  
+  if($OPTS{'tm3_output'}) {
+      if ($ntype eq 's') {
+          WriteTm3Header(@tmp);
+      } elsif ($ntype eq 'd') {
+          WriteTm3Entry(@tmp) unless $is_total;
+      }
+  }
 }
+
+## Writes the TM3 header to the file
+sub WriteTm3Header {
+    my $tm3file = $OPTS{'tm3_output'};
+    open(TM3, ">$tm3file") or die "Error: cannt open $tm3file for writing\n";
+    print TM3 "Language\t" . "Lines\t"   . "Blank\t"   . "Comments\t" . "SLOC\t"    . "Tokens\n";
+    print TM3 "STRING\t"   . "INTEGER\t" . "INTEGER\t" . "INTEGER\t"  . "INTEGER\t" . "INTEGER\n";
+    close TM3;
+}
+
+sub WriteTm3Entry {
+    my ($ntype, $fname, $language, $Name, $type, $Count) = @_;
+    my $tm3file = $OPTS{'tm3_output'};
+    open(TM3, ">>$tm3file") or die "Error: can't open $tm3file for writing\n";
+
+    my $lines = $$Count{'Lines'} || 0;
+    my $blank = $$Count{'Blank'} || 0;
+    my $comments = $$Count{'Cmnts'} || 0;
+    my $sloc = $$Count{'NCSL'} || 0;
+    my $tokens = $$Count{'TPtoks'} || 0;
+    print TM3 "$language\t$lines\t$blank\t$comments\t$sloc\t$tokens\t";
+    # Divide up the path based on the path separator.
+    # Not that currently we only support forward slash, this will break under windows
+    my @path = split(/\//,$fname);
+    foreach (@path) {
+        print TM3 "\t$_";
+    }
+    print TM3 "\n";
+    close TM3;
+}
+
 
 ##----------------------------------------------------------------------
 ## Adds a file element to the xml file containing the totals for a file.
@@ -2632,43 +2697,43 @@ sub CountFiles {
     my @files = @_;
     local ($_);
     foreach (@files) {
-    if (-d $_  && $OPTS{'recurse'}) {
-        my @entries = &ExpandDirectory($_);
-        &CountFiles(@entries);
-        next;
-    }
-    ## See if we should exclude this file from the list
-    next if (&ExcludeFile($_));
-    if (-d $_  && $OPTS{'recurse'}) {
-        &ErrorMsg("$_ is a directory.") unless ($OPTS{'ignore'});
-        next;
-    }
-    if (-B _) {
-        &ErrorMsg("$_ is a binary file.") unless ($OPTS{'ignore'});
-        next;
-    }
-    ## See if we can determine the programming language
-    ($LANG_NAME, $LANG_REF) = ('', '');
-    &SetLanguage($_);
-    &ErrorMsg("Can't determine programming language for $_")
-        unless ($LANG_REF || $OPTS{'ignore'});
-    next unless (exists $LANG_RULES{$LANG_REF});
-    my %counts = &SourceCount($_, @{ $LANG_RULES{$LANG_REF} });
-    next if ($counts{'Error'} || !$counts{'Lines'});
-    &PrintCounts('s', '', '', \@Count_Names, "", \%counts)
-        if ((++$NumSources == 1) && $SECS{'header'});
-    ++$NumSources{$LANG_NAME};
-    my (@kindList, $kind) = ("");
-    @kindList = ('<', '>') if ($OPTS{'diff'});
-    for $kind (@kindList) {
-        &PrintCounts('d', "$_$KIND{$kind}", $LANG_NAME, \@Count_Names,
-             $kind, \%counts);
-    }
-
-    for (keys %counts) {
-        $Totals{$_} += $counts{$_};
-        $Totals{$LANG_NAME}{$_} += $counts{$_};
-    }
+        if (-d $_  && $OPTS{'recurse'}) {
+            my @entries = &ExpandDirectory($_);
+            &CountFiles(@entries);
+            next;
+        }
+        ## See if we should exclude this file from the list
+        next if (&ExcludeFile($_));
+        if (-d $_  && $OPTS{'recurse'}) {
+            &ErrorMsg("$_ is a directory.") unless ($OPTS{'ignore'});
+            next;
+        }
+        if (-B _) {
+            &ErrorMsg("$_ is a binary file.") unless ($OPTS{'ignore'});
+            next;
+        }
+        ## See if we can determine the programming language
+        ($LANG_NAME, $LANG_REF) = ('', '');
+        &SetLanguage($_);
+        &ErrorMsg("Can't determine programming language for $_")
+            unless ($LANG_REF || $OPTS{'ignore'});
+        next unless (exists $LANG_RULES{$LANG_REF});
+        my %counts = &SourceCount($_, @{ $LANG_RULES{$LANG_REF} });
+        next if ($counts{'Error'} || !$counts{'Lines'});
+        &PrintCounts('s', '', '', \@Count_Names, "", \%counts, 0)
+            if ((++$NumSources == 1) && $SECS{'header'});
+        ++$NumSources{$LANG_NAME};
+        my (@kindList, $kind) = ("");
+        @kindList = ('<', '>') if ($OPTS{'diff'});
+        for $kind (@kindList) {
+            &PrintCounts('d', "$_$KIND{$kind}", $LANG_NAME, \@Count_Names,
+                 $kind, \%counts, 0);
+        }
+        
+        for (keys %counts) {
+            $Totals{$_} += $counts{$_};
+            $Totals{$LANG_NAME}{$_} += $counts{$_};
+        }
     }
 }
 
@@ -2695,23 +2760,23 @@ sub PrintTotals {
     @kindList = ('<', '>') if ($OPTS{'diff'});
 
     foreach (@languages) {
-    for $kind (@kindList) {
-        if ($SECS{'langtotals'}) {
-        $str = sprintf("%s  (%d %s)",
-                   "----- $_$KIND{$kind} -----",
-                   $NumSources{$_},
-                   ($NumSources{$_} == 1) ? 'file' : 'files');
-        &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals->{$_});
+        for $kind (@kindList) {
+            if ($SECS{'langtotals'}) {
+            $str = sprintf("%s  (%d %s)",
+                       "----- $_$KIND{$kind} -----",
+                       $NumSources{$_},
+                       ($NumSources{$_} == 1) ? 'file' : 'files');
+            &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals->{$_}, 1);
+            }
         }
     }
-    }
     for $kind (@kindList) {
-    $str = sprintf("%s  (%d %s)",
-               "***** TOTAL$KIND{$kind} *****",
-               $NumSources,
-               ($NumSources == 1) ? 'file' : 'files');
-    &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals)
-        if ($SECS{'totals'} && ((!$SECS{'langtotals'}) || (@languages > 1)));
+        $str = sprintf("%s  (%d %s)",
+                   "***** TOTAL$KIND{$kind} *****",
+                   $NumSources,
+                   ($NumSources == 1) ? 'file' : 'files');
+        &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals, 1)
+            if ($SECS{'totals'} && ((!$SECS{'langtotals'}) || (@languages > 1)));
     }
 }
 
@@ -2742,6 +2807,7 @@ sub main {
     $OPTS{'except'}       = [];
     $OPTS{'separate'}     = [];
     $OPTS{'xml_output'}   = "";
+    $OPTS{'tm3_output'}   = "";
     $OPTS{'default_exclude'} = 0;
     $OPTS{'excludedir'}   = [];
 
@@ -2767,6 +2833,7 @@ sub main {
               "toversion=s",
               "vcstring=s",
               "xml_output=s",
+              "tm3_output=s",
               "default_exclude",
               "excludedir=s@"
               );
