@@ -2192,35 +2192,10 @@ sub SourceCount {
             ++$counts{"${diffType}Blank"};
             next;
         } 
-
-        ## The following is a KLUGE to distinguish C++ from C
+        
+        # Check if a file labelled as "C" is really C++
         if ($LANG_NAME eq "C" && !($inComment || $inQuote)) {
-            $LANG_NAME = "C++"
-            if m/(?: ^\s*
-                  (?: \:\:\s*\w |
-                   (?: class |
-                public \s* : |
-                private \s* : |
-                protected \s* : |
-                template \s* < | 
-                virtual | 
-                throw \s* [\(;] |
-                try \s* [{}] |
-                catch \s* \( |
-                dynamic_cast
-                )
-                   )
-                  \b) |
-                  (?: ^[^\/\"\']*
-                   (?: \b
-                (?: throw \s* [\(;] |
-                 try \s* [{}] |
-                 catch \s* \( |
-                 dynamic_cast
-                 )\b |
-                \:\:
-                )
-                   )/x;
+            $LANG_NAME = "C++" if IsCeePlusPlus($_);
         }
 
         ## Perform any language-specific preprocessing
@@ -2865,6 +2840,38 @@ sub WriteXmlToFile {
     my %sclcHash = ();
     $sclcHash{'sclc'} = \%fileHash;
     $xml->XMLout(\%sclcHash, OutputFile=>$OPTS{'xml_output'}, KeepRoot=>1, XMLDecl=>"<?xml version='1.0'?>");  
+}
+
+# The following is a KLUGE to distinguish C++ from C
+# Return 1 if the line of code has C++-specific content, else false
+sub IsCeePlusPlus {
+    local($_) = shift;
+    return m/(?: ^\s*
+          (?: \:\:\s*\w |
+           (?: class |
+        public \s* : |
+        private \s* : |
+        protected \s* : |
+        template \s* < | 
+        virtual | 
+        throw \s* [\(;] |
+        try \s* [{}] |
+        catch \s* \( |
+        dynamic_cast
+        )
+           )
+          \b) |
+          (?: ^[^\/\"\']*
+           (?: \b
+        (?: throw \s* [\(;] |
+         try \s* [{}] |
+         catch \s* \( |
+         dynamic_cast
+         )\b |
+        \:\:
+        )
+           )/x;
+    
 }
 
 #---------------------------------------------------------------------

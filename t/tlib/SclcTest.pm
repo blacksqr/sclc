@@ -13,4 +13,16 @@ sub test_success {
   $self->assert(1);
 }
 
+sub test_IsCeePlusPlus_with_cpp_code {
+    my $self = shift;
+    my $code = "class MyClass {";
+    $self->assert(Sclc::IsCeePlusPlus($code));
+}
+
+sub test_IsCeePlusPlus_with_c_code {
+    my $self = shift;
+    my $code = "x = foo(12);";
+    $self->assert(!Sclc::IsCeePlusPlus($code));
+}
+
 1;
