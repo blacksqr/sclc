@@ -30,7 +30,8 @@
 
   <!-- Target to run all of the individual tests. -->
   <target name="all.test" depends="init, 
-    test.mpi-comment.c, test.mpi-one-line-comment.cpp,
+    test.mpi-comment.c, test.mpi-one-line-comment.cpp, test.cplusplus-with-c-extension.c,
+    test.c-one-liner.c, test.c-one-liner-with-comments.c,
     test.rank_change.php, test.teststack.java, test.pi_calc.c, test.pi_calc.f, test.matrix_multiply.f, 
     test.matrix_multiply.c, test.markov.m, test.theta_logistic.m, test.T02_Inner.java, test.mpi_mm.f, test.omp_mm.f,
     test.omp_mm.c, test.T01_MpiConstructs.cc, test.sclc1.pl, test.hello-mpi.c, test.mpi_mandel_step4.c, test.jacobi.zh, test.socket.tcl,
@@ -56,23 +57,47 @@
 
   <target name="test.mpi-comment.c">
      <runTest property.name="mpi-comment.data" test.file="${testfile.dir}/mpi-comment.c" />
-     <assertContains property.name="mpi-comment.data" property.string="MPI_Init=&quot;1&quot;" />
+     <assertContains assert.num="1" property.name="mpi-comment.data" property.string="MPI_Init=&quot;1&quot;" />
+     <assertContains assert.num="2" property.name="mpi-comment.data" property.string="fileType=&quot;C&quot;" />
   </target>
   
   <target name="test.mpi-one-line-comment.cpp">
      <runTest property.name="mpi-one-line-comment.data" test.file="${testfile.dir}/mpi-one-line-comment.cpp" />
-     <assertContains property.name="mpi-one-line-comment.data" property.string="MPI_Init=&quot;1&quot;" />
+     <assertContains assert.num="1" property.name="mpi-one-line-comment.data" property.string="MPI_Init=&quot;1&quot;" />
+     <assertContains assert.num="2" property.name="mpi-one-line-comment.data" property.string="fileType=&quot;C++&quot;" />
   </target>
+  
+  <target name="test.cplusplus-with-c-extension.c">
+     <runTest property.name="cplusplus-with-c-extension.data" test.file="${testfile.dir}/cplusplus-with-c-extension.c" />
+     <assertContains assert.num="1" property.name="cplusplus-with-c-extension.data" property.string="fileType=&quot;C++&quot;" />
+  </target>
+  
+  <target name="test.c-one-liner.c">
+     <runTest property.name="c-one-liner.data" test.file="${testfile.dir}/c-one-liner.c" />
+     <assertContains assert.num="1" property.name="c-one-liner.data" property.string="fileType=&quot;C&quot;" />
+     <assertContains assert.num="2" property.name="c-one-liner.data" property.string="sourceLines=&quot;1&quot;" />
+     <assertContains assert.num="3" property.name="c-one-liner.data" property.string="commentLines=&quot;0&quot;" />
+  </target>
+  
+  <target name="test.c-one-liner-with-comments.c">
+     <runTest property.name="c-one-liner-with-comments.data" test.file="${testfile.dir}/c-one-liner-with-comments.c" />
+     <assertContains assert.num="1" property.name="c-one-liner-with-comments.data" property.string="fileType=&quot;C&quot;" />
+     <assertContains assert.num="2" property.name="c-one-liner-with-comments.data" property.string="sourceLines=&quot;1&quot;" />
+     <assertContains assert.num="3" property.name="c-one-liner-with-comments.data" property.string="commentLines=&quot;1&quot;" />
+  </target>
+
 
   <target name="test.rank_change.php">
     <runTest property.name="rank_change.php.data" test.file="${testfile.dir}/rank_change.php" />
-    <assertContains property.name="rank_change.php.data" property.string="sourceLines=&quot;14&quot;" />
+    <assertContains assert.num="1" property.name="rank_change.php.data" property.string="sourceLines=&quot;14&quot;" />
+    <assertContains assert.num="2" property.name="rank_change.php.data" property.string="fileType=&quot;PHP&quot;" />
   </target>
       
   <target name="test.teststack.java">
     <runTest property.name="TestStack.java.data" test.file="${testfile.dir}/TestStack.java" />
     <assertContains assert.num="1" property.name="TestStack.java.data" property.string="commentLines=&quot;19&quot;" />
     <assertContains assert.num="2" property.name="TestStack.java.data" property.string="sourceLines=&quot;28&quot;" />
+    <assertContains assert.num="3" property.name="TestStack.java.data" property.string="fileType=&quot;Java&quot;" />
   </target>
   
   <target name="test.pi_calc.c">
