@@ -1502,6 +1502,8 @@ my %Suffixes = (
    ## XML
       ".xml",   "XML",
       ".xsd",   "XML",
+      ".wsdl",  "XML",
+
    ## HTML
       ".html",  "HTML",
       ".htm",   "HTML",
