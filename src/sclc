@@ -569,7 +569,7 @@ my @fileElementArray = ();
 
 ## J. Sakuda added for modified ExcludeFile function
 ## Default excludes based on Ant's exclude regex set
-my @EXCLUDES = ('\S*[\\\|/].svn[\\\|/]\S*', '\S*CVS\S*', '\w*.cvsignore', '\w*.DS_Store', '\w*~', '\w*#\w*#', '\w*.#\w*', '\w*%\w*%', '\w*SCCS\w*', '\w*vssver.scc', '\w*._\w*$');
+my @EXCLUDES = ('\S*[\\\|/].svn[\\\|/]\S*', '\S*[\\\|/].git[\\\|/]\S*', '\S*CVS\S*', '\w*.cvsignore', '\w*.DS_Store', '\w*~', '\w*#\w*#', '\w*.#\w*', '\w*%\w*%', '\w*SCCS\w*', '\w*vssver.scc', '\w*._\w*$');
 
 ##----------------------------------------------------------------------
 ## DESIGN:
