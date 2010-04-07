@@ -1712,7 +1712,7 @@ sub CheckLanguage {
     my ($ext, $lang) = ('', $_);
     ($ext, $lang) = ($1, $2) if (/^([^=]*)=(.+)$/);
     if (! $lang) {
-        &ErrorMsg("invalid -language argument \"$_\"");
+        ErrorMsg("invalid -language argument \"$_\"");
         ++$ERRORS;
         next;
     }
@@ -1720,7 +1720,7 @@ sub CheckLanguage {
     $expr =~ s/\W/\\$&/g;
     my @matches = grep(/^${expr}$/i, @Languages);
     if (@matches == 0) {
-        &ErrorMsg("Unknown programming language: \"$lang\"");
+        ErrorMsg("Unknown programming language: \"$lang\"");
         ++$ERRORS;
     }
     $lang = $matches[$[];
@@ -1754,25 +1754,23 @@ sub CheckSections {
     local($_);
     my @secspecs = split(/\W/, $OPTS{'sections'});
     if (0 == @secspecs) {
-    &ErrorMsg("invalid sections specifier \"$OPTS{'sections'}\"");
-    ++$ERRORS;
+        ErrorMsg("invalid sections specifier \"$OPTS{'sections'}\"");
+        ++$ERRORS;
     }
     else {
-    my @matches = ();
-    foreach (@secspecs) {
-        @matches = &MatchKwd($_, "header", "files", "langtotals", "totals");
-        if (@matches == 1) {
-        ++$SECS{$matches[0]};
+        my @matches = ();
+        foreach (@secspecs) {
+            @matches = &MatchKwd($_, "header", "files", "langtotals", "totals");
+            if (@matches == 1) {
+                ++$SECS{$matches[0]};
+            } elsif (@matches == 0) {
+                &ErrorMsg("invalid sections specifier \"$_\"");
+                ++$ERRORS;
+            } else {
+                &ErrorMsg("ambiguous sections specifier \"$_\"");
+                ++$ERRORS;
+            }
         }
-        elsif (@matches == 0) {
-        &ErrorMsg("invalid sections specifier \"$_\"");
-        ++$ERRORS;
-        }
-        else {
-        &ErrorMsg("ambiguous sections specifier \"$_\"");
-        ++$ERRORS;
-        }
-    }
     }
 }
 
