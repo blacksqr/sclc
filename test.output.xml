@@ -1,0 +1,30 @@
+<!--
+
+This is for testing sclc output and tm3 output. Basically, functional tests
+for non XML-based output.
+
+It depends on AntUnit
+
+-->
+<project name="sclc-test-output" xmlns:au="antlib:org.apache.ant.antunit" default="runTests">
+   <property name="test.dir" location="${basedir}/t/ant" />
+   <property name="src.dir" location="${basedir}/src"/>
+   <property name="sclcbase.dir" location="${basedir}"/> 
+   <!-- <property name="testfile.dir" location="${basedir}/lib/examples"/>  -->
+   
+
+   <target name="runTests">
+      <au:antunit>
+         <propertyset>
+            <propertyref name="src.dir" />
+            <propertyref name="sclcbase.dir" />
+         </propertyset>
+         <fileset dir="${test.dir}">
+            <include name="**/hello.xml" />
+         </fileset>
+            <au:plainlistener logLevel="none"/>
+      </au:antunit>
+   </target>
+      
+
+</project>

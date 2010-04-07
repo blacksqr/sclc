@@ -1,0 +1,23 @@
+<project xmlns:au="antlib:org.apache.ant.antunit">
+   <property name="testfile.dir" location="lib/examples"/>    
+   <property name="actualoutput.dir" location="${basedir}/actual-output" />
+   <property name="expectedoutput.dir" location="${basedir}/expected-output" />
+   
+   <target name="setUp">
+      <mkdir dir="${actualoutput.dir}" />
+      <delete file="${actualoutput.dir}/${outfile}" />
+   </target>
+   
+   <target name="test-hello.c-output">
+      <property name="outfile" value="hello.c.tm3" />
+        <exec executable="perl" 
+              dir="${sclcbase.dir}"> 
+         <arg value="${src.dir}/sclc" />
+         <arg value="-tm3_output" />
+         <arg value="${actualoutput.dir}/${outfile}" />
+         <arg value="${testfile.dir}/hello.c" />
+      </exec>
+      <au:assertFilesMatch expected="${expectedoutput.dir}/${outfile}"
+                           actual="${actualoutput.dir}/${outfile}" />
+   </target>
+</project>

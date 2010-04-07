@@ -22,9 +22,14 @@
 		</exec>
 	</target>
 	
-	<target name="test" description="Runs full tests">
+	<target name="test" description="Runs XML-based tests">
 		<ant antfile="test.build.xml" />
 	</target>
+
+	<target name="funtest" description="Runs functional tests, checking regular and TM3 output">
+		<ant antfile="test.output.xml" />
+	</target>
+
 		
 
   
