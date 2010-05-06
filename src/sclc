@@ -77,7 +77,9 @@ my @Languages = (
       'CSharp',
       'Template',
       'JavaScript',
-      'Jess'
+      'Jess',
+      'FlashConfig',
+      'FlashParameter'
 );
 
 =head1 NAME
@@ -125,6 +127,8 @@ Chapel,
 CSharp,
 CSS,
 Eiffel,
+FlashConfig,
+FlashParameter,
 FORTRAN,
 HTML,
 Java,
@@ -1397,6 +1401,64 @@ my %JESS_DEFNS = ('AESL', 5.0,
                  );
 $LANG_RULES{'JESS'} = [ \@JESS_EVALS, \%JESS_DEFNS ];
 
+##----------------------------------------------------------------------
+## FLASH Config language definitions
+my %FLASHCONFIG_KEYWORDS;
+@FLASHCONFIG_KEYWORDS{
+	qw(REQUIRES REQUESTS 
+	   PARAMETER D 
+	   REAL INTEGER STRING
+	   PPDEFINE)} = undef;
+
+my @FLASHCONFIG_EVALS = (
+	's/(^|\s+)#/\001/g',   ## denote '#' comments with \001
+	);
+
+my %FLASHCONFIG_DEFNS = ('AESL', 15.0,
+                   'START_STATE',"[\001`\"']",
+                   '"QUOTE_STATE', '\\\\.|"',
+                   'END_"', '"',
+                   "'QUOTE_STATE", "\\\\.|'",
+                   "END_'", "'",
+                   "`QUOTE_STATE", "\\\\.|`",
+                   "END_`", "`",
+                   "\001", $EolCmnt,
+                   "'", $BeginQuote,
+                   '"', $BeginQuote,
+                   '`', $BeginQuote,
+		   'KEYWORD', 'exists $FLASHCONFIG_KEYWORDS{$1}',
+		   );
+$LANG_RULES{'FLASHCONFIG'} = [ \@FLASHCONFIG_EVALS, \%FLASHCONFIG_DEFNS ];
+
+##----------------------------------------------------------------------
+## FLASH Parameter language definitions
+my %FLASHPARAMETER_KEYWORDS;
+@FLASHPARAMETER_KEYWORDS{
+	qw( .true. .false. )} = undef;
+
+my @FLASHPARAMETER_EVALS = (
+	's/(^|\s+)#/\001/g',   ## denote '#' comments with \001
+	);
+
+my %FLASHPARAMETER_DEFNS = ('AESL', 15.0,
+                   'START_STATE',"[\001`\"']",
+                   '"QUOTE_STATE', '\\\\.|"',
+                   'END_"', '"',
+                   "'QUOTE_STATE", "\\\\.|'",
+                   "END_'", "'",
+                   "`QUOTE_STATE", "\\\\.|`",
+                   "END_`", "`",
+                   "\001", $EolCmnt,
+                   "'", $BeginQuote,
+                   '"', $BeginQuote,
+                   '`', $BeginQuote,
+		   'KEYWORD', 'exists $FLASHPARAMETER_KEYWORDS{$1}',
+		   );
+$LANG_RULES{'FLASHPARAMETER'} = [ \@FLASHPARAMETER_EVALS, \%FLASHPARAMETER_DEFNS ];
+
+
+
+
 ### END OF LANGUAGE DEFINITIONS ###
 
 ## Default language extensions
@@ -1454,6 +1516,9 @@ my %Suffixes = (
       ".el",  "Lisp", # Actually emacs lisp
    ## Matlab
       ".m",   "Matlab",
+   ## Flash parameter
+      ".par", "FlashParameter",
+	  ".DAT", "FlashParameter",      
    ## Pascal
       ".p",   "Pascal",
       ".pas", "Pascal",
@@ -2039,24 +2104,35 @@ sub SetLanguage {
     local($_) = $filepath;
     my $lang = "";
     my ($dirname, $basename) = &SplitPath($_);
+	## Before suffix checking, check for double suffix issues
+	if( $basename =~ /\.par\./) {
+		$lang = "FlashParameter";
+	}
+	# If it starts with Config. it's a Config file
+	elsif ($ basename =~ /^Config\./) {
+		$lang = "FlashConfig";
+	}
     ## First see if we have a '.' suffix
     if ($basename =~ /.+(\.[^.]+)$/) {
-    $lang = $Suffixes{$1} if (defined $Suffixes{$1});
+        $lang = $Suffixes{$1} if (defined $Suffixes{$1});
     }
     elsif ($basename =~ /^makefile/i) {
-    $lang = "make";
+        $lang = "make";
     }
+	elsif( $basename =~ /^Config$/i) {
+		$lang = "FlashConfig";
+	}    
     elsif ($filepath ne '-') {
-    ## Not a normal '.' suffix, have to look at all of them
-    my %seen = ();
-    foreach (keys %Suffixes) {
-        next unless ($_);
-        next if (defined $seen{$_});
-        ++$seen{$_};
-        s/\W/\\$&/g;    ## escape regexp meta-characters
-        $lang = $Suffixes{$_} if ($basename =~ m|^.+$_$|);
-        last if ($lang);
-    }
+        ## Not a normal '.' suffix, have to look at all of them
+        my %seen = ();
+        foreach (keys %Suffixes) {
+            next unless ($_);
+            next if (defined $seen{$_});
+            ++$seen{$_};
+            s/\W/\\$&/g;    ## escape regexp meta-characters
+            $lang = $Suffixes{$_} if ($basename =~ m|^.+$_$|);
+            last if ($lang);
+        }
     }
     if ($lang) {
     $lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
