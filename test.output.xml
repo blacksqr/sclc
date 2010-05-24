@@ -20,7 +20,7 @@ It depends on AntUnit
             <propertyref name="sclcbase.dir" />
          </propertyset>
          <fileset dir="${test.dir}">
-            <include name="**/hello.xml" />
+            <include name="**/**.xml" />
          </fileset>
             <au:plainlistener logLevel="none"/>
       </au:antunit>

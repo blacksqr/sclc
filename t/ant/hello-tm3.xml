@@ -1,7 +1,8 @@
 <project xmlns:au="antlib:org.apache.ant.antunit">
-   <property name="testfile.dir" location="lib/examples"/>    
+   <property name="testfile.relpath" value="lib/examples"/>    
    <property name="actualoutput.dir" location="${basedir}/actual-output" />
    <property name="expectedoutput.dir" location="${basedir}/expected-output" />
+   <property name="outfile" value="hello.c.tm3" />
    
    <target name="setUp">
       <mkdir dir="${actualoutput.dir}" />
@@ -9,13 +10,12 @@
    </target>
    
    <target name="test-hello.c-output">
-      <property name="outfile" value="hello.c.tm3" />
         <exec executable="perl" 
               dir="${sclcbase.dir}"> 
          <arg value="${src.dir}/sclc" />
          <arg value="-tm3_output" />
          <arg value="${actualoutput.dir}/${outfile}" />
-         <arg value="${testfile.dir}/hello.c" />
+         <arg value="${testfile.relpath}/hello.c" />
       </exec>
       <au:assertFilesMatch expected="${expectedoutput.dir}/${outfile}"
                            actual="${actualoutput.dir}/${outfile}" />
