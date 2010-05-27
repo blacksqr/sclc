@@ -79,7 +79,8 @@ my @Languages = (
       'JavaScript',
       'Jess',
       'FlashConfig',
-      'FlashParameter'
+      'FlashParameter',
+      'Text'
 );
 
 =head1 NAME
@@ -147,7 +148,8 @@ SQL,
 Tcl,
 Template,
 XML,
-ZPL
+ZPL,
+Text
 
 =back
 
@@ -1518,7 +1520,7 @@ my %Suffixes = (
       ".m",   "Matlab",
    ## Flash parameter
       ".par", "FlashParameter",
-	  ".DAT", "FlashParameter",      
+      ## ".DAT", "FlashParameter",      
    ## Pascal
       ".p",   "Pascal",
       ".pas", "Pascal",
@@ -1543,6 +1545,10 @@ my %Suffixes = (
       ".tcsh", "shell",
       ".zsh",  "shell",
    ## make
+      ".in",        "make",
+      ".m4",        "make",
+      ".am",        "make",
+      ".ac",        "make",
       ".mk",        "make",
       ".MK",        "make",
       ".make",      "make",
@@ -1587,7 +1593,14 @@ my %Suffixes = (
    ## Template
       ".tt",    "Template",
    ## Jess
-      ".clp",   "Jess"
+      ".clp",   "Jess",
+   ## Text
+      ".txt",	"Text",
+      ".TXT",	"Text",
+      ".doc",	"Text",
+      ".DOC",	"Text",
+      ".rtf",	"Text",
+      ".RTF",	"Text"
 );
 
 ## Default language interpreters
@@ -2057,13 +2070,13 @@ sub GuessLanguage {
     $lang = "Pascal";
     }
     elsif (/^\s*--/) {
-    $lang = "Ada";         ## or it could be Eiffel, ZPL or Chapel
+    ## $lang = "Ada";         ## or it could be Eiffel, ZPL or Chapel
     }
     elsif (/^\s*[\(;]/) {
     $lang = "Lisp";
     }
     elsif (/^\s*\*/) {
-    $lang = "Assembly";
+    ## $lang = "Assembly";
     }
     # DO NOT USE: m:^\s*\#\s*\!\s*\S+$Path_Sep(\S+):
     # IT IS INCOMPATIBLE ON WINDOWS
@@ -2119,9 +2132,15 @@ sub SetLanguage {
     elsif ($basename =~ /^makefile/i) {
         $lang = "make";
     }
+	
 	elsif( $basename =~ /^Config$/i) {
 		$lang = "FlashConfig";
-	}    
+	}
+	
+	elsif( $basename eq "README" || $basename eq "INSTALL" || $basename eq "TODO") {
+		$lang = "Text";
+	}
+	 
     elsif ($filepath ne '-') {
         ## Not a normal '.' suffix, have to look at all of them
         my %seen = ();

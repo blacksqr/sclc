@@ -37,7 +37,8 @@
     test.omp_mm.c, test.T01_MpiConstructs.cc, test.sclc1.pl, test.hello-mpi.c, test.mpi_mandel_step4.c, test.jacobi.zh, test.socket.tcl,
     test.sort-array.p, test.temp2final.awk, test.thdruspi.ada, test.sensor-utils.el, test.TryMe.e, test.build.xml,
     test.README.html, test.ConfirmProjectSettings.jsp, test.list.sh, test.AdventureWorks.sql, test.JessActionTemplates.clp,
-    test.sample.py, test.HelloWorld.cs, test.hackyinstaller.xsd, test.functions.css, test.sample.js">
+    test.sample.py, test.HelloWorld.cs, test.hackyinstaller.xsd, test.functions.css, test.sample.js, 
+    test.README, test.example.txt, test.Makefile.am">
   </target>
   
   <!-- Initializes the necessary resources to run the tests -->
@@ -343,4 +344,20 @@
     <assertContains assert.num="2" property.name="sample.js.data" property.string="commentLines=&quot;17&quot;" />
     <assertContains assert.num="3" property.name="sample.js.data" property.string="blankLines=&quot;13&quot;" />
   </target>
+  
+  <target name="test.README">
+    <runTest property.name="README.data" test.file="${testfile.dir}/README" />
+  </target>
+  
+  <target name="test.example.txt">
+    <runTest property.name="example.txt.data" test.file="${testfile.dir}/example.txt" />
+  </target>
+
+  <target name="test.Makefile.am">
+    <runTest property.name="sample.Makefile.am" test.file="${testfile.dir}/Makefile.am" />
+    <assertContains assert.num="1" property.name="sample.Makefile.am" property.string="sourceLines=&quot;95&quot;" />
+    <assertContains assert.num="2" property.name="sample.Makefile.am" property.string="commentLines=&quot;78&quot;" />
+    <assertContains assert.num="3" property.name="sample.Makefile.am" property.string="blankLines=&quot;25&quot;" />
+  </target>
+ 
 </project>
