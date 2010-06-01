@@ -1,5 +1,3 @@
-This is an example file showing that sclc should only count lines in this text file as comments.
-
 SCLC Code Size Counter
 (University of Hawaii Edition)
 
@@ -90,4 +88,4 @@ Check the test.build.xml file for more examples.
 
 3.0 Usage
 
-To see the complete list of options available for SCLC please run "perldoc sclc". The output will contain all the options available, their descriptions, and some examples of the more advanced features. An HTML version of the Perl Doc for the most recently released version of SCLC is available at: http://csdl.ics.hawaii.edu/Tools/SCLC/svn/build/html/sclc.html
+To see the complete list of options available for SCLC please run "perldoc sclc". The output will contain all the options available, their descriptions, and some examples of the more advanced features. An HTML version of the Perl Doc for the most recently released version of SCLC is available at: http://csdl.ics.hawaii.edu/Tools/SCLC/svn/build/html/sclc.html.
