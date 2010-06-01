@@ -347,17 +347,19 @@
   
   <target name="test.README">
     <runTest property.name="README.data" test.file="${testfile.dir}/README" />
+    <assertContains assert.num="1" property.name="README.data" property.string="commentLines=&quot;61&quot;" />
   </target>
   
   <target name="test.example.txt">
     <runTest property.name="example.txt.data" test.file="${testfile.dir}/example.txt" />
+    <assertContains assert.num="1" property.name="example.txt.data" property.string="commentLines=&quot;62&quot;" />
   </target>
 
   <target name="test.Makefile.in">
-    <runTest property.name="sample.Makefile.in" test.file="${testfile.dir}/Makefile.in" />
-    <assertContains assert.num="1" property.name="sample.Makefile.in" property.string="sourceLines=&quot;213&quot;" />
-    <assertContains assert.num="2" property.name="sample.Makefile.in" property.string="commentLines=&quot;2&quot;" />
-    <assertContains assert.num="3" property.name="sample.Makefile.in" property.string="blankLines=&quot;23&quot;" />
+    <runTest property.name="sample.Makefile.in.data" test.file="${testfile.dir}/Makefile.in" />
+    <assertContains assert.num="1" property.name="sample.Makefile.in.data" property.string="sourceLines=&quot;213&quot;" />
+    <assertContains assert.num="2" property.name="sample.Makefile.in.data" property.string="commentLines=&quot;2&quot;" />
+    <assertContains assert.num="3" property.name="sample.Makefile.in.data" property.string="blankLines=&quot;23&quot;" />
   </target>
  
 </project>

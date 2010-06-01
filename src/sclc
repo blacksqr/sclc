@@ -1458,6 +1458,26 @@ my %FLASHPARAMETER_DEFNS = ('AESL', 15.0,
 		   );
 $LANG_RULES{'FLASHPARAMETER'} = [ \@FLASHPARAMETER_EVALS, \%FLASHPARAMETER_DEFNS ];
 
+##----------------------------------------------------------------------
+## Plain Text definitions
+my @TEXT_EVALS = (
+		   's/^(.*)/\001$1/g'
+                 );
+my %TEXT_DEFNS = ('AESL', 15.0,
+                   'START_STATE',"[\001`\"']",
+                   '"QUOTE_STATE', '\\\\.|"',
+                   'END_"', '"',
+                   "'QUOTE_STATE", "\\\\.|'",
+                   "END_'", "'",
+                   "`QUOTE_STATE", "\\\\.|`",
+                   "END_`", "`",
+                   "\001", $EolCmnt,
+                   "'", $BeginQuote,
+                   '"', $BeginQuote,
+                   '`', $BeginQuote
+           );
+$LANG_RULES{'TEXT'} = [ \@TEXT_EVALS, \%TEXT_DEFNS ];
+
 
 
 
