@@ -61,6 +61,7 @@ my @Languages = (
       'Java',
       'Lisp',
       'Matlab',
+      'Mathematica',
       'Pascal',
       'Perl',
       'PHP',
@@ -1537,10 +1538,13 @@ my %Suffixes = (
       ".LSP", "Lisp",
       ".el",  "Lisp", # Actually emacs lisp
    ## Matlab
+      ".nb",  "Mathematica",
+      ".nbp", "Mathematica",
+   ## Matlab
       ".m",   "Matlab",
    ## Flash parameter
       ".par", "FlashParameter",
-      ## ".DAT", "FlashParameter",      
+   ## ".DAT", "FlashParameter",      
    ## Pascal
       ".p",   "Pascal",
       ".pas", "Pascal",
@@ -2083,8 +2087,8 @@ sub GuessLanguage {
     elsif (m|^\s*//|) {
     $lang = "C++";
     }
-    elsif (/^\s*\(\*/) {
-    $lang = "Pascal";
+    elsif (/\(\*.*\*\)/) {
+    $lang = "Mathematica";
     }
     elsif (/^\s*\{/) {
     $lang = "Pascal";
