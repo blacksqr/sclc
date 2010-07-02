@@ -358,8 +358,8 @@
   <target name="test.Makefile.in">
     <runTest property.name="sample.Makefile.in.data" test.file="${testfile.dir}/Makefile.in" />
     <assertContains assert.num="1" property.name="sample.Makefile.in.data" property.string="sourceLines=&quot;213&quot;" />
-    <assertContains assert.num="2" property.name="sample.Makefile.in.data" property.string="commentLines=&quot;2&quot;" />
-    <assertContains assert.num="3" property.name="sample.Makefile.in.data" property.string="blankLines=&quot;23&quot;" />
+    <assertContains assert.num="2" property.name="sample.Makefile.in.data" property.string="commentLines=&quot;4&quot;" />
+    <assertContains assert.num="3" property.name="sample.Makefile.in.data" property.string="blankLines=&quot;22&quot;" />
   </target>
  
 </project>
