@@ -799,19 +799,19 @@ my @SHELL_EVALS = (
                    's/\\\\./__/g',        ## remove escaped characters
                    's/[(){}[\];]/ /g  if ($OPTS{delim_ignore})'
                   );
-my %SHELL_DEFNS = ('AESL', 15.0,
-                   'START_STATE',"[\001`\"']",
-                   '"QUOTE_STATE', '\\\\.|"',
-                   'END_"', '"',
-                   "'QUOTE_STATE", "\\\\.|'",
-                   "END_'", "'",
-                   "`QUOTE_STATE", "\\\\.|`",
-                   "END_`", "`",
-                   "\001", $EolCmnt,
-                   "'", $BeginQuote,
-                   '"', $BeginQuote,
-                   '`', $BeginQuote,
-           'KEYWORD', 'exists $SHELL_KEYWORDS{$1}',
+my %SHELL_DEFNS = ('AESL'         => 15.0,
+                   'START_STATE'  =>"[\001`\"']",
+                   '"QUOTE_STATE' => '\\\\.|"',
+                   'END_"'        => '"',
+                   "'QUOTE_STATE" => "\\\\.|'",
+                   "END_'"        => "'",
+                   "`QUOTE_STATE" => "\\\\.|`",
+                   "END_`"        => "`",
+                   "\001"         => $EolCmnt,
+                   "'"            => $BeginQuote,
+                   '"'            => $BeginQuote,
+                   '`'            => $BeginQuote,
+                   'KEYWORD'      => 'exists $SHELL_KEYWORDS{$1}',
            );
 $LANG_RULES{'SHELL'} = [ \@SHELL_EVALS, \%SHELL_DEFNS ];
 
