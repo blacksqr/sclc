@@ -2848,7 +2848,7 @@ sub CountFiles {
             next;
         }
         ## See if we should exclude this file from the list
-        next if (&ExcludeFile($_));
+        next if (ExcludeFile($_));
         if (-d $_  && $OPTS{'recurse'}) {
             ErrorMsg("$_ is a directory.") unless ($OPTS{'ignore'});
             next;
