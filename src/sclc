@@ -2843,35 +2843,35 @@ sub CountFiles {
     local ($_);
     foreach (@files) {
         if (-d $_  && $OPTS{'recurse'}) {
-            my @entries = &ExpandDirectory($_);
-            &CountFiles(@entries);
+            my @entries = ExpandDirectory($_);
+            CountFiles(@entries);
             next;
         }
         ## See if we should exclude this file from the list
         next if (&ExcludeFile($_));
         if (-d $_  && $OPTS{'recurse'}) {
-            &ErrorMsg("$_ is a directory.") unless ($OPTS{'ignore'});
+            ErrorMsg("$_ is a directory.") unless ($OPTS{'ignore'});
             next;
         }
         if (-B _) {
-            &ErrorMsg("$_ is a binary file.") unless ($OPTS{'ignore'});
+            ErrorMsg("$_ is a binary file.") unless ($OPTS{'ignore'});
             next;
         }
         ## See if we can determine the programming language
         ($LANG_NAME, $LANG_REF) = ('', '');
-        &SetLanguage($_);
-        &ErrorMsg("Can't determine programming language for $_")
+        SetLanguage($_);
+        ErrorMsg("Can't determine programming language for $_")
             unless ($LANG_REF || $OPTS{'ignore'});
         next unless (exists $LANG_RULES{$LANG_REF});
         my %counts = &SourceCount($_, @{ $LANG_RULES{$LANG_REF} });
         next if ($counts{'Error'} || !$counts{'Lines'});
-        &PrintCounts('s', '', '', \@Count_Names, "", \%counts, 0)
+        PrintCounts('s', '', '', \@Count_Names, "", \%counts, 0)
             if ((++$NumSources == 1) && $SECS{'header'});
         ++$NumSources{$LANG_NAME};
         my (@kindList, $kind) = ("");
         @kindList = ('<', '>') if ($OPTS{'diff'});
         for $kind (@kindList) {
-            &PrintCounts('d', "$_$KIND{$kind}", $LANG_NAME, \@Count_Names,
+            PrintCounts('d', "$_$KIND{$kind}", $LANG_NAME, \@Count_Names,
                  $kind, \%counts, 0);
         }
         
