@@ -2166,7 +2166,7 @@ sub SetLanguage {
     my ($filepath) = @_;
     local($_) = $filepath;
     my $lang = "";
-    my ($dirname, $basename) = &SplitPath($_);
+    my ($dirname, $basename) = SplitPath($_);
 	## Before suffix checking, check for double suffix issues
 	if( $basename =~ /\.par\./) {
 		$lang = "FlashParameter";
@@ -2205,35 +2205,35 @@ sub SetLanguage {
     }
     if ($lang) {
     $lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
-    my $ref = &RefLanguage($lang) || "";
+    my $ref = RefLanguage($lang) || "";
     ($LANG_NAME, $LANG_REF) = ($lang, $ref);
     }
     else {
-    ## If we still dont know the language -- see if we can tell by
-    ## looking at the contents of the first non-blank line
-    my $found_line=0;
-    if ($filepath eq '-') {
-        $_ = '';
-    }
-    elsif (open(FILEPATH, $filepath)) {
-        while (<FILEPATH>) {
-               if ( /^\s$/ ) {
-                       chop;
-               }
-               else {
-                       $found_line = 1;
-                       last;
-               }
+        ## If we still dont know the language -- see if we can tell by
+        ## looking at the contents of the first non-blank line
+        my $found_line=0;
+        if ($filepath eq '-') {
+            $_ = '';
         }
-        close(FILEPATH);
-    }
-    if( ! $found_line) {
-        my $ref = &RefLanguage($DEFAULT_LANG)||"";
-        ($LANG_NAME, $LANG_REF) = ($DEFAULT_LANG, $ref);
-    }
-    else {
-        &GuessLanguage($_);
-    }
+        elsif (open(FILEPATH, $filepath)) {
+            while (<FILEPATH>) {
+                   if ( /^\s$/ ) {
+                           chop;
+                   }
+                   else {
+                           $found_line = 1;
+                           last;
+                   }
+            }
+            close(FILEPATH);
+        }
+        if( ! $found_line) {
+            my $ref = RefLanguage($DEFAULT_LANG)||"";
+            ($LANG_NAME, $LANG_REF) = ($DEFAULT_LANG, $ref);
+        }
+        else {
+            GuessLanguage($_);
+        }
     }
 }
 
