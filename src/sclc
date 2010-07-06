@@ -2204,9 +2204,9 @@ sub SetLanguage {
         }
     }
     if ($lang) {
-    $lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
-    my $ref = RefLanguage($lang) || "";
-    ($LANG_NAME, $LANG_REF) = ($lang, $ref);
+        $lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
+        my $ref = RefLanguage($lang) || "";
+        ($LANG_NAME, $LANG_REF) = ($lang, $ref);
     }
     else {
         ## If we still dont know the language -- see if we can tell by
