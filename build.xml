@@ -16,8 +16,8 @@
     <echo message="Please check ${build.dir}/demo.xml for XML output."/>
   </target>
 
-	<target name="unit" description="Runs unit tests">
-		<exec executable="perl">
+  <target name="unit" description="Runs unit tests">
+	  <exec executable="perl">
 			<arg line="${unittest.dir}/all_tests.t" />
 		</exec>
 	</target>
@@ -29,6 +29,9 @@
 	<target name="funtest" description="Runs functional tests, checking regular and TM3 output">
 		<ant antfile="test.output.xml" />
 	</target>
+	
+	<target name ="alltest" description="Run all the different kinds of tests" depends="test, funtest, unit" />
+	
 
 		
 
