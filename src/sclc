@@ -2907,11 +2907,11 @@ sub PrintTotals {
     foreach (@languages) {
         for $kind (@kindList) {
             if ($SECS{'langtotals'}) {
-            $str = sprintf("%s  (%d %s)",
+                $str = sprintf("%s  (%d %s)",
                        "----- $_$KIND{$kind} -----",
                        $NumSources{$_},
                        ($NumSources{$_} == 1) ? 'file' : 'files');
-            &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals->{$_}, 1);
+                PrintCounts('d', $str, '', \@Count_Names, $kind, $totals->{$_}, 1);
             }
         }
     }
@@ -2920,7 +2920,7 @@ sub PrintTotals {
                    "***** TOTAL$KIND{$kind} *****",
                    $NumSources,
                    ($NumSources == 1) ? 'file' : 'files');
-        &PrintCounts('d', $str, '', \@Count_Names, $kind, $totals, 1)
+        PrintCounts('d', $str, '', \@Count_Names, $kind, $totals, 1)
             if ($SECS{'totals'} && ((!$SECS{'langtotals'}) || (@languages > 1)));
     }
 }
