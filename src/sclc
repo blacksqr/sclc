@@ -1493,138 +1493,138 @@ $LANG_RULES{'TEXT'} = [ \@TEXT_EVALS, \%TEXT_DEFNS ];
 ##----------------------------------------------------------------------
 my %Suffixes = (
    ## Assembler
-      ".s",   "Assembly",
-      ".S",   "Assembly",
-      ".as",  "Assembly",
-      ".AS",  "Assembly",
-      ".asm", "Assembly",
-      ".ASM", "Assembly",
+      ".s"   =>   "Assembly",
+      ".S"   =>   "Assembly",
+      ".as"  =>  "Assembly",
+      ".AS"  =>  "Assembly",
+      ".asm" =>  "Assembly",
+      ".ASM" =>  "Assembly",
    ## C
-      ".c", "C",
-      ".C", "C",  ## We have some special rules we use later on so we
-      ".h", "C",  ## don't mistake a C++ file for a C file.
-      ".H", "C",
+      ".c" => "C",
+      ".C" => "C",  ## We have some special rules we use later on so we
+      ".h" => "C",  ## don't mistake a C++ file for a C file.
+      ".H" => "C",
    ## C++
-      ".cc",  "C++",
-      ".cxx", "C++",
-      ".cpp", "C++",
-      ".hh",  "C++",
+      ".cc"  => "C++",
+      ".cxx" => "C++",
+      ".cpp" => "C++",
+      ".hh"  =>  "C++",
    ## Chapel
-      ".chpl", "Chapel",
+      ".chpl" => "Chapel",
    ## Ada
-      ".a",   "Ada",
-      ".ada", "Ada",
-      ".Ada", "Ada",
-      ".ADA", "Ada",
+      ".a"   =>   "Ada",
+      ".ada" => "Ada",
+      ".Ada" => "Ada",
+      ".ADA" => "Ada",
    ## Eiffel
-      ".e",   "Eiffel",
-      ".efl", "Eiffel",
-      ".Efl", "Eiffel",
-      ".EFL", "Eiffel",
+      ".e"   => "Eiffel",
+      ".efl" => "Eiffel",
+      ".Efl" => "Eiffel",
+      ".EFL" => "Eiffel",
    ## FORTAN
-      ".f",   "FORTRAN",
-      ".for", "FORTRAN",
-      ".f90", "FORTRAN",
-      ".F",   "FORTRAN",
-      ".F90", "FORTRAN",
+      ".f"   => "FORTRAN",
+      ".for" => "FORTRAN",
+      ".f90" => "FORTRAN",
+      ".F"   => "FORTRAN",
+      ".F90" => "FORTRAN",
    ## Java
-      ".java",  "Java",
-      ".jav",   "Java",
-      ".JAV",   "Java",
+      ".java" => "Java",
+      ".java" => "Java",
+      ".JAV"  => "Java",
    ## Lisp
-      ".l",   "Lisp",
-      ".lsp", "Lisp",
-      ".Lsp", "Lisp",
-      ".LSP", "Lisp",
-      ".el",  "Lisp", # Actually emacs lisp
+      ".l"   => "Lisp",
+      ".lsp" => "Lisp",
+      ".Lsp" => "Lisp",
+      ".LSP" => "Lisp",
+      ".el"  => "Lisp", # Actually emacs lisp
    ## Matlab
-      ".nb",  "Mathematica",
-      ".nbp", "Mathematica",
+      ".nb"  => "Mathematica",
+      ".nbp" => "Mathematica",
    ## Matlab
-      ".m",   "Matlab",
+      ".m"   => "Matlab",
    ## Flash parameter
-      ".par", "FlashParameter",
-   ## ".DAT", "FlashParameter",      
+      ".par" => "FlashParameter",
+   ## ".DAT" => "FlashParameter",      
    ## Pascal
-      ".p",   "Pascal",
-      ".pas", "Pascal",
-      ".Pas", "Pascal",
-      ".PAS", "Pascal",
+      ".p" =>   "Pascal",
+      ".pas" => "Pascal",
+      ".Pas" => "Pascal",
+      ".PAS" => "Pascal",
    ## Perl
-      ".pl",  "Perl",
-      ".PL",  "Perl",
-      ".plt", "Perl",
-      ".PLT", "Perl",
-      ".ph",  "Perl",
-      ".PH",  "Perl",
-      ".pm",  "Perl",
-      ".PM",  "Perl",
+      ".pl" =>  "Perl",
+      ".PL" =>  "Perl",
+      ".plt" => "Perl",
+      ".PLT" => "Perl",
+      ".ph" =>  "Perl",
+      ".PH" =>  "Perl",
+      ".pm" =>  "Perl",
+      ".PM" =>  "Perl",
    ## PHP
-      ".php",  "PHP",
+      ".php" =>  "PHP",
    ## shell
-      ".sh",   "shell",
-      ".bash", "shell",
-      ".csh",  "shell",
-      ".ksh",  "shell",
-      ".tcsh", "shell",
-      ".zsh",  "shell",
+      ".sh"   => "shell",
+      ".bash" => "shell",
+      ".csh"  => "shell",
+      ".ksh"  => "shell",
+      ".tcsh" => "shell",
+      ".zsh"  => "shell",
    ## make
-      ".in",        "make",
-      ".m4",        "make",
-      ".am",        "make",
-      ".ac",        "make",
-      ".mk",        "make",
-      ".MK",        "make",
-      ".make",      "make",
-      ".MAKE",      "make",
+      ".in"   =>  "make",
+      ".m4"   =>  "make",
+      ".am"   =>  "make",
+      ".ac"   =>  "make",
+      ".mk"   =>  "make",
+      ".MK"   =>  "make",
+      ".make" =>  "make",
+      ".MAKE" =>  "make",
    ## Awk
-      ".awk",  "Awk",
-      ".AWK",  "Awk",
+      ".awk" =>  "Awk",
+      ".AWK" =>  "Awk",
    ## Tcl
-      ".tcl",   "Tcl",
-      ".Tcl",   "Tcl",
-      ".TCL",   "Tcl",
-      ".tclsh", "Tcl",
-      ".TCLSH", "Tcl",
-      ".tk",    "Tcl",
-      ".Tk",    "Tcl",
-      ".TK",    "Tcl",
-      ".wish",  "Tcl",
-      ".WISH",  "Tcl",
+      ".tcl"   => "Tcl",
+      ".Tcl"   => "Tcl",
+      ".TCL"   => "Tcl",
+      ".tclsh" => "Tcl",
+      ".TCLSH" => "Tcl",
+      ".tk"    => "Tcl",
+      ".Tk"    => "Tcl",
+      ".TK"    => "Tcl",
+      ".wish"  => "Tcl",
+      ".WISH"  => "Tcl",
    ## ZPL
-      ".z",     "ZPL",
-      ".zh",    "ZPL",
+      ".z"  => "ZPL",
+      ".zh" => "ZPL",
    ## XML
-      ".xml",   "XML",
-      ".xsd",   "XML",
-      ".wsdl",  "XML",
+      ".xml"  => "XML",
+      ".xsd"  => "XML",
+      ".wsdl" => "XML",
 
    ## HTML
-      ".html",  "HTML",
-      ".htm",   "HTML",
+      ".html" => "HTML",
+      ".htm"  => "HTML",
    ## JSP
-      ".jsp",   "JSP",
+      ".jsp" => "JSP",
    ## SQL
-      ".sql",   "SQL",
+      ".sql" => "SQL",
    ## PYTHON
-      ".py",    "Python",
+      ".py" => "Python",
    ## C#
-      ".cs",    "CSharp",
+      ".cs" => "CSharp",
    ## CSS
-      ".css",   "CSS",
+      ".css" =>   "CSS",
    ## JavaScript
-      ".js",    "JavaScript",
+      ".js" =>    "JavaScript",
    ## Template
-      ".tt",    "Template",
+      ".tt" =>    "Template",
    ## Jess
-      ".clp",   "Jess",
+      ".clp" =>   "Jess",
    ## Text
-      ".txt",	"Text",
-      ".TXT",	"Text",
-      ".doc",	"Text",
-      ".DOC",	"Text",
-      ".rtf",	"Text",
-      ".RTF",	"Text"
+      ".txt" => "Text",
+      ".TXT" => "Text",
+      ".doc" =>	"Text",
+      ".DOC" =>	"Text",
+      ".rtf" =>	"Text",
+      ".RTF" =>	"Text"
 );
 
 ## Default language interpreters
@@ -1636,30 +1636,30 @@ my %Suffixes = (
 ##----------------------------------------------------------------------
 my %Interpreters = (
    ## Perl
-      "per5", "Perl",
-      "perl", "Perl",
-      "Perl", "Perl",
-      "PERL", "Perl",
+      "per5" => "Perl",
+      "perl" => "Perl",
+      "Perl" => "Perl",
+      "PERL" => "Perl",
    ## Awk
-      "awk",  "Awk",
+      "awk"  => "Awk",
    ## shell
-      "sh",   "shell",
-      "bash", "shell",
-      "csh",  "shell",
-      "ksh",  "shell",
-      "tcsh", "shell",
-      "zsh",  "shell",
+      "sh"   => "shell",
+      "bash" => "shell",
+      "csh"  => "shell",
+      "ksh"  => "shell",
+      "tcsh" => "shell",
+      "zsh"  => "shell",
    ## Tcl
-      "tcl",   "Tcl",
-      "Tcl",   "Tcl",
-      "TCL",   "Tcl",
-      "tclsh", "Tcl",
-      "TCLSH", "Tcl",
-      "tk",    "Tcl",
-      "Tk",    "Tcl",
-      "TK",    "Tcl",
-      "wish",  "Tcl",
-      "WISH",  "Tcl"
+      "tcl"   => "Tcl",
+      "Tcl"   => "Tcl",
+      "TCL"   => "Tcl",
+      "tclsh" => "Tcl",
+      "TCLSH" => "Tcl",
+      "tk"    => "Tcl",
+      "Tk"    => "Tcl",
+      "TK"    => "Tcl",
+      "wish"  => "Tcl",
+      "WISH"  => "Tcl"
 );
 
 
