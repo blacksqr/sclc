@@ -1839,30 +1839,30 @@ sub CheckLanguage {
     my(@extspecs) = @_;
     local($_);
     foreach (@extspecs) {
-    my ($ext, $lang) = ('', $_);
-    ($ext, $lang) = ($1, $2) if (/^([^=]*)=(.+)$/);
-    if (! $lang) {
-        ErrorMsg("invalid -language argument \"$_\"");
-        ++$ERRORS;
-        next;
-    }
-    my $expr = $lang;
-    $expr =~ s/\W/\\$&/g;
-    my @matches = grep(/^${expr}$/i, @Languages);
-    if (@matches == 0) {
-        ErrorMsg("Unknown programming language: \"$lang\"");
-        ++$ERRORS;
-    }
-    $lang = $matches[$[];
-    if (! $ext) {
-        $DEFAULT_LANG = $lang;
-    }
-    elsif ($ext =~ m|^/(.*)$|) {
-        $Interpreters{$1} = $lang;
-    }
-    else {
-        $Suffixes{$ext} = $lang;
-    }
+        my ($ext, $lang) = ('', $_);
+        ($ext, $lang) = ($1, $2) if (/^([^=]*)=(.+)$/);
+        if (! $lang) {
+            ErrorMsg("invalid -language argument \"$_\"");
+            ++$ERRORS;
+            next;
+        }
+        my $expr = $lang;
+        $expr =~ s/\W/\\$&/g;
+        my @matches = grep(/^${expr}$/i, @Languages);
+        if (@matches == 0) {
+            ErrorMsg("Unknown programming language: \"$lang\"");
+            ++$ERRORS;
+        }
+        $lang = $matches[$[];
+        if (! $ext) {
+            $DEFAULT_LANG = $lang;
+        }
+        elsif ($ext =~ m|^/(.*)$|) {
+            $Interpreters{$1} = $lang;
+        }
+        else {
+            $Suffixes{$ext} = $lang;
+        }
     }
 }
 
