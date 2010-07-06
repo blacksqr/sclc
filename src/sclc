@@ -81,7 +81,8 @@ my @Languages = (
       'Jess',
       'FlashConfig',
       'FlashParameter',
-      'Text'
+      'Text',
+      'IDL'
 );
 
 =head1 NAME
@@ -150,7 +151,8 @@ Tcl,
 Template,
 XML,
 ZPL,
-Text
+Text,
+IDL
 
 =back
 
@@ -1479,7 +1481,29 @@ my %TEXT_DEFNS = ('AESL', 15.0,
            );
 $LANG_RULES{'TEXT'} = [ \@TEXT_EVALS, \%TEXT_DEFNS ];
 
+my %IDL_KEYWORDS;
+@IDL_KEYWORDS{
+    qw(pro return begin end 
+       if then else endif
+       for do endfor 
+       case of endcase)} = undef;
 
+my @IDL_EVALS = (
+    's/;/\001/g',   ## denote ';' comments with \001
+    );
+
+my %IDL_DEFNS = ( 'AESL'         => 15.0,
+                  'START_STATE'  =>"[\001'\"]",
+                  '"QUOTE_STATE' => '\\\\.|"',
+                  'END_"'        => '"',
+                  "'QUOTE_STATE" => "\\\\.|'",
+                  "END_'"        => "'",
+                   "\001"        => $EolCmnt,
+                   "'"           => $BeginQuote,
+                   '"'           => $BeginQuote,
+                   'KEYWORD'     => 'exists $IDL_KEYWORDS{$1}',
+       );
+$LANG_RULES{'IDL'} = [ \@IDL_EVALS, \%IDL_DEFNS ];      
 
 
 ### END OF LANGUAGE DEFINITIONS ###
@@ -1624,7 +1648,9 @@ my %Suffixes = (
       ".doc" =>	"Text",
       ".DOC" =>	"Text",
       ".rtf" =>	"Text",
-      ".RTF" =>	"Text"
+      ".RTF" =>	"Text",
+   ## IDL
+      ".pro" => "IDL"
 );
 
 ## Default language interpreters

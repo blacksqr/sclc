@@ -38,7 +38,7 @@
     test.sort-array.p, test.temp2final.awk, test.thdruspi.ada, test.sensor-utils.el, test.TryMe.e, test.build.xml,
     test.README.html, test.ConfirmProjectSettings.jsp, test.list.sh, test.AdventureWorks.sql, test.JessActionTemplates.clp,
     test.sample.py, test.HelloWorld.cs, test.hackyinstaller.xsd, test.functions.css, test.sample.js, 
-    test.README, test.example.txt, test.Makefile.in">
+    test.README, test.example.txt, test.Makefile.in, test.drawcounties.pro">
   </target>
   
   <!-- Initializes the necessary resources to run the tests -->
@@ -360,6 +360,13 @@
     <assertContains assert.num="1" property.name="sample.Makefile.in.data" property.string="sourceLines=&quot;213&quot;" />
     <assertContains assert.num="2" property.name="sample.Makefile.in.data" property.string="commentLines=&quot;4&quot;" />
     <assertContains assert.num="3" property.name="sample.Makefile.in.data" property.string="blankLines=&quot;22&quot;" />
+  </target>
+  
+  <target name="test.drawcounties.pro">
+    <runTest property.name="drawcounties.pro.data" test.file="${testfile.dir}/drawcounties.pro" />
+    <assertContains assert.num="1" property.name="drawcounties.pro.data" property.string="sourceLines=&quot;96&quot;" />
+    <assertContains assert.num="2" property.name="drawcounties.pro.data" property.string="commentLines=&quot;136&quot;" />
+    <assertContains assert.num="3'" property.name="drawcounties.pro.data" property.string="blankLines=&quot;23&quot;" />
   </target>
  
 </project>
