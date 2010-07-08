@@ -1668,6 +1668,8 @@ my %Interpreters = (
       "PERL" => "Perl",
    ## Awk
       "awk"  => "Awk",
+   ## Python
+      "python" => "Python",
    ## shell
       "sh"   => "shell",
       "bash" => "shell",
@@ -2168,7 +2170,7 @@ sub SetLanguage {
     my $lang = "";
     my ($dirname, $basename) = SplitPath($_);
 	## Before suffix checking, check for double suffix issues
-	if( $basename =~ /\.par\./) {
+	if($basename =~ /\.par\./) {
 		$lang = "FlashParameter";
 	}
 	# If it starts with Config. it's a Config file
