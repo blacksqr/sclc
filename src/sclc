@@ -2957,6 +2957,7 @@ sub main {
     $OPTS{'tm3_output'}   = "";
     $OPTS{'default_exclude'} = 0;
     $OPTS{'excludedir'}   = [];
+    $OPTS{'mapping'}   = "";
 
     ## Parse options
     my $rc = &GetOptions( \%OPTS,
@@ -2982,7 +2983,8 @@ sub main {
               "xml_output=s",
               "tm3_output=s",
               "default_exclude",
-              "excludedir=s@"
+              "excludedir=s@",
+              "mapping=s"
               );
     &Usage(1) if ($OPTS{'help'});
     &Usage(2) unless ($rc);
@@ -2990,8 +2992,8 @@ sub main {
 
     ## Check for syntax errors
     if ($OPTS{'pred'} && $OPTS{'fromversion'}) {
-    &ErrorMsg("The '-pred' and '-fromversion' options are incompatible!");
-    ++$ERRORS;
+        &ErrorMsg("The '-pred' and '-fromversion' options are incompatible!");
+        ++$ERRORS;
     }
     &CheckLanguage(@{ $OPTS{'language'} }) if (@{ $OPTS{'language'} } > 0);
     &CheckSections($OPTS{'sections'}) if ($OPTS{'sections'});
@@ -3001,25 +3003,29 @@ sub main {
 
     ## Redirect STDOUT if requested
     if ($OPTS{'output'}) {
-    close STDOUT;
-    open(STDOUT, ">$OPTS{'output'}")
+        close STDOUT;
+        open(STDOUT, ">$OPTS{'output'}")
         or &FatalMsg("Unable to redirect STDOUT to $OPTS{'output'}: $!");
     }
 
     if ($OPTS{'pred'} || $OPTS{'fromversion'} || $OPTS{'toversion'}) {
     ## Set mandatory options for using cdiff
-    $OPTS{'diff'}     = 1;
-    $OPTS{'separate'} = ['-----'];
+        $OPTS{'diff'}     = 1;
+        $OPTS{'separate'} = ['-----'];
     }
     %KIND = (
          '' , '',
          '<', ' DELETED',
          '>', ' INSERTED'
          );
+    if ($OPTS{'mapping'}) {
+	# read in the file first and construct the man-made rule table
+    }
+
 
     if (! $OPTS{'filelist'}) {
-    @ARGV = ('-') if (0 == @ARGV);
-    &CountFiles(@ARGV);
+        @ARGV = ('-') if (0 == @ARGV);
+        &CountFiles(@ARGV);
     }
     else {
     ## have to read list of filenames from input
@@ -3032,9 +3038,8 @@ sub main {
                    ((! $SECS{'files'}) || ($NumSources > 1)));
                    
     if ($OPTS{'xml_output'}) {
-      &WriteXmlToFile();
+        &WriteXmlToFile();
     }
-
 }
 
 # Check if unit tests are running, 
@@ -3100,6 +3105,3 @@ if (&Sclc::UnitTestsAreRunning()) {
 }
 
 &Sclc::main(@ARGV) unless ($DO_NOT_EXECUTE);
-
-
-1
