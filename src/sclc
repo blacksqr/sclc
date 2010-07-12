@@ -48,7 +48,6 @@ my $Is_WinDos     = ( (uc $Config{'osname'}) =~ /(?:MSDOS|MSWIN|WIN32)/ );
 my $Path_Sep      = ( $Is_WinDos ? "\\" : "/" );
 my $PathList_Sep  = ( $Is_WinDos ? ";" : ":" );
 my ($NAME, $EXECDIR) = (basename($0), dirname($0) || ".");
-
 my @Languages = (
       'Ada',
       'Assembly',
@@ -2170,29 +2169,26 @@ sub SetLanguage {
     my $lang = "";
     my ($dirname, $basename) = SplitPath($_);
 	## Before suffix checking, check for double suffix issues
-	if($basename =~ /\.par\./) {
-		$lang = "FlashParameter";
-	}
+	# if($basename =~ /\.par\./) {
+	#	$lang = "FlashParameter";
+	# }
 	# If it starts with Config. it's a Config file
-	elsif ($ basename =~ /^Config\./) {
-		$lang = "FlashConfig";
-	}
+	# elsif ($ basename =~ /^Config\./) {
+	#	$lang = "FlashConfig";
+	# }
     ## First see if we have a '.' suffix
     if ($basename =~ /.+(\.[^.]+)$/) {
         $lang = $Suffixes{$1} if (defined $Suffixes{$1});
     }
-    elsif ($basename =~ /^makefile/i) {
-        $lang = "make";
-    }
-	
-	elsif( $basename =~ /^Config$/i) {
-		$lang = "FlashConfig";
-	}
-	
-	elsif( $basename eq "README" || $basename eq "INSTALL" || $basename eq "TODO") {
-		$lang = "Text";
-	}
-	 
+    # elsif ($basename =~ /^makefile/i) {
+    #    $lang = "make";
+    # }
+    # elsif( $basename =~ /^Config$/i) {
+    #    $lang = "FlashConfig";
+    # }
+    # elsif( $basename eq "README" || $basename eq "INSTALL" || $basename eq "TODO") {
+    #    $lang = "Text";
+    # }
     elsif ($filepath ne '-') {
         ## Not a normal '.' suffix, have to look at all of them
         my %seen = ();
@@ -2205,6 +2201,13 @@ sub SetLanguage {
             last if ($lang);
         }
     }
+    if ($OPTS{'mapping'}) {
+	# print ("Mapping is specified!\n");
+	if ("" ne &MappingFileType($basename)) {
+            $lang = &MappingFileType($basename);
+        }
+    }
+
     if ($lang) {
         $lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
         my $ref = RefLanguage($lang) || "";
@@ -2928,7 +2931,8 @@ sub PrintTotals {
 }
 
 use Getopt::Long;
-
+my @Mapping = ();
+my %MappingRule = ();
 ## main -- procedural interface to the script.
 sub main {
     local @ARGV = @_;
@@ -3023,10 +3027,12 @@ sub main {
         open(MAPPING, $OPTS{'mapping'}) || die ("The mapping file does not exist.\n");
 	while (<MAPPING>) {
             chomp();
-            if ($_ =~ /^(.*)\s*(.*)$/) {
+            if ($_ =~ m/(\w*)\s*(\w*)/) {
                 # print($1);
                 # print($2);
 		# So $1 will be the regular expression and $2 will be the filetype.
+                push (@Mapping, $1);
+                $MappingRule{$1} = $2;
             }
 	}
 	close(MAPPING);
@@ -3050,6 +3056,17 @@ sub main {
     if ($OPTS{'xml_output'}) {
         &WriteXmlToFile();
     }
+}
+
+sub MappingFileType {
+    my $basename = $_[0];
+    my $pattern;
+    foreach (@Mapping) {
+        if ($basename =~ m/$_/) {
+            return $MappingRule{$_};
+        }
+    }
+    return "";
 }
 
 # Check if unit tests are running, 

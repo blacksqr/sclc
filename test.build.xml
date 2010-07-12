@@ -38,7 +38,7 @@
     test.sort-array.p, test.temp2final.awk, test.thdruspi.ada, test.sensor-utils.el, test.TryMe.e, test.build.xml,
     test.README.html, test.ConfirmProjectSettings.jsp, test.list.sh, test.AdventureWorks.sql, test.JessActionTemplates.clp,
     test.sample.py, test.HelloWorld.cs, test.hackyinstaller.xsd, test.functions.css, test.sample.js, 
-    test.README, test.example.txt, test.Makefile.in, test.drawcounties.pro">
+    test.example.txt, test.Makefile.in, test.drawcounties.pro">
   </target>
   
   <!-- Initializes the necessary resources to run the tests -->
