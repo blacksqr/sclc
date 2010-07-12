@@ -2203,7 +2203,7 @@ sub SetLanguage {
     }
     if ($OPTS{'mapping'}) {
 	# print ("Mapping is specified!\n");
-	if ("" ne &MappingFileType($basename)) {
+	if (&MappingFileType($basename) ne "None") {
             $lang = &MappingFileType($basename);
         }
     }
@@ -3027,7 +3027,7 @@ sub main {
         open(MAPPING, $OPTS{'mapping'}) || die ("The mapping file does not exist.\n");
 	while (<MAPPING>) {
             chomp();
-            if ($_ =~ m/(\w*)\s*(\w*)/) {
+            if ($_ =~ m/(\S*)\s*(\S*)/) {
                 # print($1);
                 # print($2);
 		# So $1 will be the regular expression and $2 will be the filetype.
@@ -3062,11 +3062,11 @@ sub MappingFileType {
     my $basename = $_[0];
     my $pattern;
     foreach (@Mapping) {
-        if ($basename =~ m/$_/) {
+        if ($basename =~ /$_/) {
             return $MappingRule{$_};
         }
     }
-    return "";
+    return "None";
 }
 
 # Check if unit tests are running, 
