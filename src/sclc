@@ -2100,48 +2100,48 @@ sub GuessLanguage {
     local($_) = @_;
     my($lang) = "";
     if ($DEFAULT_LANG) {
-    $lang = $DEFAULT_LANG;
+        $lang = $DEFAULT_LANG;
     }
     elsif (m/^\s*\#\s*(include|if|ifdef|define)\b/) {
-    $lang = "C";
+        $lang = "C";
     }
     elsif (m|^\s*/\*\*\s*$|) {
-    $lang = "Java";
+        $lang = "Java";
     }
     elsif (m|^\s*/\*|) {
-    $lang = "C";
+        $lang = "C";
     }
     elsif (m|^\s*//|) {
-    $lang = "C++";
+        $lang = "C++";
     }
     elsif (/\(\*.*\*\)/) {
-    $lang = "Mathematica";
+        $lang = "Mathematica";
     }
     elsif (/^\s*\{/) {
-    $lang = "Pascal";
+        $lang = "Pascal";
     }
     elsif (/^\s*--/) {
     ## $lang = "Ada";         ## or it could be Eiffel, ZPL or Chapel
     }
     elsif (/^\s*[\(;]/) {
-    $lang = "Lisp";
+        $lang = "Lisp";
     }
     elsif (/^\s*\*/) {
-    ## $lang = "Assembly";
+        ## $lang = "Assembly";
     }
     # DO NOT USE: m:^\s*\#\s*\!\s*\S+$Path_Sep(\S+):
     # IT IS INCOMPATIBLE ON WINDOWS
     elsif (m|^\s*#\s*\!\s*\S+[\\/]([^\\/\s]+)\s*|) {
-    my $execname = $1;  ## get the name of the program to exec
-    ## Remove the extension if we can't find its name
-    $execname =~ s/\.[^.]*$//   unless (defined $Interpreters{$execname});
-    ## Remove trailing numbers if we still can't find its name
-    $execname =~ s/\d[.\d]*$//  unless (defined $Interpreters{$execname});
-    $lang = $Interpreters{$execname} if (defined $Interpreters{$execname});
+        my $execname = $1;  ## get the name of the program to exec
+        ## Remove the extension if we can't find its name
+        $execname =~ s/\.[^.]*$//   unless (defined $Interpreters{$execname});
+        ## Remove trailing numbers if we still can't find its name
+        $execname =~ s/\d[.\d]*$//  unless (defined $Interpreters{$execname});
+        $lang = $Interpreters{$execname} if (defined $Interpreters{$execname});
     }
     elsif (/^\s*#/) {
        $lang = "shell";
-       }
+    }
 
     $lang = $DEFAULT_LANG if ($DEFAULT_LANG && (! $lang));
 
