@@ -3020,6 +3020,16 @@ sub main {
          );
     if ($OPTS{'mapping'}) {
 	# read in the file first and construct the man-made rule table
+        open(MAPPING, $OPTS{'mapping'}) || die ("The mapping file does not exist.\n");
+	while (<MAPPING>) {
+            chomp();
+            if ($_ =~ /^(.*)\s*(.*)$/) {
+                # print($1);
+                # print($2);
+		# So $1 will be the regular expression and $2 will be the filetype.
+            }
+	}
+	close(MAPPING);
     }
 
 
