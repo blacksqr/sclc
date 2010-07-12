@@ -1695,7 +1695,7 @@ my %Interpreters = (
 ##   ErrorMsg -- Print an error message (prefixed by "$NAME: ").
 ##
 ## SYNOPSIS:
-##   &ErrorMsg("message text");
+##   ErrorMsg("message text");
 ##
 ## ARGUMENTS:
 ##   A single string containing the message text.
@@ -1780,7 +1780,7 @@ sub Usage {
 ##                only if '-debug' was specified on the command-line.
 ##
 ## SYNOPSIS:
-##   &DbgPrintf("%s\n", "debug message text");
+##   DbgPrintf("%s\n", "debug message text");
 ##
 ## ARGUMENTS:
 ##   The format and variables containing the debug message text (a newline
@@ -1924,32 +1924,32 @@ sub CheckCounts {
     local($_);
     my @cntspecs = split(/\W/, $OPTS{'counts'});
     if (0 == @cntspecs) {
-    &ErrorMsg("invalid counts specifier \"$OPTS{'counts'}\"");
-    ++$ERRORS;
+        ErrorMsg("invalid counts specifier \"$OPTS{'counts'}\"");
+        ++$ERRORS;
     }
     else {
-    my @matches = ();
-    foreach (@cntspecs) {
-        @matches = &MatchKwd($_, @Count_Names, 'all');
-        if (@matches == 1) {
-        if ($matches[0] eq 'all') {
-            for (@Count_Names) {
-            next if $_ eq 'AESL'; # skip this one
-            ++$CNTS{lc $_};
+        my @matches = ();
+        foreach (@cntspecs) {
+            @matches = MatchKwd($_, @Count_Names, 'all');
+            if (@matches == 1) {
+                if ($matches[0] eq 'all') {
+                    for (@Count_Names) {
+                        next if $_ eq 'AESL'; # skip this one
+                        ++$CNTS{lc $_};
+                    }
+                } else {
+                    ++$CNTS{lc $matches[0]};
+                }
             }
-        } else {
-            ++$CNTS{lc $matches[0]};
+            elsif (@matches == 0) {
+                ErrorMsg("invalid counts specifier \"$_\"");
+                ++$ERRORS;
+            }
+            else {
+                ErrorMsg("ambiguous counts specifier \"$_\"");
+                ++$ERRORS;
+            }
         }
-        }
-        elsif (@matches == 0) {
-        &ErrorMsg("invalid counts specifier \"$_\"");
-        ++$ERRORS;
-        }
-        else {
-        &ErrorMsg("ambiguous counts specifier \"$_\"");
-        ++$ERRORS;
-        }
-    }
     }
 }
 
@@ -2205,6 +2205,8 @@ sub SetLanguage {
 	# print ("Mapping is specified!\n");
 	if (&MappingFileType($basename) ne "None") {
             $lang = &MappingFileType($basename);
+            # Check if it's a real language
+            
         }
     }
 
@@ -2964,7 +2966,7 @@ sub main {
     $OPTS{'mapping'}   = "";
 
     ## Parse options
-    my $rc = &GetOptions( \%OPTS,
+    my $rc = GetOptions( \%OPTS,
               "debug",
               "help",
               "output=s",
@@ -2990,26 +2992,26 @@ sub main {
               "excludedir=s@",
               "mapping=s"
               );
-    &Usage(1) if ($OPTS{'help'});
-    &Usage(2) unless ($rc);
-    &Usage(2) if ((@ARGV == 0) && (-t STDIN));
+    Usage(1) if ($OPTS{'help'});
+    Usage(2) unless ($rc);
+    Usage(2) if ((@ARGV == 0) && (-t STDIN));
 
     ## Check for syntax errors
     if ($OPTS{'pred'} && $OPTS{'fromversion'}) {
-        &ErrorMsg("The '-pred' and '-fromversion' options are incompatible!");
+        ErrorMsg("The '-pred' and '-fromversion' options are incompatible!");
         ++$ERRORS;
     }
-    &CheckLanguage(@{ $OPTS{'language'} }) if (@{ $OPTS{'language'} } > 0);
-    &CheckSections($OPTS{'sections'}) if ($OPTS{'sections'});
-    &CheckCounts($OPTS{'counts'}) if ($OPTS{'counts'});
+    CheckLanguage(@{ $OPTS{'language'} }) if (@{ $OPTS{'language'} } > 0);
+    CheckSections($OPTS{'sections'}) if ($OPTS{'sections'});
+    CheckCounts($OPTS{'counts'}) if ($OPTS{'counts'});
 
-    &Usage(2) if ($ERRORS);
+    Usage(2) if ($ERRORS);
 
     ## Redirect STDOUT if requested
     if ($OPTS{'output'}) {
         close STDOUT;
         open(STDOUT, ">$OPTS{'output'}")
-        or &FatalMsg("Unable to redirect STDOUT to $OPTS{'output'}: $!");
+        or FatalMsg("Unable to redirect STDOUT to $OPTS{'output'}: $!");
     }
 
     if ($OPTS{'pred'} || $OPTS{'fromversion'} || $OPTS{'toversion'}) {
@@ -3041,20 +3043,20 @@ sub main {
 
     if (! $OPTS{'filelist'}) {
         @ARGV = ('-') if (0 == @ARGV);
-        &CountFiles(@ARGV);
+        CountFiles(@ARGV);
     }
     else {
-    ## have to read list of filenames from input
-    while (<>) {
-        chomp;
-        &CountFiles($_);
+        ## have to read list of filenames from input
+        while (<>) {
+            chomp;
+            CountFiles($_);
+        }
     }
-    }
-    &PrintTotals(\%Totals) if (($SECS{'totals'} || $SECS{'langtotals'}) &&
+    PrintTotals(\%Totals) if (($SECS{'totals'} || $SECS{'langtotals'}) &&
                    ((! $SECS{'files'}) || ($NumSources > 1)));
                    
     if ($OPTS{'xml_output'}) {
-        &WriteXmlToFile();
+        WriteXmlToFile();
     }
 }
 
@@ -3131,4 +3133,4 @@ if (&Sclc::UnitTestsAreRunning()) {
   $DO_NOT_EXECUTE = 1;
 }
 
-&Sclc::main(@ARGV) unless ($DO_NOT_EXECUTE);
+Sclc::main(@ARGV) unless ($DO_NOT_EXECUTE);
