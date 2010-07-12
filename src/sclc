@@ -1958,7 +1958,7 @@ sub CheckCounts {
 ##   SplitPath -- Split a pathname into dirname and basename components
 ##
 ## SYNOPSIS:
-##   ($dirname, $basename, $vcsuffix) = &SplitPath($pname);
+##   ($dirname, $basename, $vcsuffix) = SplitPath($pname);
 ##
 ## ARGUMENTS:
 ##   $pname : The pathname of a file
@@ -1978,17 +1978,17 @@ sub SplitPath {
     local($_) = @_;
     my($dirname, $basename, $vcsuffix, $i);
     if ($OPTS{'vcstring'}) {
-    $i = index($_, $OPTS{'vcstring'});
-    unless ($i < 0) {
-        $vcsuffix = substr($_, $i+1);
-        $_ = substr($_, 0, $i);
-    }
+        $i = index($_, $OPTS{'vcstring'});
+        unless ($i < 0) {
+            $vcsuffix = substr($_, $i+1);
+            $_ = substr($_, 0, $i);
+        }
     }
     ($dirname, $basename) = ('.', $_);
     $i = rindex($_, $Path_Sep);
     unless ($i < 0) {
-    $dirname = substr($_, 0, $i);
-    $basename = substr($_, $i+1);
+        $dirname = substr($_, 0, $i);
+        $basename = substr($_, $i+1);
     }
     ($dirname, $basename, $vcsuffix);
 }
@@ -1998,7 +1998,7 @@ sub SplitPath {
 ##   ExcludeFile -- See if a file should be excluded from processing.
 ##
 ## SYNOPSIS:
-##   if (&ExcludeFile($pname)) { ... }
+##   if (ExcludeFile($pname)) { ... }
 ##
 ## ARGUMENTS:
 ##   $pname : The pathname of a file that we may wish to process.
@@ -2073,11 +2073,11 @@ sub RefLanguage {
     local($_) = $lang;
     ## Figure out the language-specific pair of arrays to use
     if ($lang) {
-    $_ = "C" if ($lang eq "C++"); ## C & C++ use the same arrays
-    ## Arrays are named <LANG>_DEFNS and <LANG>_EVALS where <LANG> is
-    ## all uppercase with non-alphanumerics removed
-    s/\W//g;
-    s/[a-z]/\U$&/g;
+        $_ = "C" if ($lang eq "C++"); ## C & C++ use the same arrays
+        ## Arrays are named <LANG>_DEFNS and <LANG>_EVALS where <LANG> is
+        ## all uppercase with non-alphanumerics removed
+        s/\W//g;
+        s/[a-z]/\U$&/g;
     }
     $_;
 }
