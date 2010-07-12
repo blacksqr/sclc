@@ -25,4 +25,14 @@ sub test_IsCeePlusPlus_with_c_code {
     $self->assert(!Sclc::IsCeePlusPlus($code));
 }
 
+sub test_IsValidLanguage_with_real_language {
+    my $self = shift;
+    $self->assert(Sclc::IsValidLanguage("Fortran"));
+}
+
+sub test_IsValidLanguage_with_fake_language {
+    my $self = shift;
+    $self->assert(!Sclc::IsValidLanguage("klingon"));
+}
+
 1;
