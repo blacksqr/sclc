@@ -1824,30 +1824,6 @@ sub MatchKwd {
 
 ##----------------------------------------------------------------------
 ## FUNCTION: 
-##   IsValidLanguage˚ -- Checks if the input string matches one of the languages 
-##   SCLC knows (case insensitive)
-##
-## SYNOPSIS: 
-##   IsValidLanguage("foo")
-##
-## ARGUMENTS:
-##   A single string that is the name of a language
-##
-## RETURN VALUE: 
-##   True if language is valid, else false
-##
-## PRECONDITIONS:
-##   Global @Languages array must be defined and populated
-##
-## SIDE EFFECTS: None
-##----------------------------------------------------------------------
-sub IsValidLanguage {
-    my $expr = shift;
-    my @matches = grep(/^${expr}$/i, @Languages);
-    return (@matches > 0);
-}
-##----------------------------------------------------------------------
-## FUNCTION: 
 ##   CanonicalLangName -- Returns the canonical capitalization of one of 
 ##   the languages supported by sclc, or undef if the language is not
 ##   supported
