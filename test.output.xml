@@ -10,7 +10,6 @@ It depends on AntUnit
    <property name="test.dir" location="${basedir}/t/ant" />
    <property name="src.dir" location="${basedir}/src"/>
    <property name="sclcbase.dir" location="${basedir}"/> 
-   <!-- <property name="testfile.dir" location="${basedir}/lib/examples"/>  -->
    
 
    <target name="runTests">
