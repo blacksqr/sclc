@@ -9,7 +9,7 @@
       <delete file="${actualoutput.dir}/${outfile}" />
    </target>
 
-	<target name="test-Makefile.h-output">
+	<target name="test-hello.c-output">
 		<exec executable="perl"
               output="${actualoutput.dir}/${outfile}"
               dir="${sclcbase.dir}"> 
