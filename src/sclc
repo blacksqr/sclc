@@ -1532,8 +1532,6 @@ my %Suffixes = (
     ".hh"  =>  "C++",
     ## Chapel
     ".chpl" => "Chapel",
-    ## FlashConfig
-    ".fh" => "FlashConfig",
     ## Ada
     ".a"   =>   "Ada",
     ".ada" => "Ada",
