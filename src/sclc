@@ -1544,6 +1544,7 @@ my %Suffixes = (
     ".EFL" => "Eiffel",
     ## FORTAN
     ".f"   => "FORTRAN",
+    ".fh"  => "FORTRAN",
     ".for" => "FORTRAN",
     ".f90" => "FORTRAN",
     ".F"   => "FORTRAN",
