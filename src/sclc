@@ -2234,17 +2234,16 @@ sub SetLanguage {
         }
     }
     if ($OPTS{'mapping'}) {
-
         # print ("Mapping is specified!\n");
-        my $lang_candidate = MappingFileType($basename);
-
-        # Check if it's a real language
-        $lang = CanonicalLangName($lang_candidate);
-        if(! defined($lang)) {
-            FatalMsg("Unknown programming language in mapping file: \"$lang_candidate\"");
+        if (MappingFileType($basename) ne "None") {
+            my $lang_candidate = MappingFileType($basename);
+            # Check if it's a real language
+            $lang = CanonicalLangName($lang_candidate);
+            if(! defined($lang)) {
+                FatalMsg("Unknown programming language in mapping file: \"$lang_candidate\"");
+            }
         }
     }
-
     if ($lang) {
         $lang = "C++" if (($lang eq "C") && ($DEFAULT_LANG eq "C++"));
         my $ref = RefLanguage($lang) || "";
@@ -3129,6 +3128,25 @@ sub main {
 ## SIDE EFFECTS: None
 ##----------------------------------------------------------------------
 
+##----------------------------------------------------------------------
+## FUNCTION:
+##   MappingFileType -- Return a given file's type based on the rule
+##   provided by the user
+##
+## SYNPOSIS:
+##   MappingFileType("README") -> "Text"
+##
+## ARGUMENTS:
+##   Base file name without path but with suffix
+##
+## RETURN VALUE:
+##   File type set by the user in the rule file for specific file name
+##
+## PRECONDITIONS:
+##   Global @Mapping and %MappingRule
+##
+## SIDE EFFECTS: None
+##----------------------------------------------------------------------
 sub MappingFileType {
     my $basename = $_[0];
     my $pattern;
