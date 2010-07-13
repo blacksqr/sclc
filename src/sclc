@@ -1824,7 +1824,7 @@ sub MatchKwd {
 
 ##----------------------------------------------------------------------
 ## FUNCTION: 
-##   IsValidLanguage -- Checks if the input string matches one of the languages 
+##   IsValidLanguage˚ -- Checks if the input string matches one of the languages 
 ##   SCLC knows (case insensitive)
 ##
 ## SYNOPSIS: 
@@ -1845,6 +1845,36 @@ sub IsValidLanguage {
     my $expr = shift;
     my @matches = grep(/^${expr}$/i, @Languages);
     return (@matches > 0);
+}
+##----------------------------------------------------------------------
+## FUNCTION: 
+##   CanonicalLangName -- Returns the canonical capitalization of one of 
+##   the languages supported by sclc, or undef if the language is not
+##   supported
+##
+## SYNPOSIS:
+##   CanonicalLangName("Fortran") -> "FORTRAN"
+##
+## ARGUMENTS:
+##   A single string
+##
+## RETURN VALUE:
+##   The canonical spelling if the language is supported, else undef
+##
+## PRECONDITIONS:
+##   Global @Languages array must be defined and populated
+##
+## SIDE EFFECTS: None
+##----------------------------------------------------------------------
+
+sub CanonicalLangName {
+    my $expr = shift;
+    my @matches = grep(/^${expr}$/i, @Languages);
+    if (@matches > 0) {
+        return $matches[0];
+    } else {
+        return undef;
+    }
 }
 
 
@@ -1917,14 +1947,14 @@ sub CheckSections {
     else {
         my @matches = ();
         foreach (@secspecs) {
-            @matches = &MatchKwd($_, "header", "files", "langtotals", "totals");
+            @matches = MatchKwd($_, "header", "files", "langtotals", "totals");
             if (@matches == 1) {
                 ++$SECS{$matches[0]};
             } elsif (@matches == 0) {
-                &ErrorMsg("invalid sections specifier \"$_\"");
+                ErrorMsg("invalid sections specifier \"$_\"");
                 ++$ERRORS;
             } else {
-                &ErrorMsg("ambiguous sections specifier \"$_\"");
+                ErrorMsg("ambiguous sections specifier \"$_\"");
                 ++$ERRORS;
             }
         }
@@ -2047,7 +2077,7 @@ sub ExcludeFile {
   local($_) = @_;
   ## see if we should exclude this file from the list
   if ((@{ $OPTS{'name'} } > 0) || (@{ $OPTS{'except'} } > 0)) {
-    my($dirname, $basename) = &SplitPath($_);
+    my($dirname, $basename) = SplitPath($_);
     my @matches = grep($basename =~ /^$_$/, @{ $OPTS{'except'} });
     return 1  if (@matches > 0); ## this is an exception
     if (@{ $OPTS{'name'} } > 0) {
@@ -2171,7 +2201,7 @@ sub GuessLanguage {
 
     $lang = $DEFAULT_LANG if ($DEFAULT_LANG && (! $lang));
 
-    my $ref = &RefLanguage($lang);
+    my $ref = RefLanguage($lang);
     ($LANG_NAME, $LANG_REF) = ($lang, $ref);
 }
 
@@ -2229,8 +2259,8 @@ sub SetLanguage {
     }
     if ($OPTS{'mapping'}) {
 	# print ("Mapping is specified!\n");
-	if (&MappingFileType($basename) ne "None") {
-            $lang = &MappingFileType($basename);
+	if (MappingFileType($basename) ne "None") {
+            $lang = MappingFileType($basename);
             # Check if it's a real language
             
         }

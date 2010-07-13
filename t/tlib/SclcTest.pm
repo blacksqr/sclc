@@ -35,4 +35,15 @@ sub test_IsValidLanguage_with_fake_language {
     $self->assert(!Sclc::IsValidLanguage("klingon"));
 }
 
+sub test_CanonicalLangName_match {
+    my $self = shift;
+    $self->assert_equals("FORTRAN",Sclc::CanonicalLangName("Fortran"));
+}
+
+sub test_CanonicalLangName_no_match {
+    my $self = shift;
+    $self->assert_null(Sclc::CanonicalLangName("klingon"));
+}
+
+
 1;
