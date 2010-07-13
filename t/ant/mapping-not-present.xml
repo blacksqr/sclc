@@ -1,0 +1,25 @@
+<project xmlns:au="antlib:org.apache.ant.antunit">
+  <property name="testfile.relpath" value="lib/examples"/>    
+  <property name="actualoutput.dir" location="${basedir}/actual-output" />
+  <property name="expectedoutput.dir" location="${basedir}/expected-output" />
+   <property name="outfile" value="hello.c.out" />
+	
+   <target name="setUp">
+      <mkdir dir="${actualoutput.dir}" />
+      <delete file="${actualoutput.dir}/${outfile}" />
+   </target>
+
+	<target name="test-Makefile.h-output">
+		<exec executable="perl"
+              output="${actualoutput.dir}/${outfile}"
+              dir="${sclcbase.dir}"> 
+         <arg value="${src.dir}/sclc" />
+         <arg value="-mapping" />
+         <arg value="${basedir}/mapping.txt" />
+         <arg value="${testfile.relpath}/hello.c" />
+    </exec>
+
+    <au:assertFilesMatch expected="${expectedoutput.dir}/${outfile}"
+                         actual="${actualoutput.dir}/${outfile}" />
+   </target>
+</project>
