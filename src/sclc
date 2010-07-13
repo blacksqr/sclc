@@ -1532,6 +1532,8 @@ my %Suffixes = (
     ".hh"  =>  "C++",
     ## Chapel
     ".chpl" => "Chapel",
+    ## FlashConfig
+    ".fh" => "FlashConfig",
     ## Ada
     ".a"   =>   "Ada",
     ".ada" => "Ada",
@@ -2235,11 +2237,11 @@ sub SetLanguage {
     }
     if ($OPTS{'mapping'}) {
         # print ("Mapping is specified!\n");
-        if (MappingFileType($basename) ne "None") {
-            my $lang_candidate = MappingFileType($basename);
+        my $lang_candidate = MappingFileType($basename);
+        if (defined($lang_candidate)) {
             # Check if it's a real language
             $lang = CanonicalLangName($lang_candidate);
-            if(! defined($lang)) {
+            if(!defined($lang)) {
                 FatalMsg("Unknown programming language in mapping file: \"$lang_candidate\"");
             }
         }
@@ -3108,25 +3110,6 @@ sub main {
         WriteXmlToFile();
     }
 }
-##----------------------------------------------------------------------
-## FUNCTION:
-##   MappingFileType -- Return a given file's type based on the rule
-##   provided by the user
-##
-## SYNPOSIS:
-##   MappingFileType("README") -> "Text"
-##
-## ARGUMENTS:
-##   Base file name without path but with suffix
-##
-## RETURN VALUE:
-##   File type set by the user in the rule file for specific file name
-##
-## PRECONDITIONS:
-##   Global @Mapping and %MappingRule
-##
-## SIDE EFFECTS: None
-##----------------------------------------------------------------------
 
 ##----------------------------------------------------------------------
 ## FUNCTION:
@@ -3155,7 +3138,7 @@ sub MappingFileType {
             return $MappingRule{$_};
         }
     }
-    return "None";
+    return undef;
 }
 
 # Check if unit tests are running,
