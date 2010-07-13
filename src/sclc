@@ -2064,8 +2064,8 @@ sub ExcludeFile {
   if($OPTS{'default_exclude'}) {
     foreach my $ex_pattern (@EXCLUDES) {
       if($pathname =~ m/$ex_pattern/) {
-    # matches exclude pattern
-    return 1; # don't use this file
+          # matches exclude pattern
+          return 1; # don't use this file
       }
     }
   }
@@ -2074,8 +2074,8 @@ sub ExcludeFile {
     my @user_excludes = @{ $OPTS{'excludedir'} };
     foreach my $user_pattern (@user_excludes) {
       if($pathname =~ m/$user_pattern/) {
-    #matches pattern, don't use
-    return 1;
+          #matches pattern, don't use
+          return 1;
       }
     }
   }
@@ -2258,13 +2258,13 @@ sub SetLanguage {
         }
         elsif (open(FILEPATH, $filepath)) {
             while (<FILEPATH>) {
-                   if ( /^\s$/ ) {
-                           chop;
-                   }
-                   else {
-                           $found_line = 1;
-                           last;
-                   }
+                if ( /^\s$/ ) {
+                    chop;
+                }
+                else {
+                    $found_line = 1;
+                    last;
+                }
             }
             close(FILEPATH);
         }
