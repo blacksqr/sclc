@@ -1842,7 +1842,6 @@ sub MatchKwd {
 ##
 ## SIDE EFFECTS: None
 ##----------------------------------------------------------------------
-
 sub CanonicalLangName {
     my $expr = shift;
     my @matches = grep(/^${expr}$/i, @Languages);
@@ -1880,21 +1879,20 @@ sub CheckLanguage {
             next;
         }
         my $expr = $lang;
-        $expr =~ s/\W/\\$&/g;
-        my @matches = grep(/^${expr}$/i, @Languages);
-        if (@matches == 0) {
+        $expr =~ s/\W/\\$&/g; # Prepend a backslash to all non-word chars (why?)
+        my $canon_lang = CanonicalLangName($expr);
+        if(! defined($canon_lang)) {
             ErrorMsg("Unknown programming language: \"$lang\"");
-            ++$ERRORS;
+            ++$ERRORS;            
         }
-        $lang = $matches[$[];
         if (! $ext) {
-            $DEFAULT_LANG = $lang;
+            $DEFAULT_LANG = $canon_lang;
         }
         elsif ($ext =~ m|^/(.*)$|) {
-            $Interpreters{$1} = $lang;
+            $Interpreters{$1} = $canon_lang;
         }
         else {
-            $Suffixes{$ext} = $lang;
+            $Suffixes{$ext} = $canon_lang;
         }
     }
 }
