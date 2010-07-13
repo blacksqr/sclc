@@ -2234,9 +2234,13 @@ sub SetLanguage {
     if ($OPTS{'mapping'}) {
 	# print ("Mapping is specified!\n");
 	if (MappingFileType($basename) ne "None") {
-            $lang = MappingFileType($basename);
+            my $lang_candidate = MappingFileType($basename);
             # Check if it's a real language
-            
+            $lang = CanonicalLangName($lang_candidate);
+            if(! defined($lang)) {
+                FatalMsg("Unknown programming language in mapping file: \"$lang_candidate\"");
+                
+            }
         }
     }
 
@@ -2293,7 +2297,7 @@ sub IsSeparator {
     return 0 if (@{ $OPTS{'separate'} } == 0);
     my $regexp;
     foreach $regexp (@{ $OPTS{'separate'} }) {
-    return 1 if (/^(?:$regexp)$/);
+        return 1 if (/^(?:$regexp)$/);
     }
     0;
 }
@@ -3056,7 +3060,7 @@ sub main {
          );
     if ($OPTS{'mapping'}) {
 	# read in the file first and construct the man-made rule table
-        open(MAPPING, $OPTS{'mapping'}) || die ("The mapping file does not exist.\n");
+        open(MAPPING, $OPTS{'mapping'}) || FatalMsg("The mapping file does not exist");
 	while (<MAPPING>) {
             chomp();
             if ($_ =~ m/(\S*)\s*(\S*)/) {
