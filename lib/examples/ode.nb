@@ -1,0 +1,31 @@
+(* 
+ Example code from http://spot.colorado.edu/~sitelic/samplecode/mathematica/ode.html
+
+*)
+
+(* 1. system of differential equations: *)
+
+	eq1 =  x'[t] == -3 (x[t] - y[t])
+	eq2 =  y'[t] == -x[t] z[t] + 26.5 x[t] - y[t]
+	eq3 =  z'[t] == x[t] y[t] - z[t]
+
+(* 2. initial conditions: *)
+
+	ic1 =  x[0]==0
+	ic2 =  y[0]==1
+	ic3 =  z[0]==0
+
+(* 3. Numerical solution to be plotted with 3D graphics:  *)
+
+soln  =  NDSolve[ {eq1,eq2,eq3,ic1,ic2,ic3}, {x,y,z}, {t,0,20} ]
+
+	(* for convenience, name the pieces: *)
+	X = x /. soln[[1]]
+	Y = y /. soln[[1]]
+	Z = z /. soln[[1]]
+
+ParametricPlot[Evaluate[{X[t], Y[t]}], {t, 0, 20},
+	PlotLabel->"Plot of x[t] vs. y[t]\n   for t in {0,20}\n"]
+
+ParametricPlot3D[ Evaluate[{X[t],Y[t],Z[t]}], {t,0,20},
+	PlotLabel->"Plot of {x,y,z}\n\n", PlotPoints->500];
