@@ -94,8 +94,8 @@ sclc -- Source-code line counter
       [-name REGEXP] [-except REGEXP] [-recurse] [-filelist] [-ignore]
       [-diff] [-fromversion SELECTOR] [-toversion SELECTOR] [-pred]
       [-prefix REGEXP] [-separate REGEXP] [-vcstring STRING] [-output FILE]
-      [-xml_output FILE][tm3_output FILE][-default_exclude][-excludedir REGEXP]
-      [FILE ...]
+      [-xml_output FILE] [tm3_output FILE] [-default_exclude]
+      [-excludedir REGEXP] [-mapping FILE] [FILE ...]
 
 =head1 OPTIONS AND ARGUMENTS
 
@@ -307,6 +307,15 @@ Excludes a default set of files and directories using a set of regular expressio
 =item B<-excludedir>
 
 Excludes files from being evaluated if their full path or file name matches the REGEXP. When used with -default_exclude it will exclude all the default plus any REGEXP given by exclude options. Each regex string needs to have its own excludedir option. There is no limit on the number of excludedirs.  Can be used with -name and -except.
+
+=item B<-mapping> I<FILE>
+
+Specify a mapping file to override sclc's default rules for mapping file names to programming languages. Each line of the mapping file
+contains a regular expression and the programming language that should be associated if a file name matches the regular expression. 
+An example of the contents of a mapping file:
+
+   Makefile.*   make
+   .*\.h        FORTRAN
 
 =item I<FILE>
 
