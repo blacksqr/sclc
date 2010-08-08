@@ -10,7 +10,7 @@
     <attribute name="sclc.args" default="-default_exclude"/>
     <sequential>
       <exec executable="perl">
-        <arg line="${src.dir}/sclc @{sclc.args} -xml_output ${build.dir}/@{property.name}.size.xml @{test.file}" />
+        <arg line="${src.dir}/sclc @{sclc.args} -mapping ${testfile.dir}/mapping -xml_output ${build.dir}/@{property.name}.size.xml @{test.file}" />
       </exec> 
       <loadfile property="@{property.name}" srcfile="${build.dir}/@{property.name}.size.xml" />
     </sequential>
@@ -38,7 +38,7 @@
     test.sort-array.p, test.temp2final.awk, test.thdruspi.ada, test.sensor-utils.el, test.TryMe.e, test.build.xml,
     test.README.html, test.ConfirmProjectSettings.jsp, test.list.sh, test.AdventureWorks.sql, test.JessActionTemplates.clp,
     test.sample.py, test.HelloWorld.cs, test.hackyinstaller.xsd, test.functions.css, test.sample.js, 
-    test.example.txt, test.Makefile.in, test.drawcounties.pro">
+    test.example.txt, test.Makefile.in, test.drawcounties.pro, test.Config, sampleflash.par">
   </target>
   
   <!-- Initializes the necessary resources to run the tests -->
@@ -368,5 +368,18 @@
     <assertContains assert.num="2" property.name="drawcounties.pro.data" property.string="commentLines=&quot;136&quot;" />
     <assertContains assert.num="3'" property.name="drawcounties.pro.data" property.string="blankLines=&quot;23&quot;" />
   </target>
+
+  <target name="test.Config">
+		<runTest property.name="Config.data" test.file="${testfile.dir}/Config"/>
+    <assertContains assert.num="1" property.name="Config.data" property.string="sourceLines=&quot;34&quot;" />
+    <assertContains assert.num="2" property.name="Config.data" property.string="commentLines=&quot;10&quot;" />
+	</target>
+	
+	<target name="sampleflash.par">
+		<runTest property.name="sampleflash.par.data" test.file="${testfile.dir}/sampleflash.par"/>
+    <assertContains assert.num="1" property.name="sampleflash.par.data" property.string="sourceLines=&quot;36&quot;" />
+    <assertContains assert.num="2" property.name="sampleflash.par.data" property.string="commentLines=&quot;34&quot;" />
+
+	</target>
  
 </project>
