@@ -1,0 +1,69 @@
+DEFAULT Split 
+
+REQUIRES RuntimeParameters
+REQUIRES Grid
+REQUESTS monitors/Logfile
+REQUIRES PhysicalConstants
+
+
+# Lines that begin with 'D' as in 'Description' will end up as
+# comment lines in the setup_params file.  setup_params is
+# written by the setup script and holds all the default 
+# values of parameters.  
+
+# !!! If you add a parameter, please add a description line
+# Format is D <parameter name> <description>
+
+
+
+
+D dtinit             Initial timestep
+PARAMETER dtinit		REAL	1.E-10	
+
+
+D dtmin             Minimum timestep
+PARAMETER dtmin		REAL	1.E-10	
+
+D dtmax             Maximum timestep
+PARAMETER dtmax		REAL	1.E5	
+
+
+D nend              Maximum number of timesteps to take
+PARAMETER nend          INTEGER 100      
+
+D nbegin            First timestep
+PARAMETER nbegin        INTEGER 1  [ 1 to ]
+
+D tmax              Maximum simulation time     
+PARAMETER tmax          REAL    0.2    
+
+D tinitial          Initial simulation time
+PARAMETER tinitial      REAL    0.0
+
+D restart           Is this a restart run?
+PARAMETER restart       BOOLEAN FALSE
+
+
+D wall_clock_time_limit Total wall clock time limit (seconds)
+PARAMETER wall_clock_time_limit REAL 604800.
+
+D tstep_change_factor The initial dt is multiplied with this factor at &
+D                    & every timestep, until it is limited by CFL condition &
+D                    & allowing users to specify very conservative initial dt.
+PARAMETER tstep_change_factor	REAL	2.0
+
+
+#D The timestep adjustment based on temperature is not yet implemented
+#D temp_factor maximum allowable change in the temperature in a zone &
+#D   &          See documentation in Flash2.5, Section 11.1.3.1
+#PARAMETER temp_factor           REAL    0.1   
+                                              
+D zInitial    The initial redshift in a simulation.  < 0 if not being used.
+PARAMETER zInitial  REAL -1.0
+
+D zFinal      The final redshift in a simulation.  The simulation will stop 
+D    when the redshift reaches this value. Default is 0.0.
+PARAMETER zFinal    REAL 0.0
+
+D sweepOrder Determine the order of the directional sweeps
+PARAMETER sweepOrder INTEGER 123	[123, 132, 213, 231, 312, 321]
