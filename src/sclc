@@ -1423,7 +1423,7 @@ my %FLASHCONFIG_KEYWORDS;
       PPDEFINE)} = undef;
 
 my @FLASHCONFIG_EVALS = (
-    's/(^|\s+)#/\001/g',   ## denote '#' comments with \001
+    's/(^|\s+)[#D]/\001/g',   ## denote '#' comments with \001
   );
 
 my %FLASHCONFIG_DEFNS = ('AESL', 15.0,

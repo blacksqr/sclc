@@ -1,3 +1,8 @@
+# This file is from the open source version of FLASH3
+# FLASH3.1_framework.tar.gz
+# FLASH3.1_framework/source/Driver/DriverMain/Config
+# Available at http://flash.uchicago.edu/website/codesupport/
+# Used with permission as an sclc example from the Flash project
 DEFAULT Split 
 
 REQUIRES RuntimeParameters
