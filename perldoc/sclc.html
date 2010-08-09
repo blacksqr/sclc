@@ -54,7 +54,8 @@
       [-name REGEXP] [-except REGEXP] [-recurse] [-filelist] [-ignore]
       [-diff] [-fromversion SELECTOR] [-toversion SELECTOR] [-pred]
       [-prefix REGEXP] [-separate REGEXP] [-vcstring STRING] [-output FILE]
-      [-xml_output FILE][-default_exclude][-excludedir REGEXP][FILE ...]</pre>
+      [-xml_output FILE] [tm3_output FILE] [-default_exclude]
+      [-excludedir REGEXP] [-mapping FILE] [FILE ...]</pre>
 <p>
 </p>
 <hr />
@@ -88,6 +89,8 @@ Chapel,
 CSharp,
 CSS,
 Eiffel,
+FlashConfig,
+FlashParameter,
 FORTRAN,
 HTML,
 Java,
@@ -106,7 +109,9 @@ SQL,
 Tcl,
 Template,
 XML,
-ZPL</p>
+ZPL,
+Text,
+IDL</p>
 </dd>
 </dl>
 <p>Language names may <em>not</em> be abbreviated. This option may be specified
@@ -262,7 +267,12 @@ redirecting STDOUT on the cmdline using &quot;&gt; <em>FILE</em>&quot;).</p>
 <dt><strong><a name="xml_output_file" class="item"><strong>-xml_output</strong> <em>FILE</em></a></strong></dt>
 
 <dd>
-<p>Writes the results to the specified FILE.  Output will still be shown on the screen in addition to being in the XML file.</p>
+<p>Writes the results in XML format to the specified FILE.  Output will still be shown on the screen in addition to being in the XML file.</p>
+</dd>
+<dt><strong><a name="tm3_output_file" class="item"><strong>-tm3_output</strong> <em>FILE</em></a></strong></dt>
+
+<dd>
+<p>Writes the results in TM3 format to the specified FILE.  Output will still be shown on the screen in addition to being in the TM3 file.</p>
 </dd>
 <dt><strong><a name="default_exclude" class="item"><strong>-default_exclude</strong></a></strong></dt>
 
@@ -273,6 +283,16 @@ redirecting STDOUT on the cmdline using &quot;&gt; <em>FILE</em>&quot;).</p>
 
 <dd>
 <p>Excludes files from being evaluated if their full path or file name matches the REGEXP. When used with -default_exclude it will exclude all the default plus any REGEXP given by exclude options. Each regex string needs to have its own excludedir option. There is no limit on the number of excludedirs.  Can be used with -name and -except.</p>
+</dd>
+<dt><strong><a name="mapping_file" class="item"><strong>-mapping</strong> <em>FILE</em></a></strong></dt>
+
+<dd>
+<p>Specify a mapping file to override sclc's default rules for mapping file names to programming languages. Each line of the mapping file
+contains a regular expression and the programming language that should be associated if a file name matches the regular expression. 
+An example of the contents of a mapping file:</p>
+<pre>
+   Makefile.*   make
+   .*\.h        FORTRAN</pre>
 </dd>
 <dt><strong><a name="file" class="item"><em>FILE</em></a></strong></dt>
 
@@ -305,6 +325,8 @@ and/or sections to print. The counts are always printed in an order such that:</
 <p>The <strong>-recurse</strong> option can be used to specify that all files in a given directory tree should be
 processed.</p>
 <p>The <strong>-xml_output</strong> option will create a file containing the size data in XML format.</p>
+<p>The <strong>-tm3_output</strong> option will create a file containing the size data in TM3 format. For format details, see:
+&lt;<a href="http://www.cs.umd.edu/hcil/treemap/doc4.1/create_TM3_file.html">http://www.cs.umd.edu/hcil/treemap/doc4.1/create_TM3_file.html</a>&gt;</p>
 <p>If the <strong>-diff</strong> option is given than two lines are printed for each set of
 counts: one for deleted lines and one for inserted lines (and the <code>DELETED</code>
 or <code>INSERTED</code> keyword will appear on each output-line). If <strong>-pred</strong> or
@@ -386,6 +408,18 @@ the size data, in addition to printing it out to the console:</p>
             fileName=&quot;C:/svn-csdl/sclc/src/sclc.pl&quot; 
             blankLines=&quot;200&quot; commentLines=&quot;870&quot; sourceLines=&quot;1284&quot; tptoks=&quot;6910&quot; totalLines=&quot;2300&quot;/&gt;
    &lt;/sclc&gt;</pre>
+<p>Specifying the <strong>-tm3_output</strong> option with a file name instructs SCLC to produce a file in TM3 output containing
+the size data, in addition to printing it out to the console:</p>
+<pre>
+   $ sclc -recurse -default_exclude -tm3_output size.tm3 src
+    Lines  Blank  Cmnts   NCSL TPtoks
+   ====== ====== ====== ====== ====== ============================================
+     2300    200    870   1284   6910 src\sclc.pl  (Perl)</pre>
+<p>The command line output is the same as before, but now there is a file called size.tm3 containing the following:</p>
+<pre>
+    Language    Lines   Blank   Comments    SLOC    Tokens
+    STRING      INTEGER INTEGER INTEGER     INTEGER INTEGER
+    Perl        2300    200     870         1284    6910        src     sclc.pl</pre>
 <p>
 </p>
 <h2><a name="comparing_versions_using_cdiff">Comparing versions using CDIFF</a></h2>

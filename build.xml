@@ -54,7 +54,7 @@
     
   <!-- Create the version property as major.minor.daystamp -->
   <property name="majorVersionNumber" value="2" />
-  <property name="minorVersionNumber" value="7" />
+  <property name="minorVersionNumber" value="8" />
   <tstamp>
      <format property="TSTAMP" pattern="HH:mm:ss" />
      <format property="DAYSTAMP" pattern="Mdd" />
