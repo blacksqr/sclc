@@ -378,7 +378,7 @@
 	<target name="sampleflash.par">
 		<runTest property.name="sampleflash.par.data" test.file="${testfile.dir}/sampleflash.par"/>
     <assertContains assert.num="1" property.name="sampleflash.par.data" property.string="sourceLines=&quot;36&quot;" />
-    <assertContains assert.num="2" property.name="sampleflash.par.data" property.string="commentLines=&quot;34&quot;" />
+    <assertContains assert.num="2" property.name="sampleflash.par.data" property.string="commentLines=&quot;39&quot;" />
 
 	</target>
  

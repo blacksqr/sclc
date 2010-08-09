@@ -1,3 +1,10 @@
+# This file is from the open source version of FLASH3
+# FLASH3.1_framework.tar.gz
+# FLASH3.1_framework/source/Simulation/SimulationMain/sampleflash.par
+# Available at http://flash.uchicago.edu/website/codesupport/
+# Used with permission as an sclc example from the Flash project
+
+
 # Runtime parameters for a generic problem
 # check the online documentation for runtime parameter descriptions
 # or look at the setup_params file in the object directory for
