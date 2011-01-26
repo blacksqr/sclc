@@ -1600,7 +1600,6 @@ my %Suffixes = (
     ".tcsh" => "shell",
     ".zsh"  => "shell",
     ## make
-    ".in"   =>  "make",
     ".m4"   =>  "make",
     ".am"   =>  "make",
     ".ac"   =>  "make",
